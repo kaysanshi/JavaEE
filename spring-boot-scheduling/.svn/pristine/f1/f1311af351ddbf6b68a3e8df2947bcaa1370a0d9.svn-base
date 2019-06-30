@@ -1,0 +1,20 @@
+package com.leo.course.scheduling.mapper;
+
+import java.util.List;
+
+import com.leo.course.scheduling.domain.Classes;
+import com.leo.course.scheduling.utils.PageBean;
+
+public interface ClassesMapper {
+
+	int add(Classes classes);
+
+	int selectCount();
+
+	List<Classes> getPageQueryList(PageBean pageBean);
+
+	List<Classes> getClassList();
+
+	Classes getClassByid(Integer classid);
+
+}

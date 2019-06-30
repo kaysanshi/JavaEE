@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;ItemMapper.xml&apos; to &apos;e3-search-interface/src/main/java/com.leo.e3mall.search.mapper&apos;&#x0D;&#x0A;- Original project: &apos;e3-manager-dao&apos;&#x0D;&#x0A;- Destination element: &apos;e3-search-interface/src/main/java/com.leo.e3mall.search.mapper&apos;&#x0D;&#x0A;- Original element: &apos;ItemMapper.xml&apos;" description="Copy file" destination="=e3-search-interface/src\/main\/java&lt;com.leo.e3mall.search.mapper" element1="src/main/java/com/leo/e3mall/mapper/ItemMapper.xml" files="1" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1547470444115" units="0" version="1.0"/>
+</session>

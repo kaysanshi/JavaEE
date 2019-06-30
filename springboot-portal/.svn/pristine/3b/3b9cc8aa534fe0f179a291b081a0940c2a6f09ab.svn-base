@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.qfengx.portal.mapper.FeedbackMapper">
+	<select id="query" parameterType="cn.qfengx.portal.bean.FeedbackQueryVo" resultType="cn.qfengx.portal.bean.Feedback">
+		select 
+			*
+			from feedback 
+			<where>
+				<if test="startDate != null">
+					and addtime &gt;= #{startDate}
+				</if>	
+				<if test="endDate != null">
+					and addtime &lt;= #{endDate}
+				</if>
+				
+				<if test="key != null and key != ''">
+					and (title like "%"#{key}"%" or content like "%"#{key}"%")
+				</if>
+			</where>
+			<if test="sort == null or sort == 0">
+				ORDER BY addtime desc
+			</if>
+			<if test="sort == 1">
+				ORDER BY addtime asc
+			</if>
+				limit #{start}, #{limit}	 
+	</select>
+	<select id="querySum" resultType="Integer" parameterType="cn.qfengx.portal.bean.FeedbackQueryVo">
+		select 
+			count(*)
+			from feedback
+			<where>
+				<if test="startDate != null">
+					and addtime &gt;= #{startDate}
+				</if>	
+				<if test="endDate != null">
+					and addtime &lt;= #{endDate}
+				</if>
+				
+				<if test="key != null and key != ''">
+					and (title like "%"#{key}"%" or content like "%"#{key}"%")
+				</if>
+			</where>
+	</select>
+	<insert id="add" parameterType="cn.qfengx.portal.bean.Feedback" useGeneratedKeys="true" keyProperty="id">
+		insert into feedback
+			(title, content, name, gender, email, phone, company, address, addtime)
+			values (#{title}, #{content}, #{name}, #{gender}, #{email}, #{phone}, #{company}, #{address}, #{addtime})
+	</insert>
+	
+	<delete id="delete" >
+		delete from feedback 
+		where id in (
+			<foreach collection="array" item="id" separator=",">
+				#{id}
+			</foreach>
+		)
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

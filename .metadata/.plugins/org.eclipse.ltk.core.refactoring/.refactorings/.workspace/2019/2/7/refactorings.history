@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;spring-boot-portal&apos; to &apos;springboot-portal&apos;" description="Rename resource &apos;spring-boot-portal&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/spring-boot-portal" name="springboot-portal" stamp="1549938862900" updateReferences="true"/>
+</session>

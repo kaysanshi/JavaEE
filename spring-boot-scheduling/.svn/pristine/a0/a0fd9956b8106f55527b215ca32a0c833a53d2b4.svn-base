@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.leo.course.scheduling.mapper.ClassesMapper">
+ 	<insert id="add" parameterType="com.leo.course.scheduling.domain.Classes">
+ 		insert into classes(department,specialty,description,name,addtime,flag) 
+ 					values(#{department},#{specialty},#{description},#{name},#{addtime},#{flag})
+ 					
+ 	</insert>
+ 	<select id="selectCount" resultType="java.lang.Integer">
+		select count(*) from classes
+	</select>
+	<select id="getPageQueryList" resultType="com.leo.course.scheduling.domain.Classes" parameterType="com.leo.course.scheduling.utils.PageBean">
+		select id,department,specialty,description,name,addtime,flag from classes where id limit #{currentPage},#{pageSize}
+	</select>
+	<update id="update" parameterType="com.leo.course.scheduling.domain.Classes">
+
+	</update>
+	<select id="getClassList" resultType="com.leo.course.scheduling.domain.Classes" >
+		select id,department,specialty,description,name,addtime,flag from classes 
+	</select>
+	
+	<select id="getClassByid" resultType="com.leo.course.scheduling.domain.Classes" parameterType="java.lang.Integer" >
+		select id,department,specialty,description,name,addtime,flag from classes where id=#{id}
+	</select>
+ </mapper>

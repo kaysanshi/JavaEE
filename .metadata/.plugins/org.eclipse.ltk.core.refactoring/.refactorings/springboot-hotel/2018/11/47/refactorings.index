@@ -1,0 +1,53 @@
+1542772637989	Delete elements
+1542774093051	Move compilation unit
+1542777771505	Rename resource 'staff.jsp'
+1542778130127	Rename resource 'region.jsp'
+1542778183497	Rename resource 'decidedzone.jsp'
+1542778225151	Rename resource 'subarea.jsp'
+1542778271176	Rename resource 'home.jsp'
+1542778531159	Rename resource 'index.jsp'
+1542778636886	Rename resource 'bug.jsp'
+1542778683020	Rename resource 'daiban.jsp'
+1542778722738	Rename resource 'gonggao.jsp'
+1542778794893	Rename resource 'yujing.jsp'
+1542778903345	Rename resource 'login.jsp'
+1542795001375	Rename resource 'userlist.jsp'
+1542795027065	Rename resource 'userinfo.jsp'
+1542795324849	Rename resource 'userindex.jsp'
+1542795664333	Rename resource 'role.jsp'
+1542795834257	Rename resource 'role_add.jsp'
+1542795860284	Rename resource 'function.jsp'
+1542795904468	Rename resource 'function_add.jsp'
+1542796380841	Rename resource 'index.jsp'
+1542796427969	Rename resource 'unauthorizedUrl.jsp'
+1542796439406	Delete element
+1542801595038	Rename resource 'webapp'
+1542801608723	Move 'pages' to 'static'
+1542801624899	Delete element
+1542801685521	Delete element
+1542804370829	Move 10 resources to 'static'
+1542804377596	Delete element
+1542806630836	Move 4 resources to 'pages'
+1542807608734	Delete element
+1542808311872	Delete element
+1542809397713	Rename resource 'error.jsp'
+1542863441518	Delete element
+1542864662995	Rename resource 'title.jpg'
+1542893579526	Delete element
+1542893585022	Delete element
+1542945467974	Delete element
+1542945472652	Delete element
+1542946954650	Delete element
+1542946960543	Delete element
+1542946979336	Rename package 'com.leo.hotel.dao'
+1542946995557	Delete element
+1542947105609	Rename type 'UserDao'
+1542947669205	Rename resource 'application.properties'
+1542951450645	Delete element
+1542954752223	Move 'index.html' to 'pages'
+1542954754723	Move 'home.html' to 'pages'
+1542954759281	Delete element
+1542960627966	Move 3 resources to 'user'
+1543029546420	Move 3 resources to 'pages'
+1543029551562	Delete element
+1543039204057	Rename resource 'userinfo.html'

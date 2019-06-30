@@ -1,0 +1,139 @@
+package com.leo.course.scheduling.controller;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.springframework.boot.test.context.runner.ReactiveWebApplicationContextRunner;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.leo.course.scheduling.domain.Classes;
+import com.leo.course.scheduling.domain.Classroom;
+import com.leo.course.scheduling.domain.Student;
+import com.leo.course.scheduling.domain.Subject;
+import com.leo.course.scheduling.domain.Teacher;
+import com.leo.course.scheduling.domain.Times;
+import com.leo.course.scheduling.service.ClassRoomService;
+import com.leo.course.scheduling.service.ClassesService;
+import com.leo.course.scheduling.service.CourseSchulingService;
+import com.leo.course.scheduling.service.SubjectService;
+import com.leo.course.scheduling.service.TeacherService;
+
+/**
+ * 排课
+ * @author kay三石
+ *TODO
+ *2019年3月13日-下午7:30:39
+ */
+@Controller
+@RequestMapping("/scheduling")
+public class CourseSchedulingController {
+	
+	@Resource
+	private CourseSchulingService csService;
+	
+	@Resource
+	private SubjectService subjectService;//课程
+	
+	@Resource
+	private TeacherService teacherService;//教师
+	
+	@Resource
+	private ClassesService classesService;//班级
+	
+	@Resource
+	private ClassRoomService classRoomService;//教室
+	
+	/**
+	 * 依次得到学生，课程。教室，教师，
+	 */
+	private List<Student> list_student;
+	
+	private List<Subject> list_subject;
+	
+	private List<Classes> list_class;
+	
+	private List<Times> list_times;
+	
+	private List<Teacher> list_teacher;
+	private List<String> list_week;
+	
+	public List<String> getWeek() {
+		list_week=new ArrayList<>();
+		list_week.add("星期一");
+		list_week.add("星期二");
+		list_week.add("星期三");
+		list_week.add("星期四");
+		list_week.add("星期五");
+		list_week.add("星期六");
+		list_week.add("星期日");
+		return list_week;	
+	}
+	/**
+	 * 获得教师集合
+	 * 获取到的集合还是有些问题，不能够过滤到其无用的
+	 * @return
+	 */
+	public List<Teacher> getlistTeacher(){
+		return teacherService.getListTeacherName();	
+	}
+	/**
+	 * 获得课程集合
+	 * @return
+	 */
+	public List<Subject> getListSubject(){
+		return subjectService.getListSubjectName();
+		
+	}
+	/**
+	 * 获得班级集合
+	 * @return
+	 */
+	public List<Classes> getListClass(){
+		return  classesService.getListClassesName();
+	}
+	/**
+	 * 获得教室集合
+	 * @return
+	 */
+	public List<Classroom> getListClassRoom(){
+		
+		return  classRoomService.getListClassesRoomName();
+	}
+	
+	/**
+	 * 班级优先排课
+	 */
+	@RequestMapping("")
+	public Map<String, Object> getSchedulingQuickByClass(){
+		Map<String, Object> map=new HashMap<>();
+		
+		
+		return null;
+		
+	}
+	/**
+	 * 课程优先排列
+	 * @return
+	 */
+	@RequestMapping("/bycourse")
+	@ResponseBody
+	public Map<String, Object> getSchedulingQuickByCourse(){
+		Map<String, Object> map=new HashMap<>();
+		list_subject=this.getListSubject();
+		list_teacher=this.getlistTeacher();
+		System.out.println("打印："+list_subject);
+		System.out.println(list_teacher);
+			
+			
+		return null;
+		
+	}
+	
+}

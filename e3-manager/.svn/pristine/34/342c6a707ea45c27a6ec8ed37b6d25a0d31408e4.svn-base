@@ -1,0 +1,16 @@
+package com.leo.e3mall.service;
+
+import com.leo.e3mall.common.pojo.EasyUIDataGridResult;
+import com.leo.e3mall.pojo.Item;
+
+/**
+ * item
+ * @author leoill
+ *TODO
+ *2019年1月2日
+ */
+public interface ItemService {
+	Item getItemById(long itemId);
+	
+	EasyUIDataGridResult getItemList(int page,int rows);
+}

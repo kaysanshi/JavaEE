@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leo.hotel.mapper.RoomSortMapper">
+	<select id="selectCount" resultType="java.lang.Integer">
+		select count(*) from roomsort
+	</select>
+	<select id="getPageQueryList" resultType="com.leo.hotel.domain.Roomsort" parameterType="com.leo.hotel.utils.PageBean">
+		select * from roomsort where  id limit #{currentPage},#{pageSize}
+	</select>
+	<update id="add" parameterType="com.leo.hotel.domain.Roomsort">
+		insert into roomsort(sortname,description) values(#{sortname},#{description})
+	</update>
+	<update id="update" parameterType="com.leo.hotel.domain.Roomsort">
+		update roomsort set sortname=#{sortname},description=#{description} where id=#{id}	
+	</update>
+	<delete id="delete" parameterType="java.lang.String">
+		delete form roomsort where id=#{id}
+	</delete>
+	<select id="getListByAjax" resultType="com.leo.hotel.domain.Roomsort">
+			select * from roomsort
+	</select>
+</mapper>

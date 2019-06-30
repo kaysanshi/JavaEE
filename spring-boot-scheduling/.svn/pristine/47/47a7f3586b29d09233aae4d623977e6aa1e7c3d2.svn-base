@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.leo.course.scheduling.mapper.TeacherMapper">
+ 	<insert id="add" parameterType="com.leo.course.scheduling.domain.Teacher">
+ 		insert into teacher(department,tereoff,teachnumber,sex,iccode,description,name,addtime,image) 
+ 					values(#{department},#{tereoff},#{teachnumber},#{sex},#{iccode},#{description},#{name},#{addtime},#{image})
+ 					
+ 	</insert>
+ 	<select id="selectCount" resultType="java.lang.Integer">
+		select count(*) from teacher
+	</select>
+	<select id="getPageQueryList" resultType="com.leo.course.scheduling.domain.Teacher" parameterType="com.leo.course.scheduling.utils.PageBean">
+		select id,department,tereoff,teachnumber,sex,iccode,description,name,addtime,image from teacher where id limit #{currentPage},#{pageSize}
+	</select>
+	<update id="update" parameterType="com.leo.course.scheduling.domain.Teacher">
+		update teacher set department=#{department},tereoff=#{tereoff},teachnumber=#{teachnumber},sex=#{sex},
+		iccode=#{iccode},description=#{description},name=#{name},addtime=#{addtime},image=#{iamge} where id=#{id}
+	</update>
+	<select id="getteacherList" resultType="com.leo.course.scheduling.domain.Teacher">
+		select id, department,tereoff,sex,teachnumber,name from teacher
+	</select>
+	<select id="getTeacherByid" resultType="com.leo.course.scheduling.domain.Teacher">
+		select id,department,tereoff,teachnumber,sex,iccode,description,name,addtime,image from teacher where id=#{teacherid}
+	</select>
+	<select id="getListTeacherName" resultType="com.leo.course.scheduling.domain.Teacher">
+		select  teach.id,teach.department,teach.tereoff,teach.teachnumber,teach.sex,teach.iccode,teach.description,teach.name,teach.addtime,teach.image
+				
+		from teacher AS teach
+	</select>
+ </mapper>

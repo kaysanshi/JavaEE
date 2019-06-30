@@ -1,0 +1,34 @@
+package cn.qfengx.portal.service.impl;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import cn.qfengx.portal.bean.Product;
+import cn.qfengx.portal.bean.QueryVoProduct;
+import cn.qfengx.portal.mapper.ProductMapper;
+import cn.qfengx.portal.service.ProductService;
+
+@Service("ProductServiceImpl")
+public class ProductServiceImpl implements ProductService {
+
+	@Autowired
+	private ProductMapper productMapper;
+	
+	@Override
+	public Map<String, Object> list(QueryVoProduct qvp) {
+		// TODO Auto-generated method stub
+		Map<String, Object> res = new HashMap<>();
+		qvp.setStart((qvp.getPage() - 1) * qvp.getLimit());
+		List<Product> list = productMapper.query(qvp);
+		res.put("code", "0");
+		res.put("msg", "获取成功");
+		res.put("data", list);
+		res.put("count", list.size());
+		return res;
+	}
+
+}

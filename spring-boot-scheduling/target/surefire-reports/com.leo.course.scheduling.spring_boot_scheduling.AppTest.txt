@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.leo.course.scheduling.spring_boot_scheduling.AppTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.212 s - in com.leo.course.scheduling.spring_boot_scheduling.AppTest

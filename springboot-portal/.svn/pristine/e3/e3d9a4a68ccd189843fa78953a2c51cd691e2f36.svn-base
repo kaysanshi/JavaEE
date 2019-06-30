@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="detaildiv">
+    <div class="layui-card">
+        <div class="layui-card-header">
+                <img id="detail-img" src="../images/header.jpg" style="width: 400px; height: 300px; display: inline-block">
+                <div style="display: inline-block; margin-left: 20px" >
+                    <div class="layui-row"><span style="padding: 5px">产品名称:</span><span id="detail-name" style="padding: 5px">产品名称</span></div>
+                    <div class="layui-row"><span style="padding: 5px">所属分类:</span><span id="detail-pcname" style="padding: 5px">产品名称</span></div>
+                    <div class="layui-row"><span style="padding: 5px">点击数:</span><span id="detail-click" style="padding: 5px">产品名称</span></div>
+                    <div class="layui-row"><span style="padding: 5px">发布时间:</span><span id="detail-addtime" style="padding: 5px">产品名称</span></div>
+                </div>
+            </div>
+        <div class="layui-card-body">
+            <p>asdasdasd</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

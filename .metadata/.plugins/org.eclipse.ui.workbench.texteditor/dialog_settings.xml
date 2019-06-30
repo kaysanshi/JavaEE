@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">
+		<item value="692" key="DIALOG_X_ORIGIN"/>
+		<item value="362" key="DIALOG_Y_ORIGIN"/>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="false" key="isRegEx"/>
+		<item value="ItemCatExample" key="selection"/>
+		<item value="false" key="casesensitive"/>
+		<item value="true" key="incremental"/>
+		<item value="true" key="wrap"/>
+		<item value="true" key="wholeword"/>
+		<list key="findhistory">
+			<item value="TbItemCatExample"/>
+			<item value="TbItemCat"/>
+			<item value="TbItemDescExample"/>
+			<item value="TbItemDesc"/>
+			<item value="TbItemParamItem"/>
+			<item value="TbItemParamItemExample"/>
+			<item value="TbItemParamExample"/>
+			<item value="TbItemParam"/>
+			<item value="TbOrderExample"/>
+			<item value="TbOrder"/>
+			<item value="po"/>
+			<item value="slf4j-api"/>
+			<item value="ehcache"/>
+			<item value="json"/>
+			<item value="Au"/>
+		</list>
+		<list key="replacehistory">
+			<item value="ItemCatExample"/>
+			<item value="ItemCat"/>
+			<item value="ItemDescExample"/>
+			<item value="ItemDesc"/>
+			<item value="ItemParamItem"/>
+			<item value="ItemParamItemExample"/>
+			<item value="ItemParamExample"/>
+			<item value="ItemParam"/>
+			<item value="OrderExample"/>
+			<item value="Order"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="356" key="DIALOG_WIDTH"/>
+		<item value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI" key="DIALOG_FONT_NAME"/>
+		<item value="454" key="DIALOG_HEIGHT"/>
+		<item value="313" key="DIALOG_X_ORIGIN"/>
+		<item value="244" key="DIALOG_Y_ORIGIN"/>
+	</section>
+</section>

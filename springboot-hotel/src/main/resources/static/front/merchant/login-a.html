@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>酒店商家登录</title>
+
+<script src="js/jquery.min.js"></script>
+<link href="css/login.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	<div class="container-fluid"style="background-color:#3dc6b6;height:60px;font-size:30px;color:white;padding-top: 0px;">
+			美团网酒店商家
+	</div>
+<div class="signin">
+	<div class="signin-head"><img src="images/test/link.jpg" alt="" class="img-circle"width="130px"></div>
+<div class="wrap flex-c-c">
+  <form action="" method="" class="flex-c-c">
+    <ul class="select__list">
+      <li id="js-usr-rtn" class="select__label">账号密码登录</li>
+      <li id="js-usr-new" class="select__label select__label--active">手机验证登录</li>
+      
+    </ul>
+  
+    <input type="phone" placeholder="账号" class="ui-field-1" id="js-field__email" /><br />
+    <input type="password" placeholder="密码" class="ui-field" id="js-field__pass" />
+    
+    <span class="wfer"><input type="password" class="ui-field"id="js-field__r-pass"placeholder="验证码" required /></span><br />
+    <button id="js-btn" class="ui-button --usr-new"></button><br />
+ <button ><a href="zc.html"style="text-decoration: none;"class="zhuce">免费注册</button></a><br />
+    
+  </form>
+</div>
+</div>
+
+<script>
+//to-do. dry-up & remove jq
+$('.select__label').click(function() {
+  $('.select__label').removeClass('select__label--active');
+  $(this).addClass('select__label--active');
+});
+
+$('#js-usr-rtn').click(function() {
+  $('#js-btn, .pointer, #js-field__pass').removeClass('--usr-new --usr-rst ui-field--hidden');
+  $('#js-btn, .pointer').addClass('--usr-rtn');
+  $('#js-field__r-pass').addClass('ui-field--hidden');
+});
+$('#js-usr-new').click(function() {
+  $('#js-btn, .pointer, #js-field__r-pass, #js-field__pass').removeClass('--usr-rtn --usr-rst ui-field--hidden');
+  $('#js-btn').addClass('--usr-new');
+});
+$('#js-usr-rst').click(function() {
+  $('#js-btn, .pointer').removeClass('--usr-rtn --usr-new');
+  $('#js-btn, .pointer').addClass('--usr-rst');
+  $('#js-field__r-pass, #js-field__pass').addClass('ui-field--hidden');
+});
+</script>
+ <a href="forget.html"class="forget">忘记账号或密码</a>
+
+</body>
+</html>
+

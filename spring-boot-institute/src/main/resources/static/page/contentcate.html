@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <link rel="stylesheet" href="../layui/lay/modules/treetable-lay/treetable.css" />
+    <style>
+        .layui-table-view {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        .layui-table-view .layui-form-select .layui-input {
+            height: 30px;
+        }
+        .layui-table-view .layui-form-select dl dd, .layui-form-select dl dt {
+            line-height: 30px;
+        }
+        .layui-table-view .layui-form-select dl {
+            top: 34px;
+        }
+        .layui-anim, .layui-anim-upbit, .layui-form-select dl {
+            z-index: 10002;
+        }
+        .w-e-text-container{
+    		height: 500px !important;/*!important是重点，因为原div是行内样式设置的高度300px*/
+		}
+		#bodyoverflow{
+			overflow:auto;
+		}
+    </style>
+</head>
+<body  id="bodyoverflow" class="layui-layout-body">
+<table id="list" lay-filter="listtable"></table>
+</body>
+<div id="divaddcontent" style="display: none; padding: 10px">
+ <form class="layui-form layui-form-pane">        
+        <div class="layui-form-item">
+            <label class="layui-form-label">内容</label>
+            <div class="layui-input-block">
+                <div id="content"></div>
+            </div>
+      	</div>
+    </form>
+</div>
+<div id="divadd" style="display: none; padding: 10px">
+    <form class="layui-form layui-form-pane">
+        <div class="layui-form-item">
+            <label class="layui-form-label">所属分类</label>
+            <div class="layui-input-inline">
+                <select id="add-cate">
+                    <option value="-1">无</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">分类名称</label>
+            <div class="layui-input-inline">
+               	<input type="text" class="layui-input" id="name">
+            </div>
+        </div>
+        <div class="layui-form-item">
+        	 <label class="layui-form-label">是否启用</label>
+        	 <div class="layui-input-block">
+		      	<input type="checkbox" name="switch" id="add-status" lay-skin="switch" lay-text="开启|关闭">
+		    </div>
+        </div>
+    </form>
+</div>
+<script src="../layui/layui.js"></script>
+<script src="../layui/lay/modules/treetable-lay/treetable.js"></script>
+<script src="../js/wangEditor.min.js"></script>
+<script type="text/html" id="zizeng">
+    {{d.LAY_TABLE_INDEX+1}}
+</script>
+<script type="text/html" id="toswitch">
+    <input type="checkbox" lay-skin="switch" lay-text="启用|禁用" {{d.status =='0'?"checked":"" }}>
+</script>
+
+<script type="text/html" id="toolbarDemo">
+    <form class="layui-form layui-form-pane">
+        <div class="layui-form-item" style="margin-bottom: 0">
+            <div class="layui-inline">
+                <button lay-event="add" type="button" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe654;</i>添加分类</button>
+            </div>
+            <div class="layui-inline" style="float: right">
+                <button lay-event="delete" type="button" class="layui-btn layui-btn-danger layui-btn-sm"><i class="layui-icon">&#xe640;</i></button>
+            </div>
+            
+        </div>
+    </form>
+</script>
+
+<script type="text/html" id="barDemo">
+    <div class="layui-inline">
+		
+        <a class="layui-btn layui-btn-xs" lay-event="edit">
+          	编辑
+        </a>
+		<a class="layui-btn layui-btn-xs" lay-event="delete">
+       	删除节点
+        </a>
+		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="add">
+		添加内容	
+		</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="contentedit">
+     	编辑内容
+        </a>
+    </div>
+</script>
+<script>
+	layui.config({
+		base:'/layui/lay/modules/'
+	}).extend({
+		treetable:'treetable-lay/treetable'
+	});
+    layui.use(['element', 'jquery', 'table', 'form', 'laydate', 'layer','treetable'], function() {
+        var element = layui.element;
+        var $ = layui.jquery;
+        var table = layui.table;
+        var form = layui.form;
+        var laydate = layui.laydate;
+        var layer = layui.layer;
+		var treetable=layui.treetable;
+			
+		 	var editor;
+	        editor = new wangEditor('#content');
+	        editor.customConfig.debug = true;
+	        editor.customConfig.uploadFileName = 'file';
+	        editor.customConfig.uploadImgServer = '/common/img'
+	        editor.create();
+	        
+      
+		treetable.render({
+			treeColIndex:3,
+			treeSpid:-1,
+			treeIdName:'id',
+			treePidName:'pid',
+			treeDefaultClose:true,
+			treeLinkage:false,
+			elem:'#list',
+			url:'/content/cate/list',
+			toolbar: '#toolbarDemo',	
+			page:false,
+			cols:[[
+				{type:'checkbox', fixed: 'left'},
+                {width: 60, title: '序号',fixed: 'left',templet:'#zizeng', type: 'numbers'},
+				{field:'pid',title:'pid', width:60},
+				{field:'name', title:'分类名称' ,width:280},
+				{field:'description',title:'内容' ,width:300},
+				{field:'status',title:'状态',templet:'#toswitch',width:100},
+				{field:'addtime',title:'添加时间',width:150},
+				{fixed: 'right', align:'center', width:280,toolbar: '#barDemo'},
+			]],
+			done:function(){
+				//$('table:eq(1).layui-table thead tr th:eq(0)').addClass('layui-hide');
+			}
+			
+		});
+
+
+        function addreset() {//添加层元素初始化
+        	$('#name').val('');
+        	editor.txt.html('');
+        	$('#add-cate').val('');
+        	$('#add-cate').val('<option value="-1">无</option>');
+
+        }
+        //判断浏览器大小方法
+        function screen() {
+            //获取当前窗口的宽度
+            var width = $(window).width();
+            if (width > 1200) {
+                return 3;   //大屏幕
+            } else if (width > 992) {
+                return 2;   //中屏幕
+            } else if (width > 768) {
+                return 1;   //小屏幕
+            } else {
+                return 0;   //超小屏幕
+            }
+        }
+
+        //监听头部工具栏
+        table.on('toolbar(listtable)', function(obj){
+            switch(obj.event){
+                case 'add':
+                	addreset();
+                	 layer.open({
+                         type: 1,
+                         content: $('#divadd'),
+                         area: screen()<2?['90%','80%']:['1250px','600px'],
+                         title: '添加分类',
+                         btn: ['添加'],
+                         success: function(layero, index) {
+                        	
+                        	 $.ajax({
+                        		 url:"/content/cate/list",
+                        		 dataType:'json',
+                        		 success:function(res){
+                        			 console.log(res);
+                        			 if(res.code=='0'){
+                        				console.log(res.data.length)
+                        				  var $cate=$('#add-cate');
+                        					
+                        				 for(var i=0;i<res.data.length;i++){
+                        					
+                        				 	$cate.append('<option value='+res.data[i].id+'">"'+res.data[i].name+'</option>');
+                        				 	form.render();
+                        				 }
+                        			 }
+                        		 },
+                        		 error:function(res){
+                        			 layer.msg("出现错误",{icon:2,time:1000});
+                        		 }
+                        	 });
+                         },
+                         yes:function(layero,index){
+                        	var pid=$('#add-cate').val();
+                        	var name=$('#name').val();
+                        	var status=$('#add-status').val();
+                        	//console.log($('#add-status').next().hasClass('layui-form-onswitch'));
+                        	if(name==''){
+                        		layer.msg('名称不能为空', {icon: 2, time: 1000});
+                                $('#name').focus();
+                                return;
+                        	}
+                        	 
+                        	var st=""
+                        	if($('#add-status').next().hasClass('layui-form-onswitch')){
+                        		st="0";	
+                        	}else {
+                    
+                        		st="1";
+                        	}
+                        	console.log(st);
+                        	 $.ajax({
+                        		 url:'/content/cate/addcate',
+                        		 data:{pid:pid,name:name,status:st},
+                        		 dataType:'josn',
+                        		 success:function(res){
+                        			 if(res.code =='0'){
+                        				 layer.msg("添加成功",{icon:1,time:1000});
+                        				 layer.close(index);
+                        			 } else{
+                        				 layer.msg("添加失败",{icon:2,time:1000});
+                        			 }
+                        			 
+                        		 },
+                        		 error:function(res){
+                        			 layer.msg('网络错误',{icon:2,time:1000});
+                        		 }
+                        	 })
+                         },
+                     });
+                    break;
+                
+                case 'refresh':
+                   
+                    break;
+                case 'editor':
+
+                    break;
+                case 'addtree':
+                	addreset();
+                break;
+            };
+        });
+
+
+
+        //监听工具条
+        table.on('tool(listtable)', function(obj) {
+            var data = obj.data;
+            if (obj.event === 'edit') {
+                addreset();
+                layer.open({
+                    type: 1,
+                    content: $('#divadd'),
+                    area: screen()<2?['90%','80%']:['1250px','600px'],
+                    title: '编辑分类名称',
+                    btn: ['修改'],
+                    success: function(layero, index) {
+                    	if(data.status=='0'){
+                    		$('#add-status').attr("checked","checked");
+                    	}
+                    	 $.ajax({
+                    		 url:"/content/cate/list",
+                    		 dataType:'json',
+                    		 success:function(res){
+                    			 console.log(res);
+                    			 if(res.code=='0'){
+                    				console.log(res.data.length)
+                    				  var $cate=$('#add-cate');
+                    				$('#name').val(data.name);
+                    				for(var i=0;i<res.data.length;i++){
+                    				 	$cate.append('<option value='+res.data[i].id+'">"'+res.data[i].name+'</option>');
+                    				 	form.render();
+                    				 }
+                    			 }
+                    		 },
+                    		 error:function(res){
+                    			 layer.msg("出现错误",{icon:5,time:1000});
+                    		 }
+                    	 });
+                    	 
+                    },
+                    yes:function(index){
+                    	var name=$('#name').val();
+                    	var pid=data.pid;
+                    	//var status=$("#add-status").val();
+                    	if(name==''){
+                    		layer.msg('名称不能为空', {icon: 2, time: 1000});
+                            $('#name').focus();
+                            return;
+                    	}
+                    	 
+                    	var st=""
+                    	if($('#add-status').next().hasClass('layui-form-onswitch')){
+                    		st="0";	
+                    	}else {
+                
+                    		st="1";
+                    	}
+                    	 $.ajax({
+                    		 url:'/content/cate/upcate',
+                    		 data:{id:data.id,pid:pid,name:name,status:st},
+                    		 dataType:'josn',
+                    		 success:function(res){
+                    			 if(res.code =="0"){
+                    				 layer.msg("修改成功",{icon:1,time:1000});
+                    				 layer.close(index);
+                    			 } else{
+                    				 layer.msg("修改失败",{icon:2,time:1000});
+                    			 }
+                    			 
+                    		 },
+                    		 error:function(res){
+                    			 layer.msg('网络错误',{icon:5,time:1000});
+                    		 }
+                    	 })
+                    }
+                });
+            }else if(obj.event ==='delete'){
+            	  layer.confirm('您确定要删除这' + data.name + '吗？',
+                          {btn: ['确定','取消'] }, 
+                   	function(){
+                       	   $.ajax({
+          	            		url:"/content/cate/deletecate",
+          	            		type:"post",
+          	            		data:{id:data.id},
+          	            		dataType:'json',
+                      		success:function(res){
+                      			if(res.code=="0"){
+                                      layer.msg("删除成功", {icon: 0, time: 1000});
+                                      layer.close(index);
+                      			}else{
+                                      layer.msg("删除失败", {icon: 2, time: 1000});
+                                      layer.close(index);
+                      			}
+                      			
+                      		},
+                      		error:function(res){
+                      			layer.msg('网络错误',{icon:2,time:1000});
+                      		}
+                      	});
+                         	    
+                     })
+                
+           }else if(obj.event ==='contentedit'){
+            	addreset();
+            	layer.open({
+                    type: 1,
+                    content: $('#divaddcontent'),
+                    area: screen()<2?['90%','80%']:['1250px','600px'],
+                    title: '编辑内容',
+                    btn: ['修改'],
+                    success: function(layero, index) {
+                    	editor.txt.html(data.description);
+                    	
+                    },
+                    yes:function(layero,index){
+                    	var content = editor.txt.html();
+                    	$.ajax({
+                    		url:"/content/cate/addcontent",
+                    		type:"post",
+                    		data:{id:data.id,description:content},
+                    		dataType:'json',
+                    		success:function(res){
+                    			if(res.code=="0"){
+                                    layer.msg("修改成功", {icon: 1, time: 1000});
+                                    layer.close(index);
+                    			}else{
+                                    layer.msg("修改失败", {icon: 2, time: 1000});
+                                    layer.close(index);
+                    			}
+                    			
+                    		},
+                    		error:function(res){
+                    			layer.msg('网络错误',{icon:5,time:1000});
+                    		}
+                    	})
+                    
+                    }
+                });
+            }else if(obj.event ==='add'){
+            	addreset();
+            	layer.open({
+                    type: 1,
+                    content: $('#divaddcontent'),
+                    area: screen()<2?['90%','80%']:['1250px','600px'],
+                    title: '添加内容',
+                    btn: ['添加'],
+                    success: function(layero, index) {
+                    	
+                    },
+                    yes:function(index){
+                    	var content = editor.txt.html();
+                    	$.ajax({
+                    		url:"/content/cate/addcontent",
+                    		type:"post",
+                    		data:{id:data.id,description:content},
+                    		dataType:'json',
+                    		success:function(res){
+                    			if(res.code=="0"){
+                                    layer.msg("添加成功", {icon: 1, time: 1000});
+                                    layer.close(index);
+                    			}else{
+                                    layer.msg("添加失败", {icon: 2, time: 1000});
+                                    layer.close(index);
+                    			}
+                    			
+                    		},
+                    		error:function(res){
+                    			layer.msg('网络错误',{icon:5,time:1000});
+                    		}
+                    	})
+                    }
+                    
+                });
+            }
+
+        });
+
+
+    });
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

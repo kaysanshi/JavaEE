@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <!-- namespace，1.命名空间用于隔离SQL，防止出现在id相同的xml文件
+ 	2.采用mapper动态代理的方式开发时使用，在namespace中指定mapper的类路径：
+ 		同时要遵循以下原则：
+ 		1.id与接口中的方法名一致；2.参数类型一致，3.返回类型一致
+  -->
+ <mapper namespace="test">
+  	<!-- 通过id查询 ;select是查询 在这个标签下书写SQL语句, 
+  		parameterType:是指定传入参数的类型
+  		resultType:书写的为对象的话，就会自动返回这个对象，自动映射，属性要与数据库一一对应
+  		resultMap:手动映射
+  		
+  	-->
+  	<select id="selectid" parameterType="Integer" resultType="com.leo.domain.User">
+  		select * from user where id= #{v}
+  	</select>
+  	<!-- 模糊查询用户 
+  		#{}表示的为占位符。占位符?两边已经加上过''后了,,#{}括号内可以为任意字符
+  			也可用"%"#{value}"%"可以防止sql注入
+  		${}字符串拼接，${}两边必须加上'',中间只能为{value}
+  	-->
+  	<select id="selectlist" parameterType="String" resultType="com.leo.domain.User">
+  		select * from user where username like '%${value}%'
+  	</select>
+  	<!-- 添加 
+  		<selectKey>是获得当前的id
+  		select Last_INSERT_ID():mysql提供的
+  		keyProperty="id" :返回值放到的user中id属性
+  		resultType="Integer" ，id的属性是
+  		order="AFTER"：主键自增的mysql为after,oracle是before
+  	-->
+  	<insert id="insertuser" parameterType="com.leo.domain.User">
+  		<selectKey keyProperty="id" resultType="Integer" order="AFTER">
+  			select Last_INSERT_ID()
+  		</selectKey>
+  		insert into user (username,birthday,sex,address) values (#{username},#{birthday},#{sex},#{address})
+  	</insert>
+  	<!-- 修改操作 -->
+  	<update id="updateuser" parameterType="com.leo.domain.User">
+  		update user set username=#{username},sex=#{sex},birthday=#{birthday},address=#{address}
+  		where id =#{id}
+  	</update>
+  	<!-- 删除 -->
+  	<delete id="deleteUser" parameterType="Integer">
+  		delete from user where id=#{id}
+  	</delete>
+  </mapper>
+  

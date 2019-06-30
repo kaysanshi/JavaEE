@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>控制台-用户</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <style>
+        .sys-time {
+            display: inline-block;
+            position: absolute;
+            left: 275px;
+            line-height: 50px;
+            height: 100%;
+            color: rgba(255,255,255,.7);
+        }
+        .user-photo {
+            width: 200px;
+            height: 120px;
+            padding: 15px 0 5px;
+            /*transition: .5s;*/
+        }
+        .user-photo a.img {
+            display: block;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 10px;
+            border-radius: 50%;
+            border: 4px solid #44576b;
+            box-sizing: border-box;
+            vertical-align: middle;
+            overflow: hidden;
+        }
+        .user-photo a.img img {
+            display: block;
+            width: 100%;
+            height: 100%;
+
+        }
+        .user-photo p {
+            display: block;
+            width: 100%;
+            text-align: center;
+            height: 25px;
+            color: #fff;
+            font-size: 12px;
+            white-space: nowrap;
+            line-height: 25px;
+            overflow: hidden;
+        }
+        .layui-header {
+            height: 50px;
+            line-height: 50px;
+        }
+        .layui-layout-admin .layui-logo {
+            line-height: 50px;
+        }
+        .layui-layout-admin .layui-side {
+            top: 50px;
+        }
+        .layui-header .layui-nav-item {
+            line-height: 50px;
+        }
+        .layui-header .layui-nav-child {
+            top: 55px;
+        }
+        a cite {
+            margin-left: 5px;
+            font-style: normal;
+        }
+        .layui-layout-admin .layui-footer {
+            height: 30px;
+            line-height: 30px;
+        }
+        .layui-layout-admin .layui-body {
+            top: 50px;
+            bottom: 30px;
+        }
+        .refresh {
+            position: absolute;
+            width: 120px;
+            right: 0;
+            top: 5px;
+            background-color: #fff;
+            border-left: 1px solid #e2e2e2;
+            /*border-bottom: 1px solid #e2e2e2;*/
+            height: 30px;
+            overflow: hidden;
+            text-align: center;
+            line-height: 30px;
+            cursor: pointer;
+        }
+        .refresh:hover {
+            background-color: #e2e2e2;
+        }
+        .layui-admin-pagetabs .layui-tab-title .layui-this {
+            background-color: rgb(246, 246, 246);
+        }
+        ul.layui-tab-title li:first-child i{
+            display: none;
+        }
+
+        .layui-tab-title {
+            height: 30px;
+        }
+        .layui-tab-title li {
+            line-height: 31px;
+        }
+        .layui-tab-title .layui-this:after {
+            height: 32px;
+        }
+        .layui-tab {
+            margin-top: 5px;
+        }
+        .layui-tab-content {
+            padding-bottom: 0;
+        }
+    </style>
+</head>
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <div class="layui-logo">后台管理</div>
+            <ul class="layui-nav layui-layout-left" lay-filter="leftmenu">
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="hidetab" title="隐藏左侧菜单"><i class="layui-icon layui-icon-shrink-right"></i></a>
+                </li>
+            </ul>
+
+            <div class="sys-time">当前系统时间：获取中...</div>
+            <ul class="layui-nav layui-layout-right" lay-filter="right">
+                <li class="layui-nav-item">
+                    <a href="javascript:;" >
+                        <img src="../images/header.jpg" class="layui-nav-img">
+                        <span id="userNameRight">获取中...</span>
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a lay-id="info" lay-href="info.html" href="javascript:;">基本资料</a></dd>
+                        <dd><a lay-id="pwd" lay-href="pwd.html" href="javascript:;">修改密码</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="login.html">退出</a></li>
+            </ul>
+        </div>
+
+        <div class="layui-side layui-side-menu layui-bg-black">
+            <div class="layui-side-scroll">
+                <div class="user-photo">
+                    <a class="img" title="我的头像" ><img src="../images/header.jpg" class="userAvatar"></a>
+                    <p>你好！<span class="userName" id="userName">获取中...</span>, 欢迎登录</p>
+                </div>
+                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                    <li class="layui-nav-item layui-this">
+                        <a lay-id="welcome" class="" href="javascript:;" lay-href="welcome.html"><i class="layui-icon">&#xe68e;</i><cite>欢迎界面</cite></a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a class="" href="javascript:;"><i class="layui-icon">&#xe60a;</i><cite>产品管理</cite></a>
+                        <dl class="layui-nav-child">
+                            <dd><a lay-id="plist" lay-href="plist.html" href="javascript:;"><i class="layui-icon">&#xe642;</i><cite>产品列表</cite></a></dd>
+                            <dd><a lay-id="pcate" lay-href="pcate.html" href="javascript:;"><i class="layui-icon">&#xe62d;</i><cite>产品分类</cite></a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a class="" href="javascript:;"><i class="layui-icon">&#xe66f;</i><cite>新闻管理</cite></a></a>
+                        <dl class="layui-nav-child">
+                            <dd><a lay-id="newslist" lay-href="newslist.html" href="javascript:;"><i class="layui-icon">&#xe621;</i><cite>新闻列表</cite></a></dd>
+                            <dd><a lay-id="ncate" lay-href="ncate.html" href="javascript:;"><i class="layui-icon">&#xe679;</i><cite>新闻分类</cite></a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a class="" href="javascript:;"><i class="layui-icon">&#xe66f;</i><cite>工程案例</cite></a></a>
+                        <dl class="layui-nav-child">
+                            <dd><a lay-id="caselist" lay-href="caselist.html" href="javascript:;"><i class="layui-icon">&#xe621;</i><cite>工程列表</cite></a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a class="" href="javascript:;"><i class="layui-icon">&#xe66f;</i><cite>系统相关</cite></a></a>
+                        <dl class="layui-nav-child">
+                            <dd><a lay-id="info" lay-href="info.html" href="javascript:;"><i class="layui-icon">&#xe621;</i><cite>导航栏</cite></a></dd>
+                            <dd><a lay-id="pwd" lay-href="pwd.html" href="javascript:;"><i class="layui-icon">&#xe679;</i><cite>留言</cite></a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item"><a href="login.html"><i class="layui-icon">&#xe602;</i><cite>退出系统</cite></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="layui-admin-pagetabs">
+            <div class="layui-body layui-tab-brief">
+                <div class="layui-tab" lay-allowClose="true" lay-filter="demo">
+                    <ul class="layui-tab-title">
+                        <li class="layui-this" lay-id="welcome.html" id="wel">欢迎界面</li>
+                    </ul>
+                    <div class="refresh refreshThis">
+                        <a href="javascript:;">
+                            <i class="layui-icon">&#xe669;</i>
+                            刷新当前
+                        </a>
+                    </div>
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item layui-show">
+                            <iframe width="100%" src="welcome.html" class="layui-admin-iframe" scrolling="yes" frameborder="0" onload="setIframeHeight(this);"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-footer">
+            © qfengx.cn
+        </div>
+    </div>
+</body>
+<script src="../layui/layui.js"></script>
+<script>
+    layui.use(['element', 'jquery', 'layer'], function() {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var element = layui.element;
+        var userinfo = {};
+
+        //获取用户信息
+        function checkUser() {
+            $.ajax({
+                url: 'http://localhost:8080/user',
+
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+
+                dataType: 'json',
+                success: function(res) {
+
+                    if (res.code == '1') {
+                        layer.msg('未登录或登录信息已失效', {icon: 5, time: 1000}, function() {
+                            window.location.href = 'login.html';
+                        });
+                    } else if (res.code == '0') {
+                        userinfo.nick = res.data.nick;
+                        userinfo.time = res.data.lastLoginTime;
+                        userinfo.ip = res.data.lastLoginIp;
+                        loginName();
+                    }
+                },
+                error: function(res) {
+
+                }
+            });
+        }
+        checkUser();
+        function loginName() {
+            $('#userName').text(userinfo.nick);
+            $('#userNameRight').text(userinfo.nick);
+        }
+
+
+
+        element.on('nav(leftmenu)', function(elem) {
+            //隐藏显示侧边菜单
+            if (elem[0].className == 'hidetab') {//隐藏
+                //侧边菜单伸缩
+                $('.layui-side-menu').animate({width: $('.layui-side-menu').width() - 144 + 'px'});
+                //正文伸缩
+                $('.layui-body').animate({left: $('.layui-body').position().left - 144 + 'px'});
+                //底部伸缩
+                $('.layui-footer').animate({left: $('.layui-footer').position().left - 144 + 'px'});
+                $(this).attr('class', 'showtab');
+                $(this).find('i').attr('class', 'layui-icon layui-icon-spread-left');
+                //侧边菜单只显示图标
+                $('.layui-nav-tree').find('li').each(function(em, ind) {
+                    $(this).find('cite').css('display', 'none');
+                    $(this).find('dl').css('display', 'none');
+                });
+
+                $('.user-photo').css('display', 'none');
+            } else if(elem[0].className == 'showtab') {//显示
+                $('.layui-side-menu').animate({width: $('.layui-side-menu').width() + 144 + 'px'});
+                $('.layui-body').animate({left: $('.layui-body').position().left + 144 + 'px'});
+                $('.layui-footer').animate({left: $('.layui-footer').position().left + 144 + 'px'});
+                $(this).attr('class', 'hidetab');
+                $(this).find('i').attr('class', 'layui-icon layui-icon-shrink-right');
+                $('.layui-nav-tree').find('li').each(function(em, ind) {
+                    $(this).find('cite').css('display', '');
+                    $(this).find('dl').css('display', '');
+                });
+
+                $('.user-photo').css('display', '');
+            }
+        });
+
+
+        //时间显示
+        setInterval(function() {
+            var vWeek,vWeek_s,vDay;
+            vWeek = ["星期天","星期一","星期二","星期三","星期四","星期五","星期六"];
+            var date =  new Date();
+            year = date.getFullYear();
+            month = date.getMonth() + 1;
+            day = date.getDate();
+            hours = date.getHours();
+            hours = hours < 10 ? '0' + hours : hours;
+            minutes = date.getMinutes();
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = date.getSeconds();
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            vWeek_s = date.getDay();
+            $('.sys-time').text(`当前系统时间：${year}年${month}月${day}日 ${hours}:${minutes}:${seconds} ${vWeek[vWeek_s]}`);
+            // year + "年" + month + "月" + day + "日" + "\t" + hours + ":" + minutes +":" + seconds + "\t" + vWeek[vWeek_s] ;;
+        }, 1000 / 60);
+
+        //左侧导航实现手风琴效果
+        var navs = $('.layui-side-scroll .layui-nav-item');
+        function navClose() {
+            navs.each(function() {
+                $(this).removeClass('layui-nav-itemed');
+            });
+        }
+        navs.each(function() {
+            $(this).click(function() {
+                var flag = $(this).hasClass('layui-nav-itemed') ? true : false;
+                navClose();
+                if (!flag) $(this).removeClass('layui-nav-itemed');
+                else $(this).addClass('layui-nav-itemed');
+            });
+        });
+
+
+
+        element.on('nav(right)', function(elem) {
+            if ($(this).attr('lay-href') != undefined) {
+                var flag = true;
+
+                var url = $(this).attr('lay-href');
+                $('.layui-tab-title li').each(function(i, e) {
+                    if ($(this).attr('lay-id') == url) {
+                        //切换选项卡
+                        element.tabChange('demo', url);
+                        hidenWel();
+                        flag = false;
+                    }
+                });
+                if (flag) {
+                    //新增选项卡
+                    element.tabAdd('demo', {
+                        title: $(this).text(),
+                        content: '<iframe src="'+url+'" height="100%" width="100%" scrolling="yes" frameborder="0" onload="setIframeHeight(this);"></iframe>',
+                        id: url
+                    });
+                    element.tabChange('demo', url);
+                    hidenWel();
+                }
+            }
+        });
+
+
+        //侧边菜单监控
+        element.on('nav(test)', function(elem) {
+            if ($('.layui-side-menu').width() < 200) {
+                $('.layui-side-menu').animate({width: $('.layui-side-menu').width() + 144 + 'px'});
+                $('.layui-body').animate({left: $('.layui-body').position().left + 144 + 'px'});
+                $('.layui-footer').animate({left: $('.layui-footer').position().left + 144 + 'px'});
+                $('.layui-layout-left li:first-child').find('a').attr('class', 'hidetab');
+                $('.layui-layout-left li:first-child').find('i').attr('class', 'layui-icon layui-icon-shrink-right');
+                $('.layui-nav-tree').find('li').each(function(em, ind) {
+                    $(this).find('cite').css('display', '');
+                    $(this).find('dl').css('display', '');
+                });
+
+                $('.user-photo').css('display', '');
+            } else {
+                if ($(this).attr('lay-href') != undefined) {
+                    var flag = true;
+
+                    var url = $(this).attr('lay-href');
+                    $('.layui-tab-title li').each(function(i, e) {
+                        if ($(this).attr('lay-id') == url) {
+                            //切换选项卡
+                            element.tabChange('demo', url);
+                            hidenWel();
+                            flag = false;
+                        }
+                    });
+                    if (flag) {
+                        //新增选项卡
+                        element.tabAdd('demo', {
+                            title: elem[0].children[1].innerText,
+                            content: '<iframe src="'+url+'" height="100%" width="100%" scrolling="yes" frameborder="0" onload="setIframeHeight(this);"></iframe>',
+                            id: url
+                        });
+                        element.tabChange('demo', url);
+                        hidenWel();
+                    }
+                }
+            }
+        });
+        hidenWel();
+        function hidenWel() {
+            //移除第一个标签的关闭图标
+            // $('#wel').children('i').remove();
+        }
+
+
+
+
+        //刷新当前页
+        $('.refresh').on('click', function() {
+            if ($(this).hasClass('refreshThis')) {
+                $(this).removeClass('refreshThis');
+                $('.layui-tab .layui-tab-item.layui-show').find('iframe')[0].contentWindow.location.reload(true);
+                setTimeout(function() {
+                    $('.refresh').addClass('refreshThis');
+                }, 1000);
+            } else {
+                layer.msg('点击速度过快，请稍等会');
+            }
+        });
+
+        window.onresize = function() {
+            var iframes = $('.layui-tab-content iframe');
+            $.each(iframes, function(indx, iframe){
+                iframe.height = document.querySelector('.layui-admin-pagetabs .layui-body').clientHeight - 60 + 'px';
+            });
+        };
+
+
+        //监听选项卡切换
+        // element.on('tab()')
+    });
+
+    //iframe高度自适应
+    function setIframeHeight(iframe) {
+        if (iframe) {
+            var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+            if (iframeWin.document.body) {
+                // console.log(iframe.height);
+                // iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
+                console.log(document.querySelector('.layui-admin-pagetabs .layui-body').clientHeight);
+                iframe.height = document.querySelector('.layui-admin-pagetabs .layui-body').clientHeight - 60 + 'px';
+            }
+
+        }
+
+        // return;
+    };
+</script>
+</html>

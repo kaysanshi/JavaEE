@@ -1,0 +1,67 @@
+package com.leo.e3mall.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.leo.e3mall.common.pojo.EasyUIDataGridResult;
+import com.leo.e3mall.mapper.ItemMapper;
+import com.leo.e3mall.pojo.Item;
+import com.leo.e3mall.pojo.ItemExample;
+import com.leo.e3mall.pojo.ItemExample.Criteria;
+import com.leo.e3mall.service.ItemService;
+/**
+ * 商品的
+ * @author leoill
+ *TODO
+ *2019年1月2日
+ */
+@Service
+public class ItemServiceImpl implements ItemService {
+	@Autowired
+	private ItemMapper itemdao;
+
+	
+	@Override
+	public Item getItemById(long itemId) {
+		// TODO Auto-generated method stub
+	//根据主键查询
+		//设置条件查询
+		ItemExample example=new ItemExample();
+		Criteria criteria=example.createCriteria();
+		//设置查询条件
+		criteria.andIdEqualTo(itemId);
+		//执行查询
+		List<Item> list=itemdao.selectByExample(example);
+		if (list!=null && list.size()>0) {
+			return list.get(0);
+		}
+		return null;
+	}
+
+
+	@Override
+	public EasyUIDataGridResult getItemList(int page, int rows) {
+		// TODO Auto-generated method stub
+		//设置开始页，和也大小
+		PageHelper.startPage(page, rows);
+		//执行查询
+		ItemExample example=new ItemExample();
+		List<Item> list = itemdao.selectByExample(example);
+		//设置结果
+		EasyUIDataGridResult result=new EasyUIDataGridResult();
+		result.setRows(list);
+		//分页结果
+		PageInfo<Item> pageInfo=new PageInfo<>(list);
+		//取总的记录数
+		long total=pageInfo.getTotal();
+		result.setTotal(total);
+		return result;
+		
+		
+	}
+
+}

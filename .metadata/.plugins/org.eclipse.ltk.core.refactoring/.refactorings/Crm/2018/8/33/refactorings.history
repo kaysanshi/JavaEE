@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;GenericEncodingFilter.java&apos; to &apos;SSH_Crm/src/com.leo.crm.util&apos;&#x0D;&#x0A;- Original project: &apos;Crm&apos;&#x0D;&#x0A;- Destination element: &apos;SSH_Crm/src/com.leo.crm.util&apos;&#x0D;&#x0A;- Original element: &apos;com.leo.filter.GenericEncodingFilter.java&apos;" description="Copy compilation unit" destination="=SSH_Crm/src&lt;com.leo.crm.util" element1="/src&lt;com.leo.filter{GenericEncodingFilter.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1534254183317" units="1" version="1.0"/>
+</session>

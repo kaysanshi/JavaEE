@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+   "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+   "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+	<package name="result" extends="struts-default" namespace="dynamic"
+		>
+		<!-- 请求的其实是请求得action 的name属性 -->
+		<action name="result" class="com.leo.struts2.ResultAction" method="execute">
+			<!-- 成功后进行转发 -->
+			<result name="success" type="dispatcher">/dynamic/index.jsp</result>
+			<!-- 成功后进行重定向 -->
+			<result name="logindirect" type="redirect">/dynamic/index.jsp</result>
+			<!--转发到Action 中 需要配置Actionname参数和namespace参数的值 转发时带参数的使用-->
+			<result name="success" type="chain">
+				<param name="actionName">LoginAction</param>
+				<param name="namespace">/</param>
+			<!--ognl在配置文件的使用 添加的带参数的name struts中不是默认的就会作为一个参数来处理 -->
+				<param name="name">${name}</param>
+			</result>
+			<!--重定向到action地址栏要发生改变-->
+			<result name="success" type="redirectAction">
+				<param name="actionName">LoginAction</param>
+				<param name="namespace">/</param>
+			</result>
+			
+		</action>
+		
+	</package>
+	<package name="Api" extends="struts-default" 
+		>
+		<action name="GetApiAction" class="com.leo.struts2.GetApiAction" method="execute">
+			<!-- 成功后进行转发 -->
+			<result name="success" type="dispatcher">/struts/indexApi.jsp</result>
+			
+		</action>
+		
+	</package>
+	<package name="list" extends="struts-default" namespace="/">
+		<action name="listmap" class="com.leo.struts2.ListAction" method="execute">
+		<result name="success">/struts/index.jsp</result>
+		</action>
+	</package>
+</struts>

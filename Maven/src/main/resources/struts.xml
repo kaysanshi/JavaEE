@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//apache software foundation//dtd struts configuration 2.5//en"
+ "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+   <!-- name必须元素，为package唯一标使，extends是制定继承另一个包的配置 -->
+   <package name="user" extends="struts-default" namespace="/" >
+      <!-- 标准的使用：-->
+      <action name="UserAction_*"  
+            class="userAction"
+            method="{1}">
+            <result name="success">/user.jsp</result>
+            <allowed-methods>getUser,deleteUser,findUser</allowed-methods>
+      </action>     
+   </package>
+    
+</struts>

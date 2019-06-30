@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+<!-- 指定spring读取db.properties配置 -->
+<context:property-placeholder location="classpath:db.properties"></context:property-placeholder>
+<!-- 1.将连接池交给Spring管理 -->
+<bean name="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" >
+	<property name="jdbcUrl" value="${jdbc.jdbcUrl}" ></property>
+	<property name="driverClass" value="${jdbc.driverClass}" ></property>
+	<property name="user" value="${jdbc.user}" ></property>
+	<property name="password" value="${jdbc.password}" ></property>
+</bean>
+<!-- 2。核心事务管理让spring来管理事务 -->
+<bean name="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+	<property name="sessionFactory" ref="sessionFactory"></property>
+</bean>
+<!-- 3。加载配置hibernate信息 -->
+<bean name="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+	<!-- 将连接池注入到sessionFactory中，使其获得连接 -->
+	<property name="dataSource" ref="dataSource"></property>
+	<!-- 配置hibernate信息 -->
+	<property name="hibernateProperties">
+		<props>
+			<prop key="hibernate.hbm2ddl.auto" >update</prop>
+			<prop key="hibernate.dialect" >org.hibernate.dialect.MySQL5InnoDBDialect</prop>
+			<prop key="hibernate.show_sql" >true</prop>
+			<prop key="hibernate.format_sql" >true</prop>
+		</props>
+	</property>
+	<!-- 引入orm元数据，读取hibernate映射配置文件 不加*号会找不到这个文件所以需要加星号匹配 -->
+	<!--<property name="mappingDirectoryLocations" value="classpath*:/com/leo/bos/domain"></property>--> 
+	<property name="mappingLocations"> 
+	    <value>classpath:/com/leo/bos/domain/*.hbm.xml </value> 
+	</property>
+</bean>
+<!--使用注解的方式配置事务管理-->
+<tx:annotation-driven/>
+<!-- 开启组件扫描-->
+<context:component-scan base-package="com.leo.bos.*"></context:component-scan>
+<!-- 支持spring注解   dao:@Repository;service:@Service;控制层：@Controller;通用的主键扫描：@Component-->
+<context:annotation-config></context:annotation-config>
+
+<!-- 注册crm客户端的代理对象 
+	<jaxws:client id="crmClient" serviceClass="com.leo.crm.service.impl.CustomerService" address="http://localhost:8080/ssh_Crm/service/customer">
+		
+	</jaxws:client>-->
+
+<!-- 注册realm -->
+	<bean id="bosRealm" class="com.leo.bos.realm.BOSRealm"></bean>
+	<!-- 注入安全管理器 -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="bosRealm"></property>
+		<property name="cacheManager" ref="cacheManager"></property>
+	</bean>
+	<!-- 注册缓存管理器 -->
+	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+		<property name="cacheManagerConfigFile" value="classpath:ehcache.xml"></property>
+	</bean>
+<!-- 引入filter提供的工厂然后交给spring -->
+<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean"> 
+	<!-- 注入安全管理对象 -->
+	<!-- 
+	securityManager：这个属性是必须的。
+	loginUrl ：没有登录的用户请求需要登录的页面时自动跳转到登录页面，不是必须的属性，
+	不输入地址的话会自动寻找项目web项目的根目录下的”/login.jsp”页面。
+	successUrl ：登录成功默认跳转页面，不配置则跳转至”/”。如果登陆前点击的一个需要登录的页面，
+	则在登录自动跳转到那个需要登录的页面
+	unauthorizedUrl ：没有权限默认跳转的页面
+	 -->
+	<property name="securityManager" ref="securityManager"></property>
+	<property name="loginUrl" value="/login.jsp"></property>
+	<property name="successUrl" value="/index.jsp"></property>
+	<property name="unauthorizedUrl" value="unauthrized.jsp"></property>
+	<!-- 注入url拦截规则 
+		/css/**:css/.../...=anon就是匿名可以访问
+		=perms["staff"]：检查是否有这个权限，
+		/admins/user/**=authc表示需要认证(登录)才能使用，没有参数：但是现在
+		用shiro来判断时struts中的配置就不行了
+	-->
+	<property name="filterChainDefinitionMap">
+		<value>
+			/css/**=anon
+			/js/**=anon
+			/images/**=anon
+			/validatecode.jsp*=anon
+			/login.jsp*=anon
+			/userAction_login.action=anon
+			/page_base_staff.action=perms["staff"]
+			/*=authc
+		</value>
+	</property>
+</bean>	
+<!-- 开启shiro的注解
+	用法：@RequiresPermissions("staff-delete")
+ -->
+<bean id="defaultAdvisorAutoProxyCreator"
+		class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">
+	<!-- 强制使用cglib创建Action的代理对象
+	如果用jdk的代理对象则不能使用
+	 -->
+	<property name="proxyTargetClass" value="true"></property>
+</bean>
+<!-- 切面类  用于创建代理对象，通知-->
+<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor"></bean>
+<!-- quartz定时任务 -->
+	<!-- 注册自定义作业类 -->
+	<bean id="myJob" class="com.leo.bos.jobs.MailJob"></bean>
+	<!-- 配置jobdetail任务详情 -->
+	<bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<!-- 注入目标对象 -->
+		<property name="targetObject" ref="myJob"></property>
+		<!-- 注入木目标方法 value:方法名 -->
+		<property name="targetMethod">
+			<value>run</value>
+		</property>
+	</bean>
+	<!-- 配置触发器  这是原来配置有问题路径不正确-->
+	<bean id="myTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<!-- 注入任务详情对象 -->
+		<property name="jobDetail" ref="jobDetail"></property>
+		<!-- 注入cron表达式，通过这个表单指定的触发的时间-->
+		<property name="cronExpression" value="0/5 * * * * ?"></property>
+	</bean>
+	<!--配置调度工厂 -->
+	<bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<!-- 注入触发器 -->
+		<property name="triggers">
+				<list>
+					<ref bean="myTrigger"/>
+				</list>
+		</property>
+	</bean>
+</beans>
+

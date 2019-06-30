@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <style>
+        .layui-table-view {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        tr td:nth-child(4) div {
+            overflow: visible;
+        }
+    </style>
+</head>
+<body class="layui-layout-body">
+    <div class="layui-row">
+        <div class="layui-col-md2" style=" border: 1px solid #e6e6e6;overflow: auto;">
+            <ul id="pcateul"></ul>
+        </div>
+        <div class="layui-col-md10" style="float: right">
+            <table id="pcate" class="layui-hide"></table>
+        </div>
+    </div>
+</body>
+<script src="../layui/layui.js"></script>
+<script type="text/html" id="zizeng">
+    {{d.LAY_TABLE_INDEX+1}}
+</script>
+<script type="text/html" id="toolbarDemo">
+    <form class="layui-form layui-form-pane">
+        <div class="layui-form-item" style="margin-bottom: 0">
+            <div class="layui-inline">
+                <button lay-event="addperson" type="button" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe654;</i></button>
+            </div>
+        </div>
+    </form>
+</script>
+<script type="text/html" id="barDemo">
+    <div class="layui-inline">
+        <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">
+            <i class="layui-icon layui-icon-edit"></i>
+            编辑
+        </a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">
+            <i class="layui-icon layui-icon-delete"></i>
+            删除
+        </a>
+    </div>
+</script>
+<script>
+    layui.use(['element', 'jquery', 'table', 'form', 'tree'], function() {
+        var element = layui.element;
+        var $ = layui.jquery;
+        var table = layui.table;
+        var form = layui.form;
+        var tree = layui.tree;
+
+        // tree({
+        //     elem: '#pcateul',
+        //     node
+        // });
+
+        window.onresize = function() {
+            $('#pcateul').css({'height': $('.layui-form').height()});
+            $('#pcateul').css({'width': $('#pcateul').width()});
+        };
+
+        table.render({
+            elem: '#pcate',
+            url: '/pcate/list',
+            height: 'full-0',
+            toolbar: '#toolbarDemo',
+            page: true,
+            cols: [[
+                {width: 60, title: '序号',fixed: 'left',templet:'#zizeng', type: 'numbers'},
+                {field: 'name', title: '分类名'},
+                {field: 'pname', title: '父级分类名'},
+                {fixed: 'right', align:'left', toolbar: '#barDemo'}
+
+
+                // {fixed: 'left', type:'checkbox'},
+                // {width:60, title: '编号',templet:'#zizeng', type: 'numbers', totalRowText: '合计：'},
+                // {field: 'start', title: '出发站', width: 120},
+                // {field: 'end', title: '目的站', width: 120},
+                // {field: 'train', title: '车次', width: 120},
+                // {field: 'tdate', title: '乘车日期', width: 100},
+                // {field: 'person', title: '成员', width: 110},
+                // {field: 'sum', title: '人数', width: 70, totalRow: true},
+                // {field: 'degree', title: '完成度', width: 90},
+                // {field: 'price', title: '总票价', width: 85, totalRow: true},
+                // {field: 'addtime', title: '下单时间', width: 145},
+                // {field:'operator', title: '操作员', width: 130},
+                // {field:'company', title: '公司', width: 170},
+                // {fixed: 'right', align:'left', toolbar: '#barDemo'}
+            ]],
+            size: 'sm',
+            done: function() {
+                // console.log(table);
+                var data = table.cache.pcate;
+                //数据进行父节点层级加工
+                var nodes = new Array();
+                var map = new Map();
+                for (var i = 0; i < data.length; i++) {
+
+                }
+                console.log(nodes);
+                $('#pcateul').css({'height': $('.layui-form ').height()});
+                $('#pcateul').css({'width': $('#pcateul').width()});
+                tree({
+                    elem: '#pcateul',
+                    nodes: [{
+                        name: '父节点1',
+                        children: [{
+                            name: '子节点11',
+                            children: null
+                        }, {
+                            name: '子节点12'
+                        }]
+                    }, {
+                        name: '父节点2',
+                        children: [{
+                            name: '子节点21'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }, {
+                            name: '子节点22'
+                        }]
+                    }]
+                });
+            }
+        });
+    });
+</script>
+</html>

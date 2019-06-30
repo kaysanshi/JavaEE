@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd ">
+
+<!-- 指定spring读取db.properties配置 -->
+<context:property-placeholder location="classpath:db.properties"  />
+
+<!-- 1.将连接池 -->
+<bean name="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" >
+	<property name="jdbcUrl" value="${jdbc.jdbcUrl}" ></property>
+	<property name="driverClass" value="${jdbc.driverClass}" ></property>
+	<property name="user" value="${jdbc.user}" ></property>
+	<property name="password" value="${jdbc.password}" ></property>
+</bean>
+<!-- mybatis工厂 -->
+<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<property name="dataSource" ref="dataSource"></property>
+	<!-- 核心的配置的文件 -->
+	<property name="configLocation" value="classpath:sqlMapConfig.xml"></property>
+</bean>
+<!--使用mapper动态代理  扫描的方式：-->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"> 
+		<!-- 指定基本包  在这里dao层的接口相当于动态代理mapper-->
+		<property name="basePackage" value="com.leo.springmvc.dao"></property>
+	</bean>
+<!--注解事务,封装了所有事务操作. 依赖于连接池 -->
+<bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" >
+	<property name="dataSource" ref="dataSource" ></property>
+</bean>
+<!-- 开启使用注解管理aop事务 -->
+<tx:annotation-driven transaction-manager="transactionManager"/>
+<!-- 注入bean -->
+<bean id="itemService" class="com.leo.springmvc.service.impl.ItemServiceImpl">
+	<property name="itemdao" ref="itemdao"></property>
+</bean>
+
+<bean id="itemdao" class="com.leo.springmvc.dao.impl.ItemDaoImpl">
+	<property name="sqlSessionFactory" ref="sqlSessionFactoryBean"></property>
+</bean>
+</beans>

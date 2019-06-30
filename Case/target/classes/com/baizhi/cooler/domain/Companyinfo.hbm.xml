@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 2018-11-3 16:12:46 by Hibernate Tools 5.3.0.Beta2 --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="case_baizhi" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.baizhi.cooler.domain.Companyinfo" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="companyinfo">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <many-to-one class="com.baizhi.cooler.domain.Admin" embed-xml="true" fetch="select" insert="true" name="admin" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="adduser"/>
+        </many-to-one>
+        <property generated="never" lazy="false" name="name" optimistic-lock="true" type="string" unique="false">
+            <column name="name"/>
+        </property>
+        <property generated="never" lazy="false" name="address" optimistic-lock="true" type="string" unique="false">
+            <column name="address"/>
+        </property>
+        <property generated="never" lazy="false" name="phone" optimistic-lock="true" type="string" unique="false">
+            <column name="phone"/>
+        </property>
+        <property generated="never" lazy="false" name="fax" optimistic-lock="true" type="string" unique="false">
+            <column name="fax">
+                <comment>����</comment>
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="linkman" optimistic-lock="true" type="string" unique="false">
+            <column name="linkman"/>
+        </property>
+        <property generated="never" lazy="false" name="telepbone" optimistic-lock="true" type="string" unique="false">
+            <column name="telepbone"/>
+        </property>
+        <property generated="never" lazy="false" name="email" optimistic-lock="true" type="string" unique="false">
+            <column name="email"/>
+        </property>
+        <property generated="never" lazy="false" name="url" optimistic-lock="true" type="string" unique="false">
+            <column name="url">
+               
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="qq" optimistic-lock="true" type="string" unique="false">
+            <column name="qq"/>
+        </property>
+        <property generated="never" lazy="false" name="addtime" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="addtime"/>
+        </property>
+    </class>
+</hibernate-mapping>

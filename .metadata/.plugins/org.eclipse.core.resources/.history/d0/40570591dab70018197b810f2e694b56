@@ -1,0 +1,42 @@
+package com.leo.bos.web.action;
+
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+
+import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ModelDriven;
+
+
+/**
+ * 
+ * @author leoi555
+ *
+ */
+public class  BaseAction<T> extends ActionSupport implements ModelDriven<T>{
+	//模型对象
+	private T model;
+	
+	@Override
+	public T getModel() {
+		// TODO Auto-generated method stub
+		return model;
+	}
+	//构造方法中获得实体类的类型用过反射创建model对象
+	public BaseAction() {
+		//获得当前类型的父类
+		ParameterizedType genericSuperclass=(ParameterizedType)this.getClass().getGenericSuperclass();
+		//获得运行期的泛型类型
+		//返回值为数组类型的，最后再取出
+		Type[] actualTypeArguments = genericSuperclass.getActualTypeArguments();
+		Class<T> clazz = (Class<T>)actualTypeArguments[0];
+		//通过反射创建对象：
+			try {
+				model=clazz.newInstance();
+			} catch (InstantiationException | IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+	}
+
+}

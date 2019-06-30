@@ -1,0 +1,10 @@
+package cn.qfengx.portal.mapper;
+
+import java.util.List;
+
+import cn.qfengx.portal.bean.Productcate;
+
+public interface ProductcateMapper {
+
+	public List<Productcate> queryAll();
+}

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.leo.course.scheduling.mapper.StudentMapper">
+ 	<insert id="add" parameterType="com.leo.course.scheduling.domain.Student">
+ 		insert into student(number,name,sex,iccode,classid,image,addtime) 
+ 					values(#{number},#{name},#{sex},#{iccode},#{classid},#{image},#{addtime})
+ 					
+ 	</insert>
+ 	<select id="selectCount" resultType="java.lang.Integer">
+		select count(*) from student
+	</select>
+	<select id="getPageQueryList" resultType="com.leo.course.scheduling.domain.Student" parameterType="com.leo.course.scheduling.utils.PageBean">
+		select id,number,name,sex,iccode,classid,image,addtime from student where id limit #{currentPage},#{pageSize}
+	</select>
+	<update id="update" parameterType="com.leo.course.scheduling.domain.Student">
+
+	</update>
+	<select id="getStudentList" resultType="com.leo.course.scheduling.domain.Student" >
+		select id,number,name,sex,iccode,classid,image,addtime from student
+	</select>
+ </mapper>

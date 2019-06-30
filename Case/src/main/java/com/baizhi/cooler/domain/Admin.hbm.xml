@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 2018-11-3 16:12:46 by Hibernate Tools 5.3.0.Beta2 --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="case_baizhi" dynamic-insert="false" dynamic-update="false" mutable="true" name="com.baizhi.cooler.domain.Admin" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="admin">
+        <id name="id" type="string">
+            <column name="id"/>
+            <generator class="assigned"/>
+        </id>
+        <property  name="username"  type="string" unique="false">
+            <column name="username"/>
+        </property>
+        <property name="password"  type="string" unique="false">
+            <column name="password"/>
+        </property>
+        <property  name="gender"  type="string" unique="false">
+            <column name="gender"/>
+        </property>
+        <property name="telephone"  type="string" unique="false">
+            <column name="telephone"/>
+        </property>
+        <property  name="position" type="string" unique="false">
+            <column name="position"/>
+        </property>
+        <set  fetch="select" inverse="true" lazy="true" mutable="true" name="products" table="product">
+            <key on-delete="noaction">
+                <column name="pic_adduser"/>
+            </key>
+            <one-to-many class="com.baizhi.cooler.domain.Product" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="caseinfos" optimistic-lock="true" sort="unsorted" table="caseinfo">
+            <key on-delete="noaction">
+                <column name="upload_id"/>
+            </key>
+            <one-to-many class="com.baizhi.cooler.domain.Caseinfo" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="companyinfos" optimistic-lock="true" sort="unsorted" table="companyinfo">
+            <key on-delete="noaction">
+                <column name="adduser"/>
+            </key>
+            <one-to-many class="com.baizhi.cooler.domain.Companyinfo" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="newses" optimistic-lock="true" sort="unsorted" table="news">
+            <key on-delete="noaction">
+                <column name="adduser"/>
+            </key>
+            <one-to-many class="com.baizhi.cooler.domain.News" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>

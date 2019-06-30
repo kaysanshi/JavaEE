@@ -1,0 +1,5 @@
+package cn.qfengx.portal.bean;
+
+public class Banner {
+	
+}

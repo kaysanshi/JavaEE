@@ -1,0 +1,7 @@
+package cn.qfengx.portal.service.impl;
+
+import cn.qfengx.portal.service.UserService;
+
+public class UserServiceImpl implements UserService {
+
+}

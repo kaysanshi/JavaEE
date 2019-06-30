@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2018-10-9 18:00:39 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.leo.bos.domain.BcStaff" table="bc_staff" catalog="bos">
+        <id name="id" type="string">
+            <column name="id" length="32" />
+            <generator class="assigned" />
+        </id>
+        <property name="name" type="string">
+            <column name="name" length="20" />
+        </property>
+        <property name="telephone" type="string">
+            <column name="telephone" length="20" />
+        </property>
+        <property name="haspda" type="java.lang.Character">
+            <column name="haspda" length="1">
+                <comment>&#202;&#199;&#183;&#241;&#211;&#208;pda</comment>
+            </column>
+        </property>
+        <property name="deltag" type="java.lang.Character">
+            <column name="deltag" length="1">
+                <comment>&#215;&#247;&#183;&#207;&#177;&#234;&#188;&#199;</comment>
+            </column>
+        </property>
+        <property name="station" type="string">
+            <column name="station" length="40">
+                <comment>&#203;&#249;&#202;&#244;&#181;&#165;&#206;&#187;</comment>
+            </column>
+        </property>
+        <property name="standard" type="string">
+            <column name="standard" length="100">
+                <comment>&#202;&#213;&#197;&#201;&#177;&#234;&#215;&#188;</comment>
+            </column>
+        </property>
+        <set name="qpWorkbills" table="qp_workbill" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="staff_id" length="32" />
+            </key>
+            <one-to-many class="com.leo.bos.domain.QpWorkbill" />
+        </set>
+        <set name="qpNoticebills" table="qp_noticebill" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="staff_id" length="32" />
+            </key>
+            <one-to-many class="com.leo.bos.domain.QpNoticebill" />
+        </set>
+        <set name="bcDecidedzones" table="bc_decidedzone" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="staff_id" length="32" />
+            </key>
+            <one-to-many class="com.leo.bos.domain.BcDecidedzone" />
+        </set>
+    </class>
+</hibernate-mapping>

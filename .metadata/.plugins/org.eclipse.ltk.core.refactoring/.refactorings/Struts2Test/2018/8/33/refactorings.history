@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;struts.xml&apos; to &apos;Maven/src/main/resources&apos;&#x0D;&#x0A;- Original project: &apos;Struts2Test&apos;&#x0D;&#x0A;- Destination element: &apos;Maven/src/main/resources&apos;&#x0D;&#x0A;- Original element: &apos;struts.xml&apos;" description="Copy file" destination="=Maven/src\/main\/resources" element1="src/struts.xml" files="1" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1534598012887" units="0" version="1.0"/>
+</session>

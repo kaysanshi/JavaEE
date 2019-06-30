@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<!--支持国产浏览器的高速渲染-->
+		<meta name="renderer" content="Webkit">
+		<title>首页</title>
+		<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="fonts/iconfont.css">
+		<script src="js/adapter.js"></script>
+		<!--rem适配js-->
+		<link rel="stylesheet" href="css/index.css">
+		<style type="text/css">
+			a {
+				color: #000000;
+			}
+
+			a:hover {
+				text-decoration: none;
+				color: coral;
+			}
+		</style>
+	</head>
+	<script src="js/jquery-1.11.0.min.js"></script>
+	<script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+
+	<body>
+		<div id="banner">
+			<nav class="navbar navbar-default  navbar-fixed-top" role="navigation">
+				<div class="container">
+					<div class="container-fluid">
+						<div class="navbar-header">
+							<a class="navbar-brand" href="index.html" float="right">首页</a>
+
+						</div>
+						<div>
+							<ul class="nav nav-pills nav-justified">
+								<li class="dropdown  title_link">
+									<a class="dropdown-toggle" data-toggle='dropdown' href="news.html">
+										<span class="title">留学咨询</span>
+										<span class="caret"></span>
+									</a>
+									<ul class="dropdown-menu">
+										<li><a href="application_procedures.html">留学申请</a></li>
+										<li><a href="escort_project">护航项目</a></li>
+									</ul>
+								</li>
+								<li class="dropdown  title_link">
+									<a class="dropdown-toggle" data-toggle='dropdown' href="news.html">
+										<span class="title">研究性学习项目</span>
+										<span class="caret"></span>
+									</a>
+									<ul class="dropdown-menu">
+										<li><a href="PBL.html">什么是PBL ?</a></li>
+										<li><a href="data_science.html">数据科学</a></li>
+										<li><a href="environmental_science.html">环境科学</a></li>
+										<li><a href="finance.html">行为金融学</a></li>
+										<li><a href="computer_program.html">计算机编程</a></li>
+									</ul>
+								</li>
+								<li class="dropdown  title_link" target="_top">
+									<a href="news.html" class="dropdown-toggle" data-toggle='dropdown'>
+										<span class="title">托福课程</span>
+										<span class="caret"></span>
+									</a>
+									<ul class="dropdown-menu">
+										<li><a href="toefl_speaking.html">托福口语</a></li>
+										<li><a href="toefl_writing.html">托福写作</a></li>
+									</ul>
+								</li>
+								<li class="title_link">
+									<a href="tofel_precourse.html">
+										<span class="title">托福预备课程</span>
+									</a>
+								</li>
+								<li class="title_link">
+									<a href="contect.html">
+										<span class="title">联系我们</span>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</nav>
+		</div>
+
+		<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="2000">
+			<!-- 轮播（Carousel）指标 -->
+			<ol id='s1' class="carousel-indicators">
+				<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+				<li data-target="#myCarousel" data-slide-to="1"></li>
+				<li data-target="#myCarousel" data-slide-to="2"></li>
+			</ol>
+			<!-- 轮播（Carousel）项目 -->
+			<div class="carousel-inner" id="lunbo">
+				<div class="item active">
+					<img src="images/02.png" alt="First slide">
+				</div>
+				<div class="item">
+					<img src="images/03.jpg" alt="Second slide">
+				</div>
+				<div class="item">
+					<img src="images/02.png" alt="Third slide">
+				</div>
+			</div>
+			<!-- 轮播（Carousel）导航 -->
+			<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+				<span class="glyphicon " aria-hidden="true"></span>
+				<span class="sr-only">Previous</span>
+			</a>
+			<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+				<span class="glyphicon " aria-hidden="true"></span>
+				<span class="sr-only">Next</span>
+			</a>
+		</div>
+
+		<!--放置中间的-->
+		<div id="contentbox">
+			<div class="container">
+				<div id="about-berry" style="text-align: left; width: 100%; border-top: 1px solid #EBEBEB;">
+				<h3 style="color: coral; font-size: 30px;">项目背景</h3>
+
+				<ul style="font-size: 25px;text-align: left">
+					<li>近二十年来，从互联网络到人工智能，任何一次技术革命都离不开计算机。</li>
+					<li>编程已不再是计算机从业人员的专利，而已广泛的应用在金融，物理，生物等各个领域。</li>
+					<li>乔布斯：在这个国家任何人都应该学习电脑编程，因为它将教会你如何思考。</li>
+				</ul>
+			</div>
+
+			<div id="about-berry" style="text-align: left; width: 100%; border-top: 1px solid #EBEBEB;">
+				<h3 style="color: coral; font-size: 30px;">教学目标</h3>
+				<ul style="font-size: 25px;text-align: left">
+					<li>本次研究项目将由导师指导，学生独立完成:</li>
+				</ul>
+				<ol type="1" style="font-size: 25px;text-align: left">
+					<li>阅读网页设计及计算机科学相关论文，撰写摘要;</li>
+					<li>学习HTML + CSS编程语言，建立编程思维;</li>
+					<li>设计个性化项目，制作网页;</li>
+					<li>展示个人项目，撰写不少于3页的项目报告(项目和报 告可以用于留学申请)</li>
+				</ol>
+			</div>
+			<div id="about-berry" style="text-align: left; width: 100%;  border-top: 1px solid #EBEBEB;">
+				<h3 style="color: coral; font-size: 30px;">招募对象</h3>
+				<ol type="1" style="font-size: 25px;text-align: left">
+					<li>有到美国(或海外)深造计划，有意参与课外活动提升背景能力的学生;</li>
+					<li>对经济学，金融学，社会学，心理学，理科/商科交叉科 学感兴趣的学生</li>
+					<li>每周有2-4个小时可以投入到此项目</li>
+					<li>有一定的英语交流能力，参与过托福，SAT，ACT考试的优先</li>
+				</ol>
+			</div>
+
+			<div id="about-berry" style="text-align: left; width: 100%;  border-top: 1px solid #EBEBEB;">
+				<h3 style="color: coral; font-size: 30px;">更多信息</h3>
+				<a href="contact.html" style="font-size: 25px">请联系我们</a>
+			</div>
+		</div>
+	</div>
+
+
+		<!--底部-->
+		<footer class="main-footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="widget">
+							<h4 class="title">站内导航</h4>
+							<div class="content tag-cloud">
+								<a href="index.html">留学咨询</a>
+								<a href="engerner.html">托福课程</a>
+								<a href="news.html">研究性项目</a>
+								<a href="product.html">托福预备课程</a>
+								<a href="contect.html">联系我们</a>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="widget">
+							<h4 class="title">Copyright(c)</h4>
+							<div class="content tag-cloud">
+								Copyright (c) 2019 (<a href="https://codepen.io/2018yzhang/pen/VBGQaw">https://codepen.io/2018yzhang/pen/VBGQaw</a>)
+								Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+								documentation files (the "Software"), to deal in the Software without restriction, including without limitation
+								the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+								and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+								The above copyright notice and this permission notice shall be included in all copies or substantial portions
+								of the Software.
+								THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+								TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+								THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+								CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+								DEALINGS IN THE SOFTWARE
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</footer>
+	</body>
+
+</html>

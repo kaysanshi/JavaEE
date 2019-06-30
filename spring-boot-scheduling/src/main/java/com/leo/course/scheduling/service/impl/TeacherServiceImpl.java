@@ -1,0 +1,167 @@
+package com.leo.course.scheduling.service.impl;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.leo.course.scheduling.domain.Department;
+import com.leo.course.scheduling.domain.Teacher;
+import com.leo.course.scheduling.mapper.TeacherMapper;
+import com.leo.course.scheduling.service.TeacherService;
+import com.leo.course.scheduling.utils.PageBean;
+/**
+ * 
+ * @author kay三石
+ *TODO
+ *2019年3月9日-下午1:55:23
+ */
+@Service("TeacherServiceImpl")
+@Transactional
+public class TeacherServiceImpl implements TeacherService {
+	
+	@Autowired
+	private TeacherMapper teacherMapper;
+	@Autowired
+	private PageBean pageBean;
+	@Override
+	public Map<String, Object> add(Teacher teacher) {
+		// TODO Auto-generated method stub
+		Map<String, Object> map=new HashMap<>();
+		if (teacherMapper.add(teacher)>0) {
+			map.put("code", "0");
+			map.put("msg", "添加成功");
+			map.put("data", null);
+		}else {
+			map.put("code", "1");
+			map.put("msg", "添加失败");
+			map.put("data", null);
+		}
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> list(Integer page, Integer limit, HttpServletRequest request,
+			HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		//设置开始当前页
+				pageBean.setCurrentPage((page-1)*limit);
+				//设置每页页大小
+				pageBean.setPageSize(limit);
+				//查询总的记录数
+				int totalCount=teacherMapper.selectCount();
+				System.out.println("总的记录数："+totalCount);
+				//设置总页数
+				pageBean.setTotal(totalCount);
+				//分页
+				//
+				List<Teacher> listdata=teacherMapper.getPageQueryList(pageBean);
+				pageBean.setRows(listdata);
+				System.out.println("数据"+listdata);
+				Map<String, Object> map=new HashMap<>();
+				if (!listdata.isEmpty()) {
+					map.put("code", "0");
+					map.put("msg", "获取成功");
+					map.put("count", pageBean.getTotal());
+					map.put("rows", pageBean.getRows());
+					map.put("data", listdata);
+					return map;
+				}else {
+					map.put("msg", "获取失败");
+					map.put("code", "0");
+					map.put("data", null);
+					return map;
+				}
+	}
+
+	@Override
+	public Map<String, Object> update(Teacher teacher) {
+		// TODO Auto-generated method stub
+		Map<String, Object> map=new HashMap<>();
+		if (teacherMapper.update(teacher)>0) {
+			map.put("code", "0");
+			map.put("msg", "修改成功");
+			map.put("data", null);
+		}else {
+			map.put("code", "1");
+			map.put("msg", "修改失败");
+			map.put("data", null);
+		}
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> listteacher(HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		List<Teacher> listdata=teacherMapper.getteacherList();
+		Map<String, Object> map=new HashMap<>();
+		if (!listdata.isEmpty()) {
+			map.put("code", "0");
+			map.put("msg", "获取成功");
+			map.put("data", listdata);
+			return map;
+		}else {
+			map.put("msg", "获取失败");
+			map.put("code", "0");
+			map.put("data", null);
+			return map;
+		}
+	}
+
+	@Override
+	public Map<String, Object> getTeacherByid(Teacher teacher, HttpServletRequest request,
+			HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		Teacher listdata=teacherMapper.getTeacherByid(teacher);
+		System.out.println(listdata);
+		Map<String, Object> map=new HashMap<>();
+		if (listdata!=null) {
+			map.put("code", "0");
+			map.put("msg", "获取成功");
+			map.put("data", listdata);
+			return map;
+		}else {
+			map.put("msg", "获取失败");
+			map.put("code", "0");
+			map.put("data", null);
+			return map;
+		}
+	}
+
+	@Override
+	public List<Teacher> getListTeacherName() {
+		// TODO Auto-generated method stub
+		List<Teacher> listdata=teacherMapper.getListTeacherName();
+		System.out.println("::"+listdata);
+		if (!listdata.isEmpty()) {
+			return listdata;
+		}else {
+			return null;
+		}
+	}
+
+	@Override
+	public List<Teacher> getListTeacherbyListId(List<Integer> teacherid) {
+		// TODO Auto-generated method stub
+		List<Teacher> list=new ArrayList<>();
+		for(int i=0;i<teacherid.size();i++) {
+			list.add(teacherMapper.getTeacherByListid(teacherid.get(i)));
+		}
+		if (list.isEmpty()) {
+			return null;
+					
+		}else {
+			return list;
+		}
+	}
+}

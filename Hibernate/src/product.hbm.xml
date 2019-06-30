@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+ "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">  
+<Hibenate-mapping>
+		<class name="com.leo.bean.Product" table="product">
+			<id name="id" type="int" column="id">
+				<generator class="native"></generator>
+			</id>
+			<proterty name="name" type="String" column="name"></proterty>
+			<proterty name="price" type="Double" column="price"/>
+			<proterty name="factory" type="String" column="factory"/>
+			<proterty name="remark" type="String" column="remark"/>
+		</class>
+</Hibenate-mapping>

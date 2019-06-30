@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.leo.domain" >
+	<class name="IDcard" table="t_idcard" >
+		<id name="id"  column="id">
+			<generator class="foreign"><!--外键生成  -->
+				<param name="property">people</param>
+			</generator>
+		</id>
+		<property name="IDCode" column="IDcode"/>
+		<!--一对一主键映射  cascade=all.是级联操作这里为更新和删除-->
+		<one-to-one name="com.leo.domain.People" constrained="true"/>
+	</class>
+</hibernate-mapping>

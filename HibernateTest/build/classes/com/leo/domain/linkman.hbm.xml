@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    <!--  -->
+<hibernate-mapping package="com.leo.domain">
+	<class name="LinkMan" table="cust_linkman">
+	<!-- id映射主键属性name：填对应的属性名，column列名 -->
+		<id name="lkm_id"  >
+			<generator class="native"></generator>
+		</id>
+		<property name="lkm_gender"  ></property>
+		<property name="lkm_name"  ></property>
+		<property name="lkm_phone"  ></property>
+		<property name="lkm_email"  ></property>
+		<property name="lkm_qq"  ></property>
+		<property name="lkm_mobile"  ></property>
+		<property name="lkm_memo"  ></property>
+		<property name="lkm_position"  ></property>
+		<!-- 
+		fetch 决定加载的sql语句
+			select: 使用单表查询
+			join : 多表查询
+		lazy  决定加载时机
+			false: 立即加载
+			proxy: 由customer的类级别加载策略决定.
+			为了提高效率应选择select,lazy为true,使用默认值
+		 -->
+		 <!--级联操作：cascade=""  save-update:级联保存更新，delete：级联删除，all:级联删除和保存
+			操作性质：是数据的操作的简化
+			多对一的单向的操作，需要在持久化得类的外键中引入另一个表中的主键，
+			这是使用的是双向关联
+		  -->
+		  <!-- 在多的一方是不能够放弃维护关系的，外键字段是多的一方的列 -->	 
+		<many-to-one name="customer" column="lkm_cust_id" class="Customer" fetch="join" lazy="proxy"  >
+		</many-to-one>
+	</class>
+</hibernate-mapping>

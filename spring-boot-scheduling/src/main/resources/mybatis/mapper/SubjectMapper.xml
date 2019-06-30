@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.leo.course.scheduling.mapper.SubjectMapper">
+ 	<insert id="add" parameterType="com.leo.course.scheduling.domain.Subject">
+ 		insert into subject(subcode,subname,subcredit,subtype,majorno,subdescription,teacherid,subtime,addtime) 
+ 					values(#{subcode},#{subname},#{subcredit},#{subtype},#{majorno}#{subdescription},#{teacherid},#{subtime},#{addtime})
+ 					
+ 	</insert>
+ 	<select id="selectCount" resultType="java.lang.Integer">
+		select count(*) from subject
+	</select>
+	<select id="getPageQueryList" resultType="com.leo.course.scheduling.domain.Subject" parameterType="com.leo.course.scheduling.utils.PageBean">
+		select id,subcode,subname,subcredit,subtype,majorno,subdescription,teacherid,subtime,addtime from subject where id limit #{currentPage},#{pageSize}
+	</select>
+	<update id="update" parameterType="com.leo.course.scheduling.domain.Subject">
+
+	</update>
+	<select id="getListSubjectName" resultType="com.leo.course.scheduling.domain.Subject">
+		select sub.id,sub.subcode,sub.subname,sub.subcredit,sub.subtype,sub.majorno,sub.subdescription,sub.teacherid,sub.subtime,sub.addtime 
+				,teach.tereoff,teach.teachnumber,teach.name
+			from 
+					subject AS sub,teacher As teach 
+			where 
+					sub.teacherid=teach.id
+	</select>
+ </mapper>

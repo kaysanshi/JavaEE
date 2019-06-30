@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+  <system systemId="http://www.springframework.org/schema/beans/spring-beans.xsd" uri="file:///D:/SoftWare/lib/spring-framework-5.0.8.RELEASE/schema/beans/spring-beans.xsd"/>
+  <uri name="http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" uri="file:///D:/SoftWare/lib/hibernate-release-5.3.2.Final/project/hibernate-core/src/main/resources/org/hibernate/hibernate-mapping-3.0.dtd"/>
+  <uri name="http ://struts.apache.org/dtds/struts-2.5.dtd" uri="file:///D:/SoftWare/lib/struts-2.5.16-all/struts-2.5.16/src/core/src/main/resources/struts-2.5.dtd"/>
+</catalog>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;PinYin4jUtils.java&apos; to &apos;springboot-hotel/src/main/java/com.leo.hotel.utils&apos;&#x0D;&#x0A;- Original project: &apos;bos-parent&apos;&#x0D;&#x0A;- Destination element: &apos;springboot-hotel/src/main/java/com.leo.hotel.utils&apos;&#x0D;&#x0A;- Original element: &apos;PinYin4jUtils.java&apos;" description="Copy file" destination="=springboot-hotel/src\/main\/java&lt;com.leo.hotel.utils" element1="bos-utils/src/main/java/com/leo/bos/utils/PinYin4jUtils.java" files="1" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1543484381125" units="0" version="1.0"/>
+</session>

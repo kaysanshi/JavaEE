@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "http ://struts.apache.org/dtds/struts-2.5.dtd" "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+	<!-- 配置动态方法是否开启的常量 默认为false的-->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+	<package name="dynamic" extends="struts-default" namespace="/">
+	<!-- 动态方法调用 使用{1}取出方法通过*来匹配符好-->
+		<action name="DemoAction_*" class="com.leo.struts2.dynamic.DemoAction"
+				method="{1}">
+			<!--  result是默认为success；type:dispatcher;转发
+			class:默认为com.opensymphony.xwork2.ActionSupport;
+			-->
+			<result name="success">/struts/index.jsp</result>
+			 <allowed-methods>update,delete,add,find</allowed-methods>
+		</action>
+		
+	</package>
+</struts>

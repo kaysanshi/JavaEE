@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.leo.course.scheduling.mapper.DepartmentMapper">
+ 	<insert id="add" parameterType="com.leo.course.scheduling.domain.Department">
+ 		insert into department(depno,depname,majorno,majorname,addtime,flag) 
+ 					values(#{depno},#{depname},#{majorno},#{majorname},#{addtime},#{flag})
+ 					
+ 	</insert>
+ 	<select id="selectCount" resultType="java.lang.Integer">
+		select count(*) from department
+	</select>
+	<select id="getPageQueryList" resultType="com.leo.course.scheduling.domain.Department" parameterType="com.leo.course.scheduling.utils.PageBean">
+		select id,depno,depname,majorno,majorname,addtime,flag from department where id limit #{currentPage},#{pageSize}
+	</select>
+	<update id="update" parameterType="com.leo.course.scheduling.domain.Department">
+		update department set depno=#{depno},depname=#{depname},majorno=#{majorno},majorname=#{majorname},addtime=#{addtime},flag=#{flag} 
+			where id=#{id}
+	</update>
+	<select id="getDepartByname" resultType="com.leo.course.scheduling.domain.Department">
+		select depno,depname,majorno,majorname from department where flag='on'
+	</select>
+	<select id="getDepartByno" resultType="com.leo.course.scheduling.domain.Department" parameterType="com.leo.course.scheduling.domain.Department">
+		select depno,depname,majorno,majorname from department where flag='on'and majorno=#{majorno} and depno=#{depno}
+	</select>
+	<select id="getDepartNameByno" resultType="com.leo.course.scheduling.domain.Department" parameterType="com.leo.course.scheduling.domain.Department">
+		select depno,depname,majorno,majorname from department where flag='on'and  depno=#{depno}
+	</select>
+ </mapper>

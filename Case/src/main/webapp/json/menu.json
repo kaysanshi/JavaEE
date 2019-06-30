@@ -1,0 +1,9 @@
+[
+		{ "id":"11", "pId":"0", "name":"基本功能"},
+		{ "id":"112", "pId":"11", "name":"公司信息设置",  "page":"page_case_companyinfo_add.action"},
+		{ "id":"113", "pId":"11", "name":"新闻管理","page":"page_base_case.news.action"},
+		{ "id":"114", "pId":"11", "name":"产品信息管理", "page":"page_case_product.action"},
+		{ "id":"115", "pId":"11", "name":"工程案例管理","page":"page_case_case.action"},
+		{ "id":"116", "pId":"11", "name":"客户管理","page":"page_case_customer.action"}
+		
+]

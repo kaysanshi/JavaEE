@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leo.mapper.OrderMapper">
+	<select id="listOrder" resultType="com.leo.domain.Orders">
+			select id,user_id,number,createtime,note from orders
+	</select>
+	<!-- 使用Map  -->
+	<resultMap type="com.leo.domain.Orders" id="myMap">
+		<!-- 这个字段映射到哪个类型-->
+		<id column="id" property="id"/>
+		<result column="user_id" property="userId"/>
+	</resultMap>
+	<select id="listOrderByMap" resultMap="myMap">
+			select id,user_id,number,createtime,note from orders
+	</select>
+	
+	<!-- 一对一 -->
+	<!-- 使用Map 一对一映射 你要查出来的语句要都有指定的属性 -->
+	<resultMap type="com.leo.domain.Orders" id="orderMap">
+		<!-- 指定查出这个字段映射到哪个类型-->
+		<id column="id" property="id"/>
+		<result column="user_id" property="userId"/>
+		<result column="number" property="number"/>
+		<result column="createtime" property="createtime"/>
+		<result column="note" property="note"/>
+		<!-- 一对一 -->
+		<!-- association ：配置一对一属性 -->
+		<!-- property:order里面的User属性名 -->
+		<!-- javaType:属性类型-->
+		<association property="user" javaType="com.leo.domain.User">
+			<id  property="id" column="user_id"/>
+			<result column="username" property="username"/>
+		</association>
+	</resultMap>
+	<select id="selectOrders" resultMap="orderMap">
+			select 
+			 o.id,
+			 o.user_id,
+			 o.number,
+			 o.createtime,
+			 o.note, 
+			 u.username
+			from orders o
+			left join user u
+			on o.user_id = u.id
+	</select>
+	<!-- 一对多 -->
+	
+	<!-- 使用Map 一对一映射 你要查出来的语句要都有指定的属性 -->
+	<resultMap type="com.leo.domain.User" id="userMap">
+		<!-- 指定查出这个字段映射到哪个类型-->
+		<id column="id" property="id"/>
+		<id column="username" property="username"/>
+		<id column="sex" property="sex"/>
+		<id column="birthday" property="birthday"/>
+		<id column="address" property="address"/>
+		<!-- 一对多 -->
+		<collection property="orders"  javaType="list" ofType="com.leo.domain.Orders">
+			
+		</collection>
+	</resultMap>
+	<select id="selectUsers" resultMap="userMap">
+			select 
+			 o.id,
+			 o.user_id,
+			 o.number,
+			 o.createtime,
+			 o.note, 
+			 u.username
+			from user u
+			left join orders o
+			on o.user_id = u.id
+	</select>
+</mapper>

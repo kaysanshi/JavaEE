@@ -1,0 +1,42 @@
+*{
+	padding:0px;
+	margin:0px;
+	font-family: "微软雅黑";
+	font-size:14px;
+	list-style:none;
+}
+
+.body{
+	width:960px;
+	margin:auto;}
+.header .logo{
+	width:92px;
+	height:60px;
+	margin:40px 0px;
+}
+.content .login_img{
+	width:58%;
+	height:356px;
+	border: solid 1px;
+}
+.content .login_form{
+	width:38%;
+	height:356px;
+	border: solid 1px;
+}
+.content .login_form .login_user{
+	background-position:-600px -1000px;
+	background:url(../img/login/login_login_icon3.png) no-repeat;
+}
+.content .login_form .login_psd{
+	background:url(../img/login/login_login_icon4.png) no-repeat;
+}
+.content .login_form input{
+	width:220px;
+	height:40px;
+	margin-top:10px;
+	font-size:16px;
+}
+.content .login_form .forget_psd a{
+	
+}

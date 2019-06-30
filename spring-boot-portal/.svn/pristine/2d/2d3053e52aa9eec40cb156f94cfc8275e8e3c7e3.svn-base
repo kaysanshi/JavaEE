@@ -1,0 +1,11 @@
+package cn.qfengx.portal.service;
+
+import java.util.Map;
+
+import cn.qfengx.portal.bean.QueryVoProduct;
+
+public interface ProductService {
+
+	Map<String, Object> list(QueryVoProduct qvp);
+	
+}

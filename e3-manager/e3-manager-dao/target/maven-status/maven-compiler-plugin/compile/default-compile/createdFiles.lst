@@ -1,0 +1,11 @@
+com\leo\e3mall\mapper\ContentCategoryMapper.class
+com\leo\e3mall\mapper\ItemParamMapper.class
+com\leo\e3mall\mapper\OrderItemMapper.class
+com\leo\e3mall\mapper\ItemParamItemMapper.class
+com\leo\e3mall\mapper\ContentMapper.class
+com\leo\e3mall\mapper\ItemCatMapper.class
+com\leo\e3mall\mapper\ItemDescMapper.class
+com\leo\e3mall\mapper\OrderShippingMapper.class
+com\leo\e3mall\mapper\ItemMapper.class
+com\leo\e3mall\mapper\UserMapper.class
+com\leo\e3mall\mapper\OrderMapper.class

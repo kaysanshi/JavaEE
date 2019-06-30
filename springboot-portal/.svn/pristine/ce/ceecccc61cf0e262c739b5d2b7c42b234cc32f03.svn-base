@@ -1,0 +1,5 @@
+package cn.qfengx.portal.service;
+
+public interface UserService {
+
+}

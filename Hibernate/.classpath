@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="D:/SoftWare/mavenstorage/repository/org/hibernate/hibernate-core/5.3.3.Final/hibernate-core-5.3.3.Final.jar" sourcepath="E:/Java全集/Java基础视频/hibernate-release-5.3.2.Final.zip"/>
+	<classpathentry kind="lib" path="D:/SoftWare/mavenstorage/repository/org/jboss/logging/jboss-logging/3.3.2.Final/jboss-logging-3.3.2.Final.jar"/>
+	<classpathentry kind="lib" path="D:/SoftWare/mavenstorage/repository/javax/persistence/javax.persistence-api/2.2/javax.persistence-api-2.2.jar"/>
+	<classpathentry kind="lib" path="D:/SoftWare/mavenstorage/repository/org/javassist/javassist/3.23.1-GA/javassist-3.23.1-GA.jar"/>
+	<classpathentry kind="lib" path="D:/SoftWare/mavenstorage/repository/antlr/antlr/2.7.7/antlr-2.7.7.jar"/>
+	<classpathentry kind="lib" path="D:/SoftWare/mavenstorage/repository/org/jboss/spec/javax/transaction/jboss-transaction-api_1.2_spec/1.1.1.Final/jboss-transaction-api_1.2_spec-1.1.1.Final.jar"/>
+	<classpathentry kind="lib" path="D:/SoftWare/mavenstorage/repository/org/jboss/jandex/2.0.5.Final/jandex-2.0.5.Final.jar"/>
+	<classpathentry kind="lib" path="D:/SoftWare/mavenstorage/repository/com/fasterxml/classmate/1.3.4/classmate-1.3.4.jar"/>
+	<classpathentry kind="lib" path="D:/SoftWare/mavenstorage/repository/javax/activation/javax.activation-api/1.2.0/javax.activation-api-1.2.0.jar"/>
+	<classpathentry kind="lib" path="D:/SoftWare/mavenstorage/repository/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="D:/SoftWare/mavenstorage/repository/org/hibernate/common/hibernate-commons-annotations/5.0.4.Final/hibernate-commons-annotations-5.0.4.Final.jar"/>
+	<classpathentry kind="lib" path="D:/SoftWare/mavenstorage/repository/net/bytebuddy/byte-buddy/1.8.13/byte-buddy-1.8.13.jar"/>
+	<classpathentry kind="lib" path="D:/SoftWare/mavenstorage/repository/mysql/mysql-connector-java/5.0.5/mysql-connector-java-5.0.5.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

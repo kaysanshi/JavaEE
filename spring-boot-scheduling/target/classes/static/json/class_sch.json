@@ -1,0 +1,299 @@
+{
+	clazz:{
+		{
+			title:'计科161',
+			data:{
+					{
+			            {lesson: "C#", teacher: "李老师", room: "东1"},
+			            {lesson: "C#", teacher: "李老师", room: "东2"},
+			            {lesson: "C#", teacher: "李老师", room: "东1"},
+			            null
+			       	},
+			        {
+						{lesson: "java", teacher: "李老师", room: "东1"},
+			            {lesson: "C#", teacher: "李老师", room: "东3"},
+			            {lesson: "C#", teacher: "李老师", room: "东1"},
+			            null
+			        },
+			        {
+						{lesson: "java", teacher: "李老师", room: "东1"},
+			            {lesson: "C#", teacher: "李老师", room: "东3"},
+			            {lesson: "C#", teacher: "李老师", room: "东1"},
+			            null
+			        },
+			        null,
+			        {
+			       		{lesson: "java", teacher: "李老师", room: "东1"},
+			            {lesson: "C#", teacher: "李老师", room: "东3"},
+			            {lesson: "C#", teacher: "李老师", room: "东1"},
+			            null
+			        },
+			        null,
+			        null,
+				},
+			
+		},
+		{
+			title:'计科162',
+			data:{
+					{
+			            {lesson: "C#", teacher: "李老师", room: "东1"},
+			            {lesson: "C#", teacher: "李老师", room: "东2"},
+			            {lesson: "C#", teacher: "李老师", room: "东1"},
+			            null
+			       	},
+			        {
+						{lesson: "java", teacher: "李老师", room: "东1"},
+			            {lesson: "C#", teacher: "李老师", room: "东3"},
+			            {lesson: "C#", teacher: "李老师", room: "东1"},
+			            null
+			        },
+			        {
+						{lesson: "java", teacher: "李老师", room: "东1"},
+			            {lesson: "C#", teacher: "李老师", room: "东3"},
+			            {lesson: "C#", teacher: "李老师", room: "东1"},
+			            null
+			        },
+			        null,
+			        {
+			       		{lesson: "java", teacher: "李老师", room: "东1"},
+			            {lesson: "C#", teacher: "李老师", room: "东3"},
+			            {lesson: "C#", teacher: "李老师", room: "东1"},
+			            null
+			        },
+			        null,
+			        null,
+				},
+		
+		}
+	},
+	room:{
+		{
+			title:"东一",
+			data:{
+				{
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+				},
+				{
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},				
+				},
+				{
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},				
+				},
+				{
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					null,
+					null,
+				},
+				{
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					null,
+					null,
+				},
+				null,
+				null,
+			}
+		},
+		{
+			title:'东二',
+			data:{
+				{
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+				},
+				{
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},				
+				},
+				{
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},				
+				},
+				{
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					null,
+					null,
+				},
+				{
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					null,
+					null,
+				},
+				null,
+				null,			
+			}
+		},
+		{
+			title:'东三',
+			data:{
+				{
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+				},
+				{
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},				
+				},
+				{
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},				
+				},
+				{
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					null,
+					null,
+				},
+				{
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					{lesson:"C#",teacher:"李老师",clazz:'计科162'},
+					null,
+					null,
+				},
+				null,
+				null,			
+			}
+		}
+	},
+	teacher:{
+		{
+				title:"李老师",
+				data:{
+					{
+						{clazz:"计科171",lesson:"C#",room:"东1"},
+						{clazz:"计科161",lesson:"java",room:"东2"},
+						{clazz:"计科171",lesson:"C#",room:"东1"},
+						null,
+					},
+					{
+						{clazz:"计科171",lesson:"C#",room:"东1"},
+						{clazz:"计科161",lesson:"java",room:"东2"},
+						null,
+						null,				
+					},
+					{
+						{clazz:"计科171",lesson:"C#",room:"东1"},
+						{clazz:"计科161",lesson:"java",room:"东2"},
+						null,
+						null,				
+					},
+					{
+						null,
+						null,
+						null,
+						null,				
+					},
+					{
+						{clazz:"计科171",lesson:"C#",room:"东1"},
+						null,
+						null,	
+						null,			
+					},
+					null,
+					null,									
+				}
+		},
+		{
+				title:"张会临",
+				data:{
+					{
+						{clazz:"计科171",lesson:"C#",room:"东1"},
+						{clazz:"计科161",lesson:"java",room:"东2"},
+						{clazz:"计科171",lesson:"C#",room:"东1"},
+						null,
+					},
+					{
+						{clazz:"计科171",lesson:"C#",room:"东1"},
+						{clazz:"计科161",lesson:"java",room:"东2"},
+						null,
+						null,				
+					},
+					{
+						{clazz:"计科171",lesson:"C#",room:"东1"},
+						{clazz:"计科161",lesson:"java",room:"东2"},
+						null,
+						null,				
+					},
+					{
+						null,
+						null,
+						null,
+						null,				
+					},
+					{
+						{clazz:"计科171",lesson:"C#",room:"东1"},
+						null,
+						null,	
+						null,			
+					},
+					null,
+					null,									
+				}
+		},
+		{
+				title:"李老师",
+				data:{
+					{
+						{clazz:"计科171",lesson:"C#",room:"东1"},
+						{clazz:"计科161",lesson:"java",room:"东2"},
+						{clazz:"计科171",lesson:"C#",room:"东1"},
+						null,
+					},
+					{
+						{clazz:"计科171",lesson:"C#",room:"东1"},
+						{clazz:"计科161",lesson:"java",room:"东2"},
+						null,
+						null,				
+					},
+					{
+						{clazz:"计科171",lesson:"C#",room:"东1"},
+						{clazz:"计科161",lesson:"java",room:"东2"},
+						null,
+						null,				
+					},
+					{
+						null,
+						null,
+						null,
+						null,				
+					},
+					{
+						{clazz:"计科171",lesson:"C#",room:"东1"},
+						null,
+						null,	
+						null,			
+					},
+					null,
+					null,									
+				}
+		},
+			
+	}
+	
+		
+}

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.qfengx.portal.mapper.NewscateMapper">
+	<select id="queryAll" resultType="cn.qfengx.portal.bean.Newscate">
+		select 
+			*
+			from newscate
+	</select>
+	<select id="query" parameterType="cn.qfengx.portal.bean.NewsQueryVo" resultType="cn.qfengx.portal.bean.Newscate">
+		select id, pid, name from newscate
+			limit #{start}, #{limit}
+	</select>
+	<select id="querySum" parameterType="cn.qfengx.portal.bean.NewsQueryVo" resultType="Integer">
+		select count(*) from newscate
+	</select>
+	<select id="findById" parameterType="Integer" resultType="cn.qfengx.portal.bean.Newscate">
+		select * from newscate where id = #{value};
+	</select>
+	<insert id="add" parameterType="cn.qfengx.portal.bean.Newscate" useGeneratedKeys="true" keyProperty="id">
+		insert into newscate
+			(name, pid)
+			values (#{name}, #{pid})
+	</insert>
+	
+	<update id="update" parameterType="cn.qfengx.portal.bean.Newscate">
+		update newscate set name = #{name}, pid = #{pid}
+		where id = #{id}
+	</update>
+	
+	<delete id="delete" >
+		delete from newscate 
+		where id in (
+			<foreach collection="array" item="id" separator=",">
+				#{id}
+			</foreach>
+		)
+	</delete>
+</mapper>

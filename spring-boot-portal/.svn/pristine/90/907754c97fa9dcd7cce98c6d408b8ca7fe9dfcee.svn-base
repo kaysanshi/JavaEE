@@ -1,0 +1,36 @@
+package cn.qfengx.portal.service.impl;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import cn.qfengx.portal.bean.News;
+import cn.qfengx.portal.bean.NewsQueryVo;
+import cn.qfengx.portal.mapper.NewsMapper;
+
+@Transactional
+@Service("NewsServiceImpl")
+public class NewsServiceImpl implements cn.qfengx.portal.service.NewsService {
+
+	@Autowired
+	private NewsMapper newsMapper;
+	
+	@Override
+	public Map<String, Object> list(NewsQueryVo nvo) {
+		// TODO Auto-generated method stub
+		Map<String, Object> res = new HashMap<>();
+		nvo.setStart((nvo.getPage() - 1) * nvo.getLimit());
+		List<News> list = newsMapper.query(nvo);
+		int sum = newsMapper.querySum(nvo);
+		res.put("code", "0");
+		res.put("msg", "获取成功");
+		res.put("data", list);
+		res.put("count", sum);
+		return res;
+	}
+
+}

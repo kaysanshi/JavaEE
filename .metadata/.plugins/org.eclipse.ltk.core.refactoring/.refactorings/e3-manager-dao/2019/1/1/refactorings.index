@@ -1,0 +1,39 @@
+1546408005694	Rename resource 'BaseDictDao.xml'
+1546408295882	Copy file
+1546408335292	Copy file
+1546408369699	Rename resource 'CoItemCatDao.xml'
+1546408380637	Rename resource 'ContentCategoryDao.xml'
+1546408391725	Rename resource 'ContentDao.xml'
+1546408406360	Copy file
+1546408427020	Copy file
+1546408451243	Copy file
+1546408479973	Copy file
+1546408648413	Copy file
+1546408674787	Copy file
+1546408703109	Copy file
+1546408726679	Copy file
+1546408757692	Rename resource 'CoItemCatMapper.xml'
+1546409661311	Delete element
+1546413045561	Rename type 'TbContentCategoryExample'
+1546413085774	Rename type 'TbItemCatExample'
+1546413096914	Rename type 'TbItemDescExample'
+1546413106929	Rename type 'TbItemParamExample'
+1546413118308	Rename type 'TbItemParamItemExample'
+1546413129506	Rename type 'TbOrderExample'
+1546413143699	Rename type 'TbOrderItemExample'
+1546413154436	Rename type 'TbOrderShippingExample'
+1546413165499	Rename type 'TbUserExample'
+1546413319020	Move compilation units
+1546418768210	Rename type 'OrderDao'
+1546418787368	Rename type 'ItemDao'
+1546419062806	Rename type 'UserDao'
+1546419074639	Delete element
+1546419087999	Rename type 'OrederItemDao'
+1546419098457	Rename type 'OrderShippingDao'
+1546419110643	Rename type 'ItemParamItemDao'
+1546419118909	Rename type 'ItemParamDao'
+1546419132061	Rename type 'ItemDescDao'
+1546419144127	Rename type 'ItemCatDao'
+1546419154596	Rename type 'ContentDao'
+1546419161894	Rename type 'ContentCategoryDao'
+1546592493842	Rename type 'OrederItemMapper'

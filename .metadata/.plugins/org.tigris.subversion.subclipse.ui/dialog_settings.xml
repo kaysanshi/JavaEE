@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item value="" key="DirectorySelectionPage.lastParent_https://pc-201311301552/svn/taotao-test"/>
+	<item value="137" key="CommitDialog.location.y"/>
+	<item value="275" key="CommitDialog.location.x"/>
+	<item value="500" key="CommitDialog.weights.0"/>
+	<item value="" key="DirectorySelectionPage.lastParent_svn://39.105.4.254/repository"/>
+	<item value="500" key="CommitDialog.weights.1"/>
+	<item value="svn://39.105.4.254/repository" key="RepositorySelectionPage.lastRepository"/>
+	<item value="694" key="CommitDialog.size.y"/>
+	<item value="1370" key="CommitDialog.size.x"/>
+	<section name="CommitWizard">
+		<item value="500" key="VWeight2"/>
+		<item value="500" key="VWeight1"/>
+		<item value="false" key="ShowCompare"/>
+	</section>
+	<section name="SynchronizeResourceSelectionDialog">
+		<item value="" key="SynchronizeResourceSelectionDialog.STORE_WORKING_SETS"/>
+	</section>
+	<section name="IgnoreResourcesDialog">
+	</section>
+	<section name="NewLocationWizard">
+		<list key="ConfigurationWizardMainPage.STORE_URL_ID">
+			<item value="svn://39.105.4.254/repository"/>
+			<item value="svn://qfengx.cn/repository"/>
+			<item value="http://qfengx.cn/repository"/>
+			<item value="http://qfengx.cn/respository"/>
+			<item value="https://qfengx.cn/respository"/>
+		</list>
+	</section>
+</section>

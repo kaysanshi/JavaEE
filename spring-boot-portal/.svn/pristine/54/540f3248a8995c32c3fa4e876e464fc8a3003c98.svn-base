@@ -1,0 +1,64 @@
+package cn.qfengx.portal.controller;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import cn.qfengx.portal.bean.QueryVoProduct;
+import cn.qfengx.portal.service.ProductService;
+
+@Controller
+@RequestMapping("/p")
+public class ProductController {
+	
+	@Autowired
+	@Qualifier("ProductServiceImpl")
+	private ProductService productService;
+	
+	@RequestMapping("/list")
+	@ResponseBody
+	public Map<String, Object> list(QueryVoProduct qvp, 
+			HttpServletRequest req, HttpServletResponse resp) {
+		Map<String, Object> res = new HashMap<>();
+		return productService.list(qvp);
+	}
+	
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

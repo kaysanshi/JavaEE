@@ -1,0 +1,16 @@
+1535114467013	Delete element
+1535114472268	Delete element
+1535114477731	Delete element
+1535114487903	Delete elements
+1535114530004	Rename package 'com.leo.daomain'
+1535114659107	Rename resource 'applicationContext.xml'
+1535115048940	Rename package 'com.leo.domain'
+1535115080692	Rename package 'com.leo.dao'
+1535115413505	Rename resource 'springmvc-servlet.xml'
+1535115840411	Rename resource 'spring-mvc-servlet.xml'
+1535116128099	Delete element
+1535116162011	Rename package 'com.leo.controller'
+1535169871666	Move 'applicationContext.xml' to 'WEB-INF'
+1535170306293	Move file
+1535171300105	Move 'applicationContext.xml' to 'WEB-INF'
+1535177339550	Rename resource 'itemmapper.xml'

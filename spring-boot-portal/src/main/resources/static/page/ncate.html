@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <style>
+        .layui-table-view {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        tr td:nth-child(4) div {
+            overflow: visible;
+        }
+    </style>
+</head>
+<body class="layui-layout-body">
+<div class="layui-row">
+    <div class="layui-col-md2" style=" border: 1px solid #e6e6e6;overflow: auto;">
+        <ul id="ncateul"></ul>
+    </div>
+    <div class="layui-col-md10" style="float: right">
+        <table id="ncate" class="layui-hide" lay-filter="ncatetable"></table>
+    </div>
+</div>
+</body>
+<div id="divadd" style="display: none; padding: 10px">
+    <form class="layui-form layui-form-pane">
+        <div class="layui-form-item">
+            <label class="layui-form-label">父级分类</label>
+            <div class="layui-input-inline">
+                <select id="add-pcate">
+                    <option value="-1">无分类</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">分类名</label>
+            <div class="layui-input-inline">
+                <input type="text" id="add-name" required lay-verify="required" autocomplete="off" placeholder="请输入分类名" class="layui-input">
+            </div>
+        </div>
+    </form>
+</div>
+<script src="../layui/layui.js"></script>
+<script type="text/html" id="zizeng">
+    {{d.LAY_TABLE_INDEX+1}}
+</script>
+<script type="text/html" id="toolbarDemo">
+    <form class="layui-form layui-form-pane">
+        <div class="layui-form-item" style="margin-bottom: 0">
+            <div class="layui-inline">
+                <button lay-event="add" type="button" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe654;</i></button>
+            </div>
+            <div class="layui-inline" style="float: right">
+                <button id="refresh" lay-event="refresh" class="layui-btn layui-bg-blue layui-btn-sm" type="button"><i class="layui-icon">&#xe669;</i></button>
+            </div>
+        </div>
+    </form>
+</script>
+<script type="text/html" id="barDemo">
+    <div class="layui-inline">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">
+            编辑
+        </a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">
+            删除
+        </a>
+    </div>
+</script>
+<script>
+    layui.use(['element', 'jquery', 'table', 'form', 'tree'], function() {
+        var element = layui.element;
+        var $ = layui.jquery;
+        var table = layui.table;
+        var form = layui.form;
+        var tree = layui.tree;
+
+        window.onresize = function() {
+            $('#ncateul').css({'height': $('.layui-form').height()});
+            $('#ncateul').css({'width': $('#ncateul').width()});
+        };
+
+        table.render({
+            elem: '#ncate',
+            url: '/n/nlist',
+            height: 'full-0',
+            toolbar: '#toolbarDemo',
+            page: true,
+            id: 'tablencate',
+            cols: [[
+                {width: 60, title: '序号',fixed: 'left',templet:'#zizeng', type: 'numbers'},
+                {field: 'name', title: '分类名'},
+                {field: 'pname', title: '父级分类名'},
+                {fixed: 'right', align:'left', toolbar: '#barDemo'}
+            ]],
+            size: 'sm',
+            done: function() {
+                var data = table.cache.tablencate;
+                //数据进行父节点层级加工
+                var nodes = new Array();
+                var map = new Map();
+                for (var i = 0; i < data.length; i++) {
+
+                }
+                console.log(nodes);
+                $('#ncateul').css({'height': $('.layui-form ').height()});
+                $('#ncateul').css({'width': $('#ncateul').width()});
+
+
+            }
+        });
+      //判断浏览器大小方法
+	      function screen() {
+	          //获取当前窗口的宽度
+	  	    var width = $(window).width();
+	  	    if (width > 1200) {
+	  	        return 3;   //大屏幕
+	  	    } else if (width > 992) {
+	  	        return 2;   //中屏幕
+	  	    } else if (width > 768) {
+	  	        return 1;   //小屏幕
+	  	    } else {
+	  	        return 0;   //超小屏幕
+	  	    }
+	      }
+        //监听工具条
+        table.on('tool(ncatetable)', function(obj) {
+            var data = obj.data;
+            if (obj.event === 'edit') {
+                addreset();
+                layer.open({
+                    type: 1,
+                    content: $('#divadd'),
+                    area: ['350px', '330px'],
+                    title: '编辑分类',
+                    btn: ['修改'],
+                    success: function(layero, index) {
+                        $.ajax({
+                            url: '/n/nquery',
+                            type: 'post',
+                            dataType: 'json',
+                            success: function(res) {
+                                if (res.code == "0") {
+                                    var $cate = $('#add-pcate');
+                                    for (var i = 0; i < res.count; i++) {
+                                        $cate.append('<option value="' + res.data[i].id + '">' + res.data[i].name + '</option>')
+                                    }
+
+                                    $('#add-name').val(data.name);
+                                    $('#add-pcate').val(data.pid);
+
+                                    form.render();
+                                } else {
+                                    layer.msg(res.msg, {icon: 2, time: 1000});
+                                }
+                            },
+                            error: function(res) {
+                                layer.msg('异常错误', {icon: 2, time: 1000});
+                            }
+                        })
+                    },
+                    yes: function(index) {
+                        var name = $('#add-name').val();
+                        var cate = $('#add-pcate').val();
+
+                        if (name == '') {
+                            layer.msg('分类名称不能为空', {icon: 2, time: 1000});
+                            $('#add-name').focus();
+                            return;
+                        }
+                        if (cate == '') {
+                            layer.msg('请选择父级分类', {icon: 2, time: 1000});
+                            return;
+                        }
+
+                        $.ajax({
+                            url: '/n/nupdate',
+                            type: 'post',
+                            data: {name: name, pid: cate, id: data.id},
+                            dataType: 'json',
+                            success: function(res) {
+                                if (res.code == "0") {
+                                    layer.msg('修改成功', {icon: 1, time: 500}, function() {
+                                        $('#refresh').click();
+                                        layer.close(index);
+                                    });
+                                } else {
+                                    layer.msg(res.msg, {icon: 2, time: 1000});
+                                }
+                            },
+                            error: function(res) {
+                                layer.msg('网络错误', {icon: 2, time: 1000});
+                            }
+                        })
+                    }
+                });
+            } else if (obj.event === 'delete') {
+                layer.confirm('您确定要删除 ' + data.name + ' 分类吗？',
+                    {btn: ['确定','取消'] },
+                    function() {
+                        $.ajax({
+                            url: "/n/ndelete",
+                            type: 'post',
+                            data: {ids: [data.id]},
+                            dataType: 'json',
+                            success: function (res) {
+                                if (res.code == '0') {
+                                    layer.msg('删除成功', {icon: 1, time: 500}, function () {
+                                        $('#refresh').click();
+                                        layer.close(index);
+                                    });
+                                } else if (res.code == '1') {
+                                    layer.msg(res.msg, {icon: 2, time: 1000});
+                                }
+                            },
+                            error: function(res) {
+                                layer.msg('异常错误', {icon: 2, time: 1000});
+                            }
+                        });
+                    });
+            }
+        });
+
+        function addreset() {
+            $('#add-name').val('');
+            $("#add-pcate").find("option:selected").text("");
+            $("#add-pcate").empty();
+            $("#add-pcate").append('<option value="-1">无父级</option>');
+        }
+
+        function tablereload(page, keyObj) {
+            table.reload('tablencate', {
+                page: page,
+                where: keyObj,
+                done: function() {
+                    daterender();
+                    setKeyObj(keyObj);
+                }
+            });
+        }
+
+
+
+
+
+        //监听头部工具栏
+        table.on('toolbar(ncatetable)', function(obj){
+            switch(obj.event){
+                case 'add':
+                    addreset();
+                    layer.open({
+                        type: 1,
+                        content: $('#divadd'),
+                        area: ['350px', '330px'],
+                        title: '添加分类',
+                        btn: ['添加'],
+                        success: function(layero, index) {
+                            $.ajax({
+                                url: '/n/nquery',
+                                type: 'post',
+                                dataType: 'json',
+                                success: function(res) {
+                                    if (res.code == "0") {
+                                        var $cate = $('#add-pcate');
+                                        for (var i = 0; i < res.count; i++) {
+                                            $cate.append('<option value="' + res.data[i].id + '">' + res.data[i].name + '</option>')
+                                        }
+                                        form.render();
+                                    } else {
+                                        layer.msg(res.msg, {icon: 2, time: 1000});
+                                    }
+                                },
+                                error: function(res) {
+                                    layer.msg('异常错误', {icon: 2, time: 1000});
+                                }
+                            })
+                        },
+                        yes: function(index) {
+                            var name = $('#add-name').val();
+                            var cate = $('#add-pcate').val();
+
+                            if (name == '') {
+                                layer.msg('分类名称不能为空', {icon: 2, time: 1000});
+                                $('#add-name').focus();
+                                return;
+                            }
+                            if (cate == '') {
+                                layer.msg('请选择父级分类', {icon: 2, time: 1000});
+                                return;
+                            }
+
+                            $.ajax({
+                                url: '/n/nadd',
+                                type: 'post',
+                                data: {name: name, pid: cate},
+                                dataType: 'json',
+                                success: function(res) {
+                                    if (res.code == "0") {
+                                        layer.msg('添加成功', {icon: 1, time: 500}, function() {
+                                            $('#refresh').click();
+                                            layer.close(index);
+                                        });
+                                    } else {
+                                        layer.msg(res.msg, {icon: 2, time: 1000});
+                                    }
+                                },
+                                error: function(res) {
+                                    layer.msg('网络错误', {icon: 2, time: 1000});
+                                }
+                            })
+                        }
+                    });
+                    break;
+                case 'refresh':
+                    var keyObj = {};
+                    tablereload({curr: obj.config.page.curr}, keyObj);
+                    break;
+            };
+        });
+    });
+</script>
+</html>

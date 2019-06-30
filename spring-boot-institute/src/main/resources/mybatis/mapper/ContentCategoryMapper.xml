@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kaysanshi.institute.mapper.ContentCategoryMapper">
+	<select id="getlist" resultType="com.kaysanshi.institute.bean.Category" parameterType="com.kaysanshi.institute.bean.Category">
+		select id,pid,name,url,status,description,addtime from category where status='0'
+	</select>
+	<update id="addContent" parameterType="com.kaysanshi.institute.bean.Category" useGeneratedKeys="true" keyProperty="id">	
+		update category set description=#{description} where id=#{id}
+	</update> 
+	<insert id="addcate" parameterType="com.kaysanshi.institute.bean.Category" useGeneratedKeys="true" keyProperty="id">
+		insert category (pid,name,addtime,status) values(#{pid},#{name},#{addtime},#{status})
+	</insert>
+	<update id="upcate">
+		update category set pid=#{pid},name=#{name},status=#{status} where id=#{id}
+	</update>
+	<delete id="deletecate" parameterType="com.kaysanshi.institute.bean.Category">
+		delete from category where id=#{id}
+	</delete>
+	<select id="getlistBypid" resultType="com.kaysanshi.institute.bean.Category">
+		select id,pid,name,description,status,addtime from category where pid=#{value}
+	</select>
+	<select id="getItemByid" resultType="com.kaysanshi.institute.bean.Category">
+		select id,pid,name,description,status,addtime from category where id=#{value}
+	</select>
+	<!-- <select id="getsublist" resultType="com.kaysanshi.institute.bean.Category">
+		select id, pid,name,description,status,addtime from category where pid in
+		<foreach item="list2" index="index" collection="list" open="(" separator="," close=")">
+			#{list2}
+		</foreach>
+	</select> -->
+</mapper>

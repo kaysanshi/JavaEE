@@ -1,0 +1,27 @@
+-------------------------------------------------------------------------------
+Test set: com.leo.e3mall.fast.DastDfsTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 10.256 sec <<< FAILURE!
+com.leo.e3mall.fast.DastDfsTest.testUpload()  Time elapsed: 5.203 sec  <<< FAILURE!
+java.io.FileNotFoundException: \.jpg (系统找不到指定的文件。)
+	at java.io.FileInputStream.open0(Native Method)
+	at java.io.FileInputStream.open(FileInputStream.java:195)
+	at java.io.FileInputStream.<init>(FileInputStream.java:138)
+	at org.csource.fastdfs.StorageClient.upload_file(StorageClient.java:151)
+	at org.csource.fastdfs.StorageClient.upload_file(StorageClient.java:132)
+	at org.csource.fastdfs.StorageClient.upload_file(StorageClient.java:114)
+	at com.leo.e3mall.fast.DastDfsTest.testUpload(DastDfsTest.java:36)
+
+com.leo.e3mall.fast.DastDfsTest.testFastDfsClient()  Time elapsed: 5.031 sec  <<< FAILURE!
+java.io.FileNotFoundException: \\.jpg (指定的路径无效。)
+	at java.io.FileInputStream.open0(Native Method)
+	at java.io.FileInputStream.open(FileInputStream.java:195)
+	at java.io.FileInputStream.<init>(FileInputStream.java:138)
+	at org.csource.fastdfs.StorageClient.upload_file(StorageClient.java:151)
+	at org.csource.fastdfs.StorageClient.upload_file(StorageClient.java:132)
+	at org.csource.fastdfs.StorageClient.upload_file(StorageClient.java:114)
+	at org.csource.fastdfs.StorageClient1.upload_file1(StorageClient1.java:67)
+	at com.leo.e3mall.utils.FastDFSClient.uploadFile(FastDFSClient.java:48)
+	at com.leo.e3mall.utils.FastDFSClient.uploadFile(FastDFSClient.java:53)
+	at com.leo.e3mall.fast.DastDfsTest.testFastDfsClient(DastDfsTest.java:48)
+

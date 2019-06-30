@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body>
+<div class="layui-upload" id="addimg">
+    <button type="button" class="layui-btn" id="uppimg">上传LOGO</button>
+    <div class="layui-upload-list">
+        <img class="layui-upload-img" id="uppimgview" width="92" height="92">
+        <p id="uppimgtext"></p>
+    </div>
+</div>
+<div class="layui-inline">
+    <button type="button" class="layui-btn" id="clear">清除</button>
+    <button type="button" class="layui-btn" id="save">保存</button>
+</div>
+</body>
+<script src="../layui/layui.js"></script>
+<script>
+    layui.use(['element', 'jquery', 'table', 'form', 'laydate', 'layer', 'upload'], function() {
+        var element = layui.element;
+        var $ = layui.jquery;
+        var table = layui.table;
+        var form = layui.form;
+        var laydate = layui.laydate;
+        var layer = layui.layer;
+        var upload = layui.upload;
+        var imgurl = '';
+
+
+        $.ajax({
+            type: 'post',
+            data: {logo: imgurl},
+            url: '/sys/logo/query',
+            dataType: 'json',
+            success: function(res) {
+                if (res.code == '0') {
+                $('#uppimgview').attr('src', res.data.image);
+                    
+                } else {
+                    layer.msg(res.msg, {icon: 2, time: 1000});
+                }
+            },
+            error: function(res) {
+                layer.msg('异常错误', {icon: 2, time: 1000});
+            }
+        })
+
+
+        $('#clear').click(function() {
+            $('#addimg').empty();
+            imgurl = '';
+            $('#addimg').append('<button type="button" class="layui-btn" id="uppimg">上传LOGO</button>\n' +
+                '                <div class="layui-upload-list">\n' +
+                '                    <img class="layui-upload-img" id="uppimgview" width="92" height="92">\n' +
+                '                    <p id="uppimgtext" style="margin-left: 110px"></p>\n' +
+                '                </div>');
+        });
+
+        $('#save').click(function() {
+            if (imgurl == '') {
+                layer.msg('请上传图片', {icon: 2, time: 1000});
+                return;
+            }
+            $.ajax({
+                type: 'post',
+                data: {image: imgurl},
+                url: '/sys/logo/update',
+                dataType: 'json',
+                success: function(res) {
+                    if (res.code == '0') {
+                        layer.msg('保存成功', {icon: 1, time: 500});
+                        } else {
+                        layer.msg(res.msg, {icon: 2, time: 1000});
+                    }
+                },
+                error: function(res) {
+                    layer.msg('异常错误', {icon: 2, time: 1000});
+                }
+            })
+        })
+
+        var uploadInst = upload.render({
+            elem: '#uppimg',
+            url: '/common/img',
+            before: function(obj) {
+                obj.preview(function(index, file, result){
+                    $('#uppimgview').attr('src', result); //图片链接（base64）
+                });
+            },
+            done: function(res) {
+                if (res.errno == '0') {
+                    imgurl = res.data[0];
+                } else if (res.errno == '1') {
+                    layer.msg(res.msg, {icon: 2, time: 1000});
+                    return;
+                }
+            },
+            error: function() {
+                var demoText = $('#uppimgtext');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function(){
+                    uploadInst.upload();
+                });
+            }
+        });
+    });
+</script>
+</html>

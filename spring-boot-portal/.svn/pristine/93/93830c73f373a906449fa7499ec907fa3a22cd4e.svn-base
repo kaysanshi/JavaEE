@@ -1,0 +1,70 @@
+package cn.qfengx.portal.service.impl;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import cn.qfengx.portal.bean.Product;
+import cn.qfengx.portal.bean.Productcate;
+import cn.qfengx.portal.bean.QueryVoProduct;
+import cn.qfengx.portal.mapper.ProductMapper;
+import cn.qfengx.portal.mapper.ProductcateMapper;
+import cn.qfengx.portal.service.ProductService;
+
+@Transactional
+@Service("ProductServiceImpl")
+public class ProductServiceImpl implements ProductService {
+
+	@Autowired
+	private ProductMapper productMapper;
+	
+	@Autowired
+	private ProductcateMapper productcateMapper;
+	
+	@Override
+	public Map<String, Object> list(QueryVoProduct qvp) {
+		// TODO Auto-generated method stub
+		Map<String, Object> res = new HashMap<>();
+		qvp.setStart((qvp.getPage() - 1) * qvp.getLimit());
+		List<Product> list = productMapper.query(qvp);
+		res.put("code", "0");
+		res.put("msg", "获取成功");
+		res.put("data", list);
+		res.put("count", list.size());
+		return res;
+	}
+
+	@Override
+	public Map<String, Object> add(Product product) {
+		// TODO Auto-generated method stub
+		Map<String, Object> res = new HashMap<>();
+		if (productMapper.add(product) > 0) {
+			res.put("code", "0");
+			res.put("msg", "添加成功");
+			res.put("data", null);
+		} else {
+			res.put("code", "1");
+			res.put("msg", "添加失败");
+			res.put("data", null);
+		}
+		return res;
+	}
+	
+	
+	@Override
+	public Map<String, Object> cquery() {
+		// TODO Auto-generated method stub
+		Map<String, Object> res = new HashMap<>();
+		List<Productcate> list = productcateMapper.queryAll();
+		res.put("code", "0");
+		res.put("msg", "获取成功");
+		res.put("data", list);
+		res.put("count", list.size());
+		return res;
+	}
+
+}

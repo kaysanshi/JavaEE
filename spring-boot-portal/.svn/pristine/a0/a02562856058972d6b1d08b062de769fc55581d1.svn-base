@@ -1,0 +1,11 @@
+package cn.qfengx.portal.mapper;
+
+import java.util.List;
+
+import cn.qfengx.portal.bean.Product;
+import cn.qfengx.portal.bean.QueryVoProduct;
+
+public interface ProductMapper {
+
+	List<Product> query(QueryVoProduct qvp);
+}

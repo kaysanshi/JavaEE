@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <style>
+        .layui-table-view {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        .layui-table-view .layui-form-select .layui-input {
+            height: 30px;
+        }
+        .layui-table-view .layui-form-select dl dd, .layui-form-select dl dt {
+            line-height: 30px;
+        }
+        .layui-table-view .layui-form-select dl {
+            top: 34px;
+        }
+        .layui-anim, .layui-anim-upbit, .layui-form-select dl {
+            z-index: 10002;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="layui-layout-body">
+<table id="fdlist" lay-filter="fdlisttable"></table>
+</body>
+<div id="divshow" style="display: none">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <div style="text-align: center;font-size: 20px; font-weight: bold;display: block">
+                <span id="show-title">大标题</span>
+            </div>
+            <div style="text-align: center; color: #c2c2c2; display: block">
+                <span style="padding: 5px">称呼：</span><span id="show-name" style="padding: 5px">asdasd</span>
+                <span style="padding: 5px">性别：</span><span id="show-gender" style="padding: 5px">asdasd</span>
+                <span style="padding: 5px">日期：</span><span id="show-addtime" style="padding: 5px">asdasd</span>
+            </div>
+            <div style="text-align: center; color: #c2c2c2; display: block">
+                <span style="padding: 5px">手机：</span><span id="show-phone" style="padding: 5px">asdasd</span>
+                <span style="padding: 5px">邮箱：</span><span id="show-email" style="padding: 5px">asdasd</span>
+                <span style="padding: 5px">公司名称：</span><span id="show-company" style="padding: 5px">asasdasddasdasdasd</span>
+                <span style="padding: 5px">联系地址：</span><span id="show-address" style="padding: 5px">asasdasddasdasdasd</span>
+            </div>
+            <div id="show-content"></div>
+        </div>
+    </div>
+</div>
+<script src="../layui/layui.js"></script>
+<script type="text/html" id="zizeng">
+    {{d.LAY_TABLE_INDEX+1}}
+</script>
+<script type="text/html" id="toolbarDemo">
+    <form class="layui-form layui-form-pane">
+        <div class="layui-form-item" style="margin-bottom: 0">
+            <div class="layui-inline">
+                <label class="layui-form-label" style="height: 30px; line-height: 13px">起始日期</label>
+                <div class="layui-input-inline" style="width: 95px;">
+                    <input  type="text" style="height: 30px" id="startDate" placeholder="请选择日期" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label" style="height: 30px; line-height: 13px">结束日期</label>
+                <div class="layui-input-inline" style="width: 95px;">
+                    <input type="text" style="height: 30px;" id="endDate" placeholder="请选择日期" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-input-inline" style="width: 100px">
+                    <select id="sort" name="sort">
+                        <option value="0">日期降序</option>
+                        <option value="1">日期升序</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-input-inline" style="width: 110px">
+                    <input id="key" type="text" style="height: 30px" placeholder="请输入关键字" class="layui-input layui-input-xs">
+                </div>
+                <button id="search" lay-event="search" class="layui-btn layui-bg-blue layui-btn-sm" type="button"><i class="layui-icon">&#xe615;</i></button>
+                <button id="refresh" lay-event="refresh" class="layui-btn layui-bg-blue layui-btn-sm" type="button"><i class="layui-icon">&#xe669;</i></button>
+            </div>
+            <div class="layui-inline" style="float: right">
+                <button lay-event="delete" type="button" class="layui-btn layui-btn-danger layui-btn-sm"><i class="layui-icon">&#xe640;</i></button>
+            </div>
+        </div>
+    </form>
+</script>
+<script type="text/html" id="barDemo">
+    <div class="layui-inline">
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">
+            查看
+        </a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">
+            删除
+        </a>
+    </div>
+</script>
+<script type="text/html" id="pimg">
+    <img src="{{d.img}}" style="height: 100%; width: 100%">
+</script>
+<script>
+    layui.use(['element', 'jquery', 'table', 'form', 'laydate', 'layer', 'upload'], function() {
+        var element = layui.element;
+        var $ = layui.jquery;
+        var table = layui.table;
+        var form = layui.form;
+        var laydate = layui.laydate;
+        var layer = layui.layer;
+        var upload = layui.upload;
+
+        function daterender() {
+            laydate.render({
+                elem: '#startDate',
+                format:'yyyy-MM-dd'
+            });
+            laydate.render({
+                elem: '#endDate',
+                format:'yyyy-MM-dd'
+            });
+        }
+
+        table.render({
+            elem: '#fdlist',
+            url: '/sys/fd/list',
+            height: 'full-0',
+            toolbar: '#toolbarDemo',
+            page: true,
+            id: 'tablefdlist',
+            cols: [[
+                {type:'checkbox', fixed: 'left'},
+                {width: 60, title: '序号',templet:'#zizeng', type: 'numbers'},
+                {field: 'title', title: '标题'},
+                {field: 'content', title: '内容'},
+                {field: 'name', title: '称呼', width: 100},
+                {field: 'gender', title: '性别', width: 60},
+                {field: 'email', title: '邮箱'},
+                {field: 'phone', title: '手机'},
+                {field: 'company', title: '公司名称'},
+                {field: 'address', title: '联系地址'},
+                {field: 'addtime', title: '日期', width: 110},
+                {fixed: 'right', align:'left', toolbar: '#barDemo'}
+            ]],
+            done: function() {
+                daterender();
+            }
+        });
+
+        function detailreset() {
+            $('#show-title').val('');
+            $('#show-name').val('');
+            $('#show-gender').val('');
+            $('#show-addtime').val('');
+            $('#show-email').val('');
+            $('#show-company').val('');
+            $('#show-address').val('');
+            $('#show-phone').val('');
+            $('#show-content').empty();
+        }
+
+        function getKeyObj() {
+            var startDate = $('#startDate').val();
+            var endDate = $('#endDate').val();
+            var sort = $('#sort').val();
+            var key = $('#key').val();
+            return {
+                startDate: startDate,
+                endDate: endDate,
+                sort: sort,
+                key: key
+            }
+        }
+
+
+        function setKeyObj(keyObj) {
+            $('#startDate').val(keyObj.startDate);
+            $('#endDate').val(keyObj.endDate);
+            $('#sort').val(keyObj.sort);
+            $('#key').val(keyObj.key);
+
+            form.render();
+        }
+
+        function tablereload(page, keyObj) {
+            table.reload('tablefdlist', {
+                page: page,
+                where: keyObj,
+                done: function() {
+                    daterender();
+                    setKeyObj(keyObj);
+                }
+            });
+        }
+
+        function getids(obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            if (checkStatus.data.length == 0) {
+                layer.msg('没有选中行', {icon: 2, time: 500});
+                return;
+            }
+            //提取oids
+            var ids = [];
+            for (var i = 0; i < checkStatus.data.length; i++)
+                ids.push(checkStatus.data[i].id);
+            return ids;
+        }
+
+        //监听头部工具栏
+        table.on('toolbar(fdlisttable)', function(obj){
+            switch(obj.event){
+                case 'search':
+                    var keyObj = getKeyObj();
+                    console.log(keyObj);
+                    tablereload({curr: 1}, keyObj);
+                    break;
+                case 'refresh':
+                    var keyObj = getKeyObj();
+                    tablereload({curr: obj.config.page.curr}, keyObj);
+                    break;
+                case 'delete':
+                    var ids = getids(obj);
+                    if (ids.length == 0)
+                        return;
+                    layer.confirm('您确定要删除这' + ids.length + '条留言吗？',
+                        {btn: ['确定','取消'] },
+                        function() {
+                            $.ajax({
+                                url: "/sys/fd/delete",
+                                type: 'post',
+                                data: {ids: ids},
+                                dataType: 'json',
+                                success: function (res) {
+                                    if (res.code == '0') {
+                                        layer.msg('删除成功', {icon: 1, time: 500}, function () {
+                                            $('#refresh').click();
+                                            layer.close(index);
+                                        });
+                                    } else if (res.code == '1') {
+                                        layer.msg(res.msg, {icon: 2, time: 1000});
+                                    }
+                                },
+                                error: function(res) {
+                                    layer.msg('异常错误', {icon: 2, time: 1000});
+                                }
+                            });
+                        });
+                    break;
+            };
+        });
+
+
+        //监听行双击事件
+        table.on('rowDouble(fdlisttable)', function(obj) {
+            detailreset();
+            var data = obj.data;
+            layer.open({
+                type: 1,
+                content: $('#divshow'),
+                area: [$('body').width() - 45 + 'px', $('body').height() - 45 + 'px'],
+                title: '留言详情',
+                success: function(layero, index) {
+                    $('#show-title').val(data.title);
+                    $('#show-name').val(data.name);
+                    $('#show-gender').val(data.gender);
+                    $('#show-addtime').val(data.addtime);
+                    $('#show-email').val(data.email);
+                    $('#show-company').val(data.company);
+                    $('#show-address').val(data.address);
+                    $('#show-phone').val(data.phone);
+                    $('#show-content').html(data.content);
+                }
+            });
+            //标注选中样式
+            obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+        });
+
+        //监听工具条
+        table.on('tool(fdlisttable)', function(obj) {
+            var data = obj.data;
+            console.log(data);
+            if (obj.event === 'detail') {
+                detailreset();
+                layer.open({
+                    type: 1,
+                    content: $('#divshow'),
+                    area: [$('body').width() - 45 + 'px', $('body').height() - 45 + 'px'],
+                    title: '留言详情',
+                    success: function(layero, index) {
+                        $('#show-title').val(data.title);
+                        $('#show-name').val(data.name);
+                        $('#show-gender').val(data.gender);
+                        $('#show-addtime').val(data.addtime);
+                        $('#show-email').val(data.email);
+                        $('#show-company').val(data.company);
+                        $('#show-address').val(data.address);
+                        $('#show-phone').val(data.phone);
+                        $('#show-content').html(data.content);
+                    }
+                });
+            } else if (obj.event === 'delete') {
+                layer.confirm('您确定要删除留言 ' + data.title + ' 吗？',
+                    {btn: ['确定','取消'] },
+                    function() {
+                        $.ajax({
+                            url: "/sys/fd/delete",
+                            type: 'post',
+                            data: {ids: [data.id]},
+                            success: function (res) {
+                                if (res.code == '0') {
+                                    layer.msg('删除成功', {icon: 1, time: 500}, function () {
+                                        obj.del();//删除行
+                                        layer.close(index);
+                                    });
+                                } else if (res.code == '1') {
+                                    layer.msg(res.msg, {icon: 2, time: 500});
+                                }
+                            },
+                            error: function(res) {
+                                layer.msg('异常错误', {icon: 2, time: 500});
+                            }
+                        });
+                    });
+            }
+        });
+
+    });
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

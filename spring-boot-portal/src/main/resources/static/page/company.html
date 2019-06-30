@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <style>
+        .layui-table-view {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        .layui-table-view .layui-form-select .layui-input {
+            height: 30px;
+        }
+        .layui-table-view .layui-form-select dl dd, .layui-form-select dl dt {
+            line-height: 30px;
+        }
+        .layui-table-view .layui-form-select dl {
+            top: 34px;
+        }
+        .layui-anim, .layui-anim-upbit, .layui-form-select dl {
+            z-index: 10002;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="layui-layout-body">
+    <table id="plist" lay-filter="plisttable"></table>
+</body>
+<div id="divadd" style="display: none; padding: 10px">
+    <form class="layui-form layui-form-pane">
+        <div class="layui-form-item">
+            <label class="layui-form-label">公司名称</label>
+            <div class="layui-input-block">
+                <input type="text" id="add-name" lay-verify="name" autocomplete="off" placeholder="请输入公司名称" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">电话</label>
+            <div class="layui-input-block">
+                <input type="text" id="add-phone" lay-verify="phone" autocomplete="off" placeholder="请输入公司电话" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">电话</label>
+            <div class="layui-input-block">
+                <input type="text" id="add-telephone" lay-verify="telephone" autocomplete="off" placeholder="请输入联系人手机" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+        	<label class="layui-form-label">传真</label>
+        	<div class="layui-input-block">
+        		<input type="text" id="add-fax" lay-verify="fax" autocomplete="off" placeholder="请输入传真信息" class="layui-input">
+        	</div>
+        </div>
+         <div class="layui-form-item">
+        	<label class="layui-form-label">邮箱</label>
+        	<div class="layui-input-block">
+        		<input type="text" id="add-email" lay-verify="email" autocomplete="off" placeholder="请输入邮箱信息" class="layui-input">
+        	</div>
+        </div>
+         <div class="layui-form-item">
+        	<label class="layui-form-label">QQ</label>
+        	<div class="layui-input-block">
+        		<input type="text" id="add-qq" lay-verify="qq" autocomplete="off" placeholder="请输入QQ信息" class="layui-input">
+        	</div>
+        </div>
+         <div class="layui-form-item">
+        	<label class="layui-form-label">联系人</label>
+        	<div class="layui-input-block">
+        		<input type="text" id="add-linkman" lay-verify="linkman" autocomplete="off" placeholder="请输入联系人信息" class="layui-input">
+        	</div>
+        </div>
+         <div class="layui-form-item">
+        	<label class="layui-form-label">网址</label>
+        	<div class="layui-input-block">
+        		<input type="text" id="add-url" lay-verify="url" autocomplete="off" placeholder="请输入公司网址" class="layui-input">
+        	</div>
+        </div>
+        <div class="layui-form-item">
+        	<label class="layui-form-label">邮编</label>
+        	<div class="layui-input-block">
+        		<input type="text" id="add-postcode" lay-verify="postcode" autocomplete="off" placeholder="请输入邮编" class="layui-input">
+        	</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">公司图片</label>
+            <div class="layui-upload" id="addimg">
+                <button type="button" class="layui-btn" id="uppimg">上传公司图片</button>
+                <div class="layui-upload-list">
+                    <img class="layui-upload-img" id="uppimgview">
+                    <p id="uppimgtext"></p>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">公司简介</label>
+            <div class="layui-input-block">
+                <div id="detail"></div>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="divdetail" style="display: none">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <img id="detail-img" src="" style="width: 400px; height: 300px; display: inline-block">
+            <div style="display: inline-block; margin-left: 20px" >
+                <div class="layui-row"><span style="padding: 5px">公司名称:</span><span id="detail-name" style="padding: 5px"></span></div>
+                <div class="layui-row"><span style="padding: 5px">联系方式:</span><span id="detail-phone" style="padding: 5px"></span></div>
+                <div class="layui-row"><span style="padding: 5px">传真:</span><span id="detail-fax" style="padding: 5px"></span></div>
+                <div class="layui-row"><span style="padding: 5px">手机:</span><span id="detail-telephone" style="padding: 5px"></span></div>
+                 <div class="layui-row"><span style="padding: 5px">邮箱:</span><span id="detail-email" style="padding: 5px"></span></div>
+                <div class="layui-row"><span style="padding: 5px">联系人:</span><span id="detail-linkman" style="padding: 5px"></span></div>
+                 <div class="layui-row"><span style="padding: 5px">网址:</span><span id="detail-url" style="padding: 5px"></span></div>
+                <div class="layui-row"><span style="padding: 5px">邮编:</span><span id="detail-postcode" style="padding: 5px"></span></div>
+            </div>
+            <div id="detail-detail">
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../layui/layui.js"></script>
+<script src="../js/wangEditor.min.js"></script>
+<script type="text/html" id="zizeng">
+    {{d.LAY_TABLE_INDEX+1}}
+</script>
+<script type="text/html" id="toolbarDemo">
+    <form class="layui-form layui-form-pane">
+        <div class="layui-form-item" style="margin-bottom: 0">
+            <div class="layui-inline">
+                <button lay-event="add" type="button" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe654;</i></button>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label" style="height: 30px; line-height: 13px">起始日期</label>
+                <div class="layui-input-inline" style="width: 95px;">
+                    <input  type="text" style="height: 30px" id="startDate" placeholder="请选择日期" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label" style="height: 30px; line-height: 13px">结束日期</label>
+                <div class="layui-input-inline" style="width: 95px;">
+                    <input type="text" style="height: 30px;" id="endDate" placeholder="请选择日期" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-input-inline" style="width: 100px">
+                    <select id="sort" name="sort">
+                        <option value="0">日期降序</option>
+                        <option value="1">日期升序</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-input-inline" style="width: 110px">
+                    <input id="key" type="text" style="height: 30px" placeholder="请输入关键字" class="layui-input layui-input-xs">
+                </div>
+                <button id="search" lay-event="search" class="layui-btn layui-bg-blue layui-btn-sm" type="button"><i class="layui-icon">&#xe615;</i></button>
+                <button id="refresh" lay-event="refresh" class="layui-btn layui-bg-blue layui-btn-sm" type="button"><i class="layui-icon">&#xe669;</i></button>
+            </div>
+            <div class="layui-inline" style="float: right">
+                <button lay-event="delete" type="button" class="layui-btn layui-btn-danger layui-btn-sm"><i class="layui-icon">&#xe640;</i></button>
+            </div>
+        </div>
+    </form>
+</script>
+<script type="text/html" id="barDemo">
+    <div class="layui-inline">
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">
+            查看
+        </a>
+        <a class="layui-btn layui-btn-xs" lay-event="edit">
+            编辑
+        </a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">
+            删除
+        </a>
+    </div>
+</script>
+<script type="text/html" id="img">
+    <img src="{{d.img}}" style="height: 100%; width: 100%">
+</script>
+<script>
+    layui.use(['element', 'jquery', 'table', 'form', 'laydate', 'layer', 'upload'], function() {
+        var element = layui.element;
+        var $ = layui.jquery;
+        var table = layui.table;
+        var form = layui.form;
+        var laydate = layui.laydate;
+        var layer = layui.layer;
+        var upload = layui.upload;
+
+        var editor;
+        editor = new wangEditor('#detail');
+        editor.customConfig.debug = true;
+        editor.customConfig.uploadFileName = 'file';
+        editor.customConfig.uploadImgServer = '/common/img'
+        editor.create();
+
+
+        function daterender() {
+            laydate.render({
+                elem: '#startDate',
+                format:'yyyy-MM-dd'
+            });
+            laydate.render({
+                elem: '#endDate',
+                format:'yyyy-MM-dd'
+            });
+        }
+
+        table.render({
+            elem: '#plist',
+            url: '/company/list',
+            height: 'full-0',
+            toolbar: '#toolbarDemo',
+            page: true,
+            id: 'tableplist',
+            cols: [[
+                {type:'checkbox', fixed: 'left'},
+                {width: 60, title: '序号',templet:'#zizeng', type: 'numbers'},
+                {field: 'name', title: '公司名称'},
+                {templet:'#img', title: '图片'},
+                {field: 'phone', title: '电话'},
+                {field: 'fax', title: '传真'},
+                {field: 'telephone', title: '手机'},
+                {field: 'email', title: '邮箱'},
+                {field: 'qq', title: 'QQ'},
+                {field: 'introduction', title: '简介'},
+                {field: 'linkman', title: '联系人'},
+                {field: 'url', title: '网址'},
+                {field: 'postcode', title: '邮编'},
+               
+                {fixed: 'right', align:'left', toolbar: '#barDemo'}
+            ]],
+            done: function() {
+                daterender();
+            }
+        });
+
+        function addreset() {//添加层元素初始化
+            $('#addimg').empty();
+            $('#addimg').append('<button type="button" class="layui-btn" id="uppimg">上传公司图片</button>\n' +
+                '                <div class="layui-upload-list">\n' +
+                '                    <img class="layui-upload-img" id="uppimgview" width="92" height="92" style="margin-left: 110px">\n' +
+                '                    <p id="uppimgtext" style="margin-left: 110px"></p>\n' +
+                '                </div>');
+        }
+
+        function detailreset() {
+            $('#detail-img').attr('src', '');
+            $('#detail-name').text('');
+            $('#detail-phone').text('');
+            $('#detail-fax').text('');
+            $('#detail-telephone').text('');
+            $('#detail-email').text('');
+            $('#detail-qq').text('');
+            $('#detail-introduction').text('');
+            $('#detail-linkman').text('');
+            $('#detail-url').text('');
+            $('#detail-postcode').text(''); 
+        }
+
+        function getKeyObj() {
+            var startDate = $('#startDate').val();
+            var endDate = $('#endDate').val();
+            var sort = $('#sort').val();
+            var key = $('#key').val();
+            return {
+                startDate: startDate,
+                endDate: endDate,
+                sort: sort,
+                key: key
+            }
+        }
+
+
+        function setKeyObj(keyObj) {
+            $('#startDate').val(keyObj.startDate);
+            $('#endDate').val(keyObj.endDate);
+            $('#sort').val(keyObj.sort);
+            $('#key').val(keyObj.key);
+
+            form.render();
+        }
+
+        function tablereload(page, keyObj) {
+            table.reload('tableplist', {
+                page: page,
+                where: keyObj,
+                done: function() {
+                    daterender();
+                    setKeyObj(keyObj);
+                }
+            });
+        }
+
+        function getids(obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            if (checkStatus.data.length == 0) {
+                layer.msg('没有选中行', {icon: 2, time: 500});
+                return;
+            }
+            //提取oids
+            var ids = [];
+            for (var i = 0; i < checkStatus.data.length; i++)
+                ids.push(checkStatus.data[i].id);
+            return ids;
+        }
+      //判断浏览器大小方法
+	      function screen() {
+	          //获取当前窗口的宽度
+	  	    var width = $(window).width();
+	  	    if (width > 1200) {
+	  	        return 3;   //大屏幕
+	  	    } else if (width > 992) {
+	  	        return 2;   //中屏幕
+	  	    } else if (width > 768) {
+	  	        return 1;   //小屏幕
+	  	    } else {
+	  	        return 0;   //超小屏幕
+	  	    }
+	      }
+        //监听头部工具栏
+        table.on('toolbar(plisttable)', function(obj){
+            switch(obj.event){
+                case 'add':
+                    addreset();
+                    var pimgurl = '';
+                    var uploadInst = upload.render({
+                        elem: '#uppimg',
+                        url: '/common/img',
+                        before: function(obj) {
+                            obj.preview(function(index, file, result){
+                                $('#uppimgview').attr('src', result); //图片链接（base64）
+                            });
+                        },
+                        done: function(res) {
+                            if (res.errno == '0') {
+                                pimgurl = res.data[0];
+                            } else if (res.errno == '1') {
+                                layer.msg(res.msg, {icon: 2, time: 1000});
+                                return;
+                            }
+                        },
+                        error: function() {
+                            var demoText = $('#uppimgtext');
+                            demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                            demoText.find('.demo-reload').on('click', function(){
+                                uploadInst.upload();
+                            });
+                        }
+                    });
+                    layer.open({
+                        type: 1,
+                        content: $('#divadd'),
+                        area:screen()<2?['80%','70%']:['1000px','600px'],
+                        title: '添加信息',
+                        btn: ['添加'],
+                        success: function(layero, index) {
+                           
+                        },
+                        yes: function(index) {
+                            var name = $('#add-name').val();
+                            var phone=$("#add-phone").val();
+                            var telephone=$('#add-telephone').val();
+                            var fax=$('#add-fax').val();
+                            var email=$('#add-email').val();
+                            var qq=$('#add-qq').val();
+                            var linkman=$('#add-linkman').val();
+                            var url=$('#add-url').val();
+                            var postcode=$('#add-postcode').val();
+                            var detail = editor.txt.html();
+
+                            if (name == '') {
+                                layer.msg('公司名称不能为空', {icon: 2, time: 1000});
+                                $('#add-name').focus();
+                                return;
+                            }
+                            if (pimgurl == '') {
+                                layer.msg('请上传公司图片', {icon: 2, time: 1000});
+                                return;
+                            }
+                            $.ajax({
+                                url: '/company/add',
+                                type: 'post',
+                                data: {name: name, phone: phone, fax: fax,telephone: telephone,email: email,qq: qq,introduction: detail,linkman:linkman, img: pimgurl,url: url,postcode: postcode},
+                                dataType: 'json',
+                                success: function(res) {
+                                    if (res.code == "0") {
+                                        layer.msg('添加成功', {icon: 1, time: 500}, function() {
+                                            $('#refresh').click();
+                                            layer.close(index);
+                                        });
+                                    } else {
+                                        layer.msg(res.msg, {icon: 2, time: 1000});
+                                    }
+                                },
+                                error: function(res) {
+                                    layer.msg('网络错误', {icon: 2, time: 1000});
+                                }
+                            })
+                        }
+                    });
+                    break;
+                case 'search':
+                    var keyObj = getKeyObj();
+                    console.log(keyObj);
+                    tablereload({curr: 1}, keyObj);
+                    break;
+                case 'refresh':
+                    var keyObj = getKeyObj();
+                    tablereload({curr: obj.config.page.curr}, keyObj);
+                    break;
+                case 'delete':
+                    var ids = getids(obj);
+                    if (ids.length == 0)
+                        return;
+                    layer.confirm('您确定要删除这' + ids.length + '个信息吗？',
+                        {btn: ['确定','取消'] },
+                        function() {
+                            $.ajax({
+                                url: "/company/delete",
+                                type: 'post',
+                                data: {ids: ids},
+                                dataType: 'json',
+                                success: function (res) {
+                                    if (res.code == '0') {
+                                        layer.msg('删除成功', {icon: 1, time: 500}, function () {
+                                            $('#refresh').click();
+                                            layer.close(index);
+                                        });
+                                    } else if (res.code == '1') {
+                                        layer.msg(res.msg, {icon: 2, time: 1000});
+                                    }
+                                },
+                                error: function(res) {
+                                    layer.msg('异常错误', {icon: 2, time: 1000});
+                                }
+                            });
+                        });
+                    break;
+            };
+        });
+
+
+        //监听行双击事件
+        table.on('rowDouble(plisttable)', function(obj) {
+            detailreset();
+            var data = obj.data;
+            layer.open({
+                type: 1,
+                content: $('#divdetail'),
+                area:screen()<2?['80%','70%']:['1000px','600px'],
+                title: '公司详情',
+                success: function(layero, index) {
+                    $('#detail-img').attr('src', data.img);
+                    $('#detail-name').text(data.name);
+                    $('#detail-phone').text(data.phone);
+                    $('#detail-fax').text(data.fax);
+                    $('#detail-telephone').text(data.telephone);
+                    $('#detail-email').text(data.email);
+                    $('#detail-qq').text(data.qq);
+                    $('#detail-introduction').html(data.detail);
+                    $('#detail-linkman').text(data.linkman);
+                    $('#detail-url').text(data.url);
+                    $('#detail-postcode').text(data.postcode); 
+                }
+            });
+            //标注选中样式
+            obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+        });
+
+        //监听工具条
+        table.on('tool(plisttable)', function(obj) {
+            var data = obj.data;
+            console.log(data);
+            if (obj.event === 'detail') {
+                detailreset();
+                layer.open({
+                    type: 1,
+                    content: $('#divdetail'),
+                    area:screen()<2?['80%','70%']:['1000px','600px'],
+                    title: '公司详情',
+                    success: function(layero, index) {
+                    	 $('#detail-img').attr('src', data.img);
+                         $('#detail-name').text(data.name);
+                         $('#detail-phone').text(data.phone);
+                         $('#detail-fax').text(data.fax);
+                         $('#detail-telephone').text(data.telephone);
+                         $('#detail-email').text(data.email);
+                         $('#detail-qq').text(data.qq);
+                         $('#detail-introduction').html(data.detail);
+                         $('#detail-linkman').text(data.linkman);
+                         $('#detail-url').text(data.url);
+                         $('#detail-postcode').text(data.postcode); 
+                    }
+                });
+            } else if (obj.event === 'edit') {
+                addreset();
+                var pimgurl = '';
+                var uploadInst = upload.render({
+                    elem: '#uppimg',
+                    url: '/common/img',
+                    before: function(obj) {
+                        obj.preview(function(index, file, result){
+                            $('#uppimgview').attr('src', result); //图片链接（base64）
+                        });
+                    },
+                    done: function(res) {
+                        if (res.errno == '0') {
+                            pimgurl = res.data[0];
+                        } else if (res.errno == '1') {
+                            layer.msg(res.msg, {icon: 2, time: 1000});
+                            return;
+                        }
+                    },
+                    error: function() {
+                        var demoText = $('#uppimgtext');
+                        demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                        demoText.find('.demo-reload').on('click', function(){
+                            uploadInst.upload();
+                        });
+                    }
+                });
+                layer.open({
+                    type: 1,
+                    content: $('#divadd'),
+                    area:screen()<2?['80%','70%']:['1000px','600px'],
+                    title: '编辑公司',
+                    btn: ['修改'],
+                    success: function(layero, index) {
+                    	//弹出框后回调
+                    	$('#uppimgview').attr('src', data.img);
+                        $('#add-name').val(data.name);
+                        $('#add-phone').val(data.phone);
+                        $('#add-fax').val(data.fax);
+                        $('#add-telephone').val(data.telephone);
+                        $('#add-email').val(data.email);
+                        $('#add-qq').val(data.qq);
+                        editor.txt.html(data.introduction);
+                        $('#add-linkman').val(data.linkman);
+                        $('#add-url').val(data.url);
+                        $('#add-postcode').val(data.postcode); 
+                        pimgurl = data.img;
+                   		
+                    },
+                    yes: function(index) {
+                    	//确定按钮回调
+                        var name = $('#add-name').val();
+                        var phone=$("#add-phone").val();
+                        var telephone=$('#add-telephone').val();
+                        var fax=$('#add-fax').val();
+                        var email=$('#add-email').val();
+                        var qq=$('#add-qq').val();
+                        var linkman=$('#add-linkman').val();
+                        var url=$('#add-url').val();
+                        var postcode=$('#add-postcode').val();
+                        var detail = editor.txt.html();
+                        if (name == '') {
+                            layer.msg('公司名称不能为空', {icon: 2, time: 1000});
+                            $('#add-name').focus();
+                            return;
+                        }
+                      
+                        if (pimgurl == '') {
+                            layer.msg('请上传与公司相关图片', {icon: 2, time: 1000});
+                            return;
+                        }
+                        $.ajax({
+                            url: '/company/update',
+                            type: 'post',
+                            data: {id: data.id, name: name, phone: phone, fax: fax,telephone: telephone,email: email,qq: qq,introduction: detail,linkman:linkman, img: pimgurl,url: url,postcode: postcode},
+                            dataType: 'json',
+                            success: function(res) {
+                                if (res.code == "0") {
+                                    layer.msg('修改成功', {icon: 1, time: 500}, function() {
+                                        $('#refresh').click();
+                                        layer.close(index);
+                                    });
+                                } else {
+                                    layer.msg(res.msg, {icon: 2, time: 1000});
+                                }
+                            },
+                            error: function(res) {
+                                layer.msg('网络错误', {icon: 2, time: 1000});
+                            }
+                        })
+                    }
+                    
+                }); 
+            } else if (obj.event === 'delete') {
+                layer.confirm('您确定要删除' + data.name + ' 吗？',
+                    {btn: ['确定','取消'] },
+                    function() {
+                        $.ajax({
+                            url: "/company/delete",
+                            type: 'post',
+                            data: {ids: [data.id]},
+                            success: function (res) {
+                                if (res.code == '0') {
+                                    layer.msg('删除成功', {icon: 1, time: 500}, function () {
+                                        obj.del();//删除行
+                                        layer.close(index);
+                                    });
+                                } else if (res.code == '1') {
+                                    layer.msg(res.msg, {icon: 2, time: 500});
+                                }
+                            },
+                            error: function(res) {
+                                layer.msg('异常错误', {icon: 2, time: 500});
+                            }
+                        });
+                    });
+            }
+        });
+
+    });
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

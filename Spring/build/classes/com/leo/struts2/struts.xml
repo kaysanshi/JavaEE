@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+   "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+   "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+		<!-- 配置常量意思是否把action对象交给Spring容器来管理和创建 -->
+		<constant name="struts.objectFactory" value="spring"></constant>
+		<!-- 用来配置Action的的依赖注入属性 -->
+		<constant name="struts.objectFactory.spring.autoWire" value="name"></constant>
+		
+		<package name="" namespace="/" extends="struts-default">
+			<!-- 整合方案一：用原来的class属性来使用
+			由struts创建对象，Spring用来组装和管理	
+		 -->
+			<action name="userAction_" class="com/leo/struts2/UserAction.java" method="{1}">
+				<result name="suceesss">/index.jsp</result>
+			</action>
+			<!--方案二：	class属性填写Spring中action对象的beanName，就是spring管理的xml中配置的bean的名字。完全有Spring来创建管理action的周期
+									注意；Spring不能自动组装，只能手动注入依赖属性 -->
+			<action name="userAction_" class="userAction" method="{1}">
+				<result name="suceesss">/index.jsp</result>
+			</action>
+		</package>
+</struts>

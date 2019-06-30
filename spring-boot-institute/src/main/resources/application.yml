@@ -1,0 +1,27 @@
+logging:
+  level:
+    com:
+      kaysanshi:
+        institute:
+             mapper: debug
+  file: /home/ubuntu/upload/log/institute_log.log
+server:
+  port: 80
+spring:
+  datasource:
+    username: root
+    password: berry123
+    url: jdbc:mysql://54.67.93.117:3306/berryinst?useSSL=true
+    driver-class-name: com.mysql.jdbc.Driver
+  servlet:
+    multipart:
+      max-file-size: 128MB
+      max-request-size: 128MB
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations:
+  - classpath:mybatis/mapper/*.xml
+upload:
+  path:
+    product: 
+      img: /home/ubuntu/upload/institute/upload/img/

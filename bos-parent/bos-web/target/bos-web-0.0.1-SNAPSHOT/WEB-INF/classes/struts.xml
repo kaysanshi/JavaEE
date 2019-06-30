@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+	<constant name="struts.devMode" value="true" />
+	<!-- 配置常量意思是否把action对象交给Spring容器来管理和创建 --> 
+	<constant name="struts.objectFactory" value="spring"/>
+	<package name="basicstruts2" extends="struts-default" namespace="/">
+		<interceptors>
+		<!-- 注册拦截器 -->
+			<interceptor name="LogoinInterceptor" class="com.leo.bos.web.interceptor.LogoinInterceptor">
+			<!-- 指定哪些不拦截 -->
+				<param name="excludeMethods">login</param>
+			</interceptor>
+			<!-- 定义拦截器栈 -->
+			<interceptor-stack name="myStack">
+				<!-- 引入自定义拦截器 -->
+				<interceptor-ref name="LogoinInterceptor"></interceptor-ref>
+				<!-- 引入默认的拦截器 -->
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<!-- 设置默认的拦截器栈 -->
+		<default-interceptor-ref name="myStack"></default-interceptor-ref>
+		<!-- 全局结果集配置 -->
+		<global-results>
+			<result name="login" type="redirect" >/login.jsp</result>
+			<result name="unauthorized" type="redirect" >/unauthorizedUrl.jsp</result>
+			<result name="error" type="redirect" >/error.jsp</result>	
+		</global-results>
+		<!-- 全局异常处理 -->
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.RuntimeException"></exception-mapping>
+			<exception-mapping result="unauthorized" exception="org.apache.shiro.authz.UnauthorizedException"></exception-mapping>	
+		</global-exception-mappings>
+		<!-- 需要进行权限控制的页面访问 -->
+		<action name="page_*_*">
+			<result type="dispatcher">/WEB-INF/pages/{1}/{2}.jsp</result>
+		</action>
+		
+		<!-- userAction用户管理 -->
+		<action name="userAction_*" class="userAction" method="{1}" >
+			<result name="login">/login.jsp</result>
+			<result name="home">/index.jsp</result>
+			<result name="list">/WEB-INF/pages/admin/userlist.jsp</result>
+			<allowed-methods>login,logout,editPassword,add</allowed-methods>
+		</action>
+		
+		<!-- 取派员管理 -->
+		<action name="staffAction_*" class="staffAction" method="{1}">
+			<result name="list">/WEB-INF/pages/base/staff.jsp</result>
+			<allowed-methods>add,pageQuery,edit,list</allowed-methods>
+		</action>
+		<!-- 区域管理 -->
+		<action name="regionAction_*" class="regionAction" method="{1}">
+			<result name="list">/WEB-INF/pages/base/region.jsp</result>
+			<allowed-methods>importXls,pageQuery,list</allowed-methods>
+		</action>
+		<!-- 分区管理 -->
+		<action name="subareaAction_*" class="subareaAction" method="{1}">
+			<result name="list">/WEB-INF/pages/base/subarea.jsp</result>
+			<allowed-methods>add,exportXls,list,pageQuery</allowed-methods>
+		</action>
+		<!-- 定区管理 DecidedZoneAction-->
+		<action name="decidedZoneAction_*" class="decidedZoneAction" method="{1}">
+			<result name="list">/WEB-INF/pages/base/decidezone.jsp</result>
+			<allowed-methods>add</allowed-methods>
+		</action>
+		<!-- 业务通知单 noticeBillAction-->
+		<action name="noticeBillAction_*" class="noticebillAction" method="{1}">
+			<result name="add">/WEB-INF/pages/qupai/noticebill_add.jsp</result>
+			<result name="list">/WEB-INF/pages/qupai/noticebill.jsp</result>
+			<allowed-methods>findCustomerByTelephone</allowed-methods>
+		</action>
+		<!-- 工作单快速录入 -->
+		<action name="workordermanageAction_*" class="workordermanageAction" method="{1}">
+			<allowed-methods>add</allowed-methods>
+		</action>
+		<!-- 权限管理-->
+		<action name="functionAction_*" class="functionAction" method="{1}">
+			<result name="list">/WEB-INF/pages/admin/function.jsp</result>
+			<allowed-methods>list,add,findMenu,pageQuery</allowed-methods>
+		</action>
+		<!-- RoleAction 角色管理 -->
+		<action name="roleAction_*" class="roleAction" method="{1}">
+			<result name="list">/WEB-INF/pages/admin/role.jsp</result>
+			<allowed-methods>list,add</allowed-methods>
+		</action>
+	</package>
+</struts>

@@ -1,0 +1,75 @@
+package com.leo.hotel.service.impl;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.catalina.mapper.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.leo.hotel.domain.User;
+import com.leo.hotel.mapper.UserMapper;
+import com.leo.hotel.service.UserService;
+import com.leo.hotel.utils.MD5Utils;
+import com.leo.hotel.utils.PageBean;
+/**
+ * 
+ * @author leoi555
+ *
+ */
+@Transactional
+@Service("UserServiceImpl")
+public class UserServiceImpl implements UserService{
+	@Autowired
+	private UserMapper userMapper;
+
+	@Override
+	public Map<String, Object> addUser(User user) {
+		// TODO Auto-generated method stub
+		Map<String, Object> res = new HashMap<>();
+		user.setPassword(MD5Utils.md5(user.getPassword()));
+		if (userMapper.add(user) > 0) {
+			res.put("code", "0");
+			res.put("msg", "添加成功");
+			res.put("data", null);
+		} else {
+			res.put("code", "1");
+			res.put("msg", "添加失败");
+			res.put("data", null);
+		}
+		return res;
+	}
+
+	@Override
+	public Map<String, Object> checkUser(User user) {
+		
+		// TODO Auto-generated method stub
+		Map<String, Object> res = new HashMap<>();
+		String password=MD5Utils.md5(user.getPassword());
+		user.setPassword(password);
+		User user2=(User) userMapper.checkUser(user);
+		System.out.println(user2);
+		if (user2!=null) {
+			res.put("code", "0");
+			res.put("msg", "添加成功");
+			res.put("data", user2);
+		} else {
+			res.put("code", "1");
+			res.put("msg", "添加失败");
+			res.put("data", null);
+		}
+		return res;
+	}
+
+	@Override
+	public Map<String, Object> getList(PageBean pageBean) {
+		// TODO Auto-generated method stub
+		Map<String, Object> res = new HashMap<>();
+		userMapper.getList(pageBean);
+		return null;
+	}
+}

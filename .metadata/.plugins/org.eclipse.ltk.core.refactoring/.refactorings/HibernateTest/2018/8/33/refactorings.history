@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move &apos;WebContent&apos; to &apos;HibernateTest&apos;" description="Move &apos;WebContent&apos; to &apos;HibernateTest&apos;" destination="/HibernateTest" element1="/Maven/WebContent" flags="7" id="org.eclipse.ltk.core.refactoring.move.resources" resources="1" stamp="1534592014763" updateReferences="true"/>
+</session>

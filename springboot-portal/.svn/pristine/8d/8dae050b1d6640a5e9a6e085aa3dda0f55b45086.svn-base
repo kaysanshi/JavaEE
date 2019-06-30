@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.qfengx.portal.mapper.ProductMapper">
+	<select id="query" parameterType="cn.qfengx.portal.bean.ProductQueryVo" resultType="cn.qfengx.portal.bean.Product">
+		select 
+			product.id as id,
+			product.name as name,
+			product.detail as detail,
+			product.addtime as addtime,
+			product.pcid as pcid,
+			product.click as click,
+			product.img as img,
+			productcate.name as pcname
+			from product, productcate 
+				where
+					product.pcid = productcate.id
+				<if test="startDate != null">
+					and product.addtime &gt;= #{startDate}
+				</if>	
+				<if test="endDate != null">
+					and product.addtime &lt;= #{endDate}
+				</if>
+				
+				<if test="key != null and key != ''">
+					and product.name like "%"#{key}"%"
+				</if>
+				
+				<if test="sort == null or sort == 0">
+					ORDER BY product.addtime desc
+				</if>
+				<if test="sort == 1">
+					ORDER BY product.addtime asc
+				</if>
+				
+				
+				limit #{start}, #{limit}	 
+	</select>
+	<select id="querySum" resultType="Integer" parameterType="cn.qfengx.portal.bean.ProductQueryVo">
+		select 
+			count(*)
+			from product, productcate 
+				where
+					product.pcid = productcate.id
+				<if test="startDate != null">
+					and product.addtime &gt;= #{startDate}
+				</if>	
+				<if test="endDate != null">
+					and product.addtime &lt;= #{endDate}
+				</if>
+				
+				<if test="key != null and key != ''">
+					and product.name like "%"#{key}"%"
+				</if>
+				
+				<if test="sort == null or sort == 0">
+					ORDER BY product.addtime desc
+				</if>
+				<if test="sort == 1">
+					ORDER BY product.addtime asc
+				</if>
+	</select>
+	<insert id="add" parameterType="cn.qfengx.portal.bean.Product" useGeneratedKeys="true" keyProperty="id">
+		insert into product
+			(name, detail, addtime, pcid, click, img)
+			values (#{name}, #{detail}, #{addtime}, #{pcid}, #{click}, #{img})
+	</insert>
+	
+	<update id="update" parameterType="cn.qfengx.portal.bean.Product">
+		update product set name = #{name}, detail = #{detail}, pcid = #{pcid}, img = #{img}
+		where id = #{id}
+	</update>
+	
+	<delete id="delete" >
+		delete from product 
+		where id in (
+			<foreach collection="array" item="id" separator=",">
+				#{id}
+			</foreach>
+		)
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

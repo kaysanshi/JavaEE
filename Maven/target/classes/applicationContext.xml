@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd ">
+<!-- 这里未用到 c3p0连接池所以不用以前的方式 -->
+
+<!--配置sessionFactory -->
+<bean name="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+	<property name="configLocation" value="class:hibernate.cfg.xml"></property>
+	<property name="mappingDirectoryLocations">
+		 <value>classpath:com/leo/entity</value>
+	</property>
+</bean>
+<!-- 配置action -->
+<bean name="userAction" class="com.leo.action.UserAction" scope="prototype">
+	<property name="userService" ref="userService"></property>
+</bean>
+<bean name="userService" class="com.leo.service.impl.UserServiceImpl">
+	<property name="userDao" ref="userDao"></property>
+</bean>	
+<bean name="userDao" class="com.leo.dao.impl.UserDaoImpl">
+	<property name="sessionFactory" ref="sessionFactory"></property>
+</bean>	
+</beans>

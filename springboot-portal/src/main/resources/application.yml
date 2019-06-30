@@ -1,0 +1,27 @@
+logging:
+  level:
+    cn:
+      qfengx:
+        portal:
+          mapper: debug
+  file: D:/log/portal_log.log
+server:
+  port: 81
+spring:
+  datasource:
+    username: root
+    password: 123
+    url: jdbc:mysql://localhost:3306/portal?useSSL=true
+    driver-class-name: com.mysql.jdbc.Driver
+  servlet:
+    multipart:
+      max-file-size: 128MB
+      max-request-size: 128MB
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations:
+  - classpath:mybatis/mapper/*.xml
+upload:
+  path:
+    product: 
+      img: D:/portal/upload/product/img/

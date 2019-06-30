@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.leo.course.scheduling.mapper.ClassRoomMapper">
+ 	<insert id="add" parameterType="com.leo.course.scheduling.domain.Classroom">
+ 		insert into classroom(floor,room,count,addtime,code,description,image) 
+ 					values(#{floor},#{room},#{count},#{addtime},#{code},#{description},#{image})
+ 					
+ 	</insert>
+ 	<select id="selectCount" resultType="java.lang.Integer">
+		select count(*) from classroom
+	</select>
+	<select id="getPageQueryList" resultType="com.leo.course.scheduling.domain.Classroom" parameterType="com.leo.course.scheduling.utils.PageBean">
+		select id,floor,room,count,addtime,code,description,image from classroom where id limit #{currentPage},#{pageSize}
+	</select>
+	<update id="update" parameterType="com.leo.course.scheduling.domain.Classroom">
+		update classroom set floor=#{floor},room=#{room},addtime=#{addtime},code=#{code},description=#{description},image=#{image} where id=#{id}
+	</update>
+	<select id="getListClassRoomName" resultType="com.leo.course.scheduling.domain.Classroom">
+		select id,floor,room,count,addtime,code,description,image from classroom 
+	</select>
+ </mapper>

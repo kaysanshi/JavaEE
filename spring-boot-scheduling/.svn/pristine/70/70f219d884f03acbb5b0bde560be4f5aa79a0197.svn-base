@@ -1,0 +1,20 @@
+package com.leo.course.scheduling;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.context.annotation.ComponentScan;
+
+/**
+ * springboot项目启动类
+ *
+ */
+@SpringBootApplication
+@ComponentScan("com.leo.course.scheduling.mapper")
+@ServletComponentScan
+public class SpringbootSchedulingApplication {
+	
+    public static void main( String[] args ){
+       SpringApplication.run(SpringbootSchedulingApplication.class, args);
+    }
+}

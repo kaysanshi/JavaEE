@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>一键排课</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<script src="../js/jquery-1.8.3.js"></script>
+<script src="../layui/layui.js"></script>
+<script></script>
+<body>
+<div id="addclass" style="display: true; padding: 10px">
+<h3>选择排课优先规则----</h3>
+<h4 style='color:red'>全选则根据现有的资源进行优先排列</h4>
+ 	<form class="layui-form" action=" ">
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">是否按课程优先排课</label>
+				<div class="layui-input-block">
+					<input type="checkbox" name="switch_course" id="course_s" lay-skin="switch" lay-text="ON|OFF" >					
+				</div>
+			</div>
+			<div class="layui-inline">
+				<label class="layui-form-label">是否按班级优先排课</label>
+				<div class="layui-input-block">
+					<input type="checkbox" name="switch_class" id="class_s" lay-skin="switch" lay-text="ON|OFF">					
+									
+				</div>
+			</div>
+			<div class="layui-inline">
+				<label class="layui-form-label">是否按教室有限排课</label>
+				<div class="layui-input-block">
+					<input type="checkbox" name="switch_room" id="room_s" lay-skin="switch" lay-text="ON|OFF">					
+				</div>
+			</div>
+			<div class="layui-inline">		
+				<label class="layui-form-label">是否按教师优先排课</label>
+				<div class="layui-input-block">
+					<input type="checkbox" name="switch_teacher" id="teacher_s" lay-skin="switch" lay-text="ON|OFF">					
+				</div>
+			</div>
+			<div class="layui-inline">
+				<div class="layui-input-block">
+			      <button class="layui-btn" lay-submit="" lay-filter="demo1">立即排课</button>
+			      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+			    </div>
+		    </div>
+		</div>
+		
+		
+	</form>
+</div>
+<table class="layui-table" id="list" >
+	 <thead style="text_align:center;">
+          <tr>
+              <th width="100px" scope="col" ></th>
+              <th width="160px" scope="col">星期一</th>
+              <th width="160px" scope="col">星期二</th>
+              <th width="160px" scope="col">星期三</th>
+              <th width="160px" scope="col">星期四</th>
+              <th width="160px" scope="col">星期五</th>
+          </tr>
+      </thead>
+
+      <tbody style="text-align: center;">
+          <tr style="height: 120px">
+              <th scope="row">1-2节
+	               </th>
+	               <td id="table_1_1"></td>
+	               <td id="table_2_1"></td>
+	               <td id="table_3_1"></td>
+	               <td id="table_4_1"></td>
+	               <td id="table_5_1"></td>
+               </tr>
+               <tr style="height: 120px">
+	               <th scope="row">3-4节</th>
+	               <td id="table_1_2"></td>
+	               <td id="table_2_2"></td>
+	               <td id="table_3_2"></td>
+	               <td id="table_4_2"></td>
+	               <td id="table_5_2"></td>
+               </tr>
+ 			   <tr style="height: 120px">
+                    <th scope="row">5-6节</th>
+                    <td id="table_1_3"></td>
+                    <td id="table_2_3"></td>
+                    <td id="table_3_3"></td>
+                    <td id="table_4_3"></td>
+                    <td id="table_5_3"></td>
+               </tr>                           
+              <tr style="height: 120px">
+                    <th scope="row" >7-8节</th>
+                    <td id="table_1_4"></td>
+                    <td id="table_2_4"></td>
+                    <td id="table_3_4"></td>
+                    <td id="table_4_4"></td>
+                    <td id="table_5_4"></td>
+              </tr>
+              <tr style="height: 120px">
+                   <th scope="row">9-10节 </th>
+                   <td id="table_1_5"></td>
+                   <td id="table_2_5"></td>
+                   <td id="table_3_5"></td>
+                   <td id="table_4_5"></td>
+                   <td id="table_5_5"></td>
+              </tr>
+       </tbody>
+
+</table>
+<!-- 初始化数据表格 -->
+<script>
+</script>
+<script>
+	layui.use(['form','table'],function(){
+		var form=layui.form;
+		var table=layui.table;
+		var $=layui.jquery;
+		//执行一个 table 实例
+		table.render({
+		  elem: '#list'
+		  ,height:600 
+		  ,url: '/json/class_sch.json' //数据接口
+		  ,title: '课程表'
+		  ,page: true //开启分页
+		  ,toolbar: '#toolbar' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+		  ,totalRow: true //开启合计行
+		  ,cols: [[ //表头
+			 {filed:'jieci',title:'节次',width:160} 
+		    ,{field: 'week1', title: '周一', width:160}
+		    ,{field: 'week2', title: '周二', width: 160}
+		    ,{field: 'week3', title: '周三', width:160 }
+		    ,{field: 'week4', title: '周四', width: 160}
+		    ,{field: 'week5', title: '周五', width:160} 
+		    ,{field: 'week6', title: '周六', width: 160}
+		    ,{field: 'week7', title: '周日', width: 160}
+		    
+		  ]]
+		});
+		//////////////////////
+		
+		////////////////////////
+		  //监听提交
+		  form.on('submit(demo1)', function(data){		  
+			 var datad=JSON.stringify(data.field);
+			 console.log(datad.length);
+		    if(datad.length<=2){
+		    	
+		    	$.getJSON('/json/class_sch.json',function(datas){
+		    		console.log(datas)
+		    	})
+		    	
+		    	layer.alert("请至少禁忌一项");
+		    	
+		    }else if(datad.length==22){
+		    	//课程优先
+		    	layer.alert("课程优先排列");
+		    	$.ajax({
+		    		url:'/scheduling/bycourse',
+		    		type:'post',
+		    		dataType:'json',
+		    		success:function(res){
+		    			if(res.code=='0'){
+		    				//清空课程表
+		    	            for(var i=1;i<6;i++){
+		    	                for(var j=1;j<6;j++){
+		    	                    $("#table_"+j+"_"+i).html("");
+		    	                }
+		    	            }
+		    	            //遍历课程表
+		    	            for (var i=0;i<data.length;i++) {
+		    	                $("#table_"+res.data[i].week+"_"+data[i].jieci).html(data[i].cname+"<br>"+data[i].banji+"<br>"+data[i].address);
+		    	            } 
+		    			}else{
+		    				
+		    			}
+		    			
+		    		},
+		    		error:function(res){
+		    			layer.alert('出现错误');
+		    		}
+		    	})
+		    }else if(datad.length==21){
+		    	//班级先排列
+		    	$.ajax({
+		    		url:'/schduling/byclass',
+		    		type:'post',
+		    		dataType:'json',
+		    		success:function(res){
+		    			if(res.code=='0'){
+		    				
+		    			}else{
+		    				
+		    			}
+		    			
+		    		},
+		    		error:function(res){
+		    			layer.alert('出现错误');
+		    		}
+		    	})
+		    }else if(datad.length==20){
+		    	//教室优先排列
+		    	$.ajax({
+		    		url:'/schduling/byroom',
+		    		type:'post',
+		    		dataType:'json',
+		    		success:function(res){
+		    			if(res.code=='0'){
+		    				
+		    			}else{
+		    				
+		    			}
+		    			
+		    		},
+		    		error:function(res){
+		    			layer.alert('出现错误');
+		    		}
+		    	})
+		    }else if(datad.length==23){
+		    	//教师优先排列
+		    }else if(datad.length==42){
+		    	//教师和教室 
+		    	//班级和课程
+		    }else if(datad.length==43){
+		    	//教师和班级
+		    }else if(datad.length==44){
+		    	//课程和教师
+		    }else if(datad.length==41){
+		    	//教室和课程
+		    }else if(datad.length==40){
+		    	//教室和班级
+		    }else if(datad.length==61){
+		    	//课程，班级，教室
+		    }else if(datad.length==64){
+		    	//课程，班级，教师
+		    }else if(datad.length==63){
+		    	//课程，教师，教室
+		    }else if(datad.length==62){
+		    	//班级，教室，教师
+		    }else{
+		    	//全选
+		    	
+		    }
+		    return false;
+		  });
+		
+	})
+</script>
+<hr color="black"></hr>
+<!-- - -->
+<script type="text/html" id="toolbar">
+
+</script>
+</body>
+</html>

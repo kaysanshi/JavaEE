@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+   "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+   "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+<!-- 是否使用开发模式 -->
+<constant name="struts.devMode" value="true" />
+		<package name="customer" extends="struts-default" namespace="/"> 
+		
+		<interceptors>
+			<!-- 注册拦截器 -->
+			<interceptor name="loginInterceptor" class="com.leo.interceptor.LoginInterceptor"></interceptor>
+			<!-- 注册拦截器栈 -->
+			<interceptor-stack name="myStack">
+				<interceptor-ref name="loginInterceptor">
+					<!--不包含哪个方法  -->
+					<param name="excludeMethods">login</param>
+				</interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<!-- 指定包中的默认拦截器栈 -->
+		<default-interceptor-ref name="myStack"></default-interceptor-ref>
+		<!-- 定义全局结果集 -->
+		<global-results>
+			<result name="toLogin" type="redirect" >/login.jsp</result>
+		</global-results>
+		<global-exception-mappings>
+			<!-- 如果出现java.lang.RuntimeException异常,就将跳转到名为error的结果 -->
+			<exception-mapping result="error" exception="java.lang.RuntimeException"></exception-mapping>
+		</global-exception-mappings>
+		
+			<action name="CustomerAction_*" class="com.leo.web.CustomerAction" method="{1}" >
+			 <result name="list" >/jsp/customer/list.jsp</result>
+			 <result name="edit" >/jsp/customer/edit.jsp</result>
+			<result name="toList" type="redirectAction">
+	             <param name="actionName">CustomerAction_list</param>
+	             <param name="namespace">/</param>
+	         </result>
+	         	<allowed-methods>list,update,save,add,getCustomer</allowed-methods>
+			</action>
+			<action name="UserAction_login" class="com.leo.web.UserAction" method="login" >
+			 <result name="toHome"  type="redirect">index.htm</result>
+			</action>
+		</package>
+</struts>

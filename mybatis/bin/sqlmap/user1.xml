@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace，命名空间用于隔离SQL，防止出现在id相同的xml文件
+ 	2.采用mapper动态代理的方式开发时使用，在namespace中指定mapper的类路径：
+ 		同时要遵循以下原则：
+ 		1.id与接口中的方法名一致；2.参数类型一致，3.返回类型一致
+  -->
+ <mapper namespace="com.leo.mapper.UserMapper">
+  	<!-- 通过id查询 ;select是查询 在这个标签下书写SQL语句, 
+  		parameterType:是指定传入参数的类型
+  		resultType:书写的为对象的话，就会自动返回这个对象，自动映射，属性要与数据库一一对应
+  		resultMap:手动映射
+  		
+  	-->
+  	<!-- 提取相同的sql语句   用的时候方法：<include refid="id">就可以 -->
+  	<sql id="selectsql1" >
+  		select *from user
+  	</sql>
+  	<!-- 直接把条件包含到<where>标签，多条件中间用and连接-->
+  	<select id="selectUserBysexAndname" parameterType="com.leo.domain.User" resultType="com.leo.domain.User">
+  			<!-- 引入sql片段 -->
+  			<include refid="selectsql1"></include>
+  			<where>
+	  			<if test="sex !=null and sex!='' ">
+	  					sex=#{sex}
+	  			</if>
+	  			<if test="username != null and username!='' ">
+	  					and username=#{username}
+	  			</if>
+  			</where>
+  	</select>
+  	<!-- 用代理的 -->
+  	<select id="selectUserByIdsByQueryVo" parameterType="com.leo.domain.QueryVo" resultType="com.leo.domain.User">
+  			<!-- 引入sql片段 -->
+  			<include refid="selectsql1"></include>
+  			<where>
+	  			<!--  id in 1,2,3-->
+	  			<foreach collection="listinter" item='id' separator=","  open="id in (" close=")">
+	  				#{id}
+	  			 </foreach>
+  			</where>
+  	</select>
+  	<!-- 用数组的形式没有用自己设置的对象而是直接用collection=array 不用自己设置的字段 -->
+  	<select id="selectUserByIdsByInteger" parameterType="com.leo.domain.QueryVo" resultType="com.leo.domain.User">
+  			<!-- 引入sql片段 -->
+  			<include refid="selectsql1"></include>
+  			<where>
+	  			<!--  id in 1,2,3-->
+	  			<foreach collection="array" item='id' separator=","  open="id in (" close=")">
+	  				#{id}
+	  			 </foreach>
+  			</where>
+  	</select>
+  	<!-- 用list  collection=list-->
+  	<select id="selectUserByIdsByList" parameterType="com.leo.domain.QueryVo" resultType="com.leo.domain.User">
+  			<!-- 引入sql片段 -->
+  			<include refid="selectsql1"></include>
+  			<where>
+	  			<!--  id in 1,2,3-->
+	  			<foreach collection="list" item='id' separator=","  open="id in (" close=")">
+	  				#{id}
+	  			 </foreach>
+  			</where>
+  	</select>
+  </mapper>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;MD5Utils.java&apos; to &apos;spring-boot-institute/src/main/java/cn.qfengx.portal.util&apos;&#x0D;&#x0A;- Original project: &apos;springboot-hotel&apos;&#x0D;&#x0A;- Destination element: &apos;spring-boot-institute/src/main/java/cn.qfengx.portal.util&apos;&#x0D;&#x0A;- Original element: &apos;com.leo.hotel.utils.MD5Utils.java&apos;" description="Copy compilation unit" destination="=spring-boot-institute/src\/main\/java&lt;cn.qfengx.portal.util" element1="/src\/main\/java&lt;com.leo.hotel.utils{MD5Utils.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1554618058061" units="1" version="1.0"/>
+</session>

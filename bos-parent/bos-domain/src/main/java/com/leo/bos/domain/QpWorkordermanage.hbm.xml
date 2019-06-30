@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2018-10-9 18:00:39 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping auto-import="false">
+ <class catalog="bos" name="com.leo.bos.domain.QpWorkordermanage" table="qp_workordermanage">
+  <id name="id" type="string">
+   <column length="32" name="id"/>
+   <generator class="assigned"/>
+  </id>
+  <property generated="never" lazy="false" name="arrivecity" type="string">
+   <column length="20" name="arrivecity"/>
+  </property>
+  <property generated="never" lazy="false" name="product" type="string">
+   <column length="20" name="product"/>
+  </property>
+  <property generated="never" lazy="false" name="num" type="java.lang.Integer">
+   <column name="num"/>
+  </property>
+  <property generated="never" lazy="false" name="weight" type="java.lang.Double">
+   <column name="weight" precision="22" scale="0"/>
+  </property>
+  <property generated="never" lazy="false" name="floadreqr" type="string">
+   <column name="floadreqr"/>
+  </property>
+  <property generated="never" lazy="false" name="prodtimelimit" type="string">
+   <column length="40" name="prodtimelimit"/>
+  </property>
+  <property generated="never" lazy="false" name="prodtype" type="string">
+   <column length="40" name="prodtype"/>
+  </property>
+  <property generated="never" lazy="false" name="sendername" type="string">
+   <column length="20" name="sendername"/>
+  </property>
+  <property generated="never" lazy="false" name="senderphone" type="string">
+   <column length="20" name="senderphone"/>
+  </property>
+  <property generated="never" lazy="false" name="senderaddr" type="string">
+   <column length="200" name="senderaddr"/>
+  </property>
+  <property generated="never" lazy="false" name="receivername" type="string">
+   <column length="20" name="receivername"/>
+  </property>
+  <property generated="never" lazy="false" name="receiverphone" type="string">
+   <column length="20" name="receiverphone"/>
+  </property>
+  <property generated="never" lazy="false" name="receiveraddr" type="string">
+   <column length="200" name="receiveraddr"/>
+  </property>
+  <property generated="never" lazy="false" name="feeitemnum" type="java.lang.Integer">
+   <column name="feeitemnum"/>
+  </property>
+  <property generated="never" lazy="false" name="actlweit" type="java.lang.Double">
+   <column name="actlweit" precision="22" scale="0"/>
+  </property>
+  <property generated="never" lazy="false" name="vol" type="string">
+   <column length="20" name="vol"/>
+  </property>
+  <property generated="never" lazy="false" name="managerCheck" type="string">
+   <column length="1" name="managerCheck"/>
+  </property>
+  <property generated="never" lazy="false" name="updatetime" type="date">
+   <column length="10" name="updatetime"/>
+  </property>
+ </class>
+</hibernate-mapping>

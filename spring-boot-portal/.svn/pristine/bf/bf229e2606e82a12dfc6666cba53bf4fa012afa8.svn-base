@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <style>
+        .layui-table-view {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        .layui-table-view .layui-form-select .layui-input {
+            height: 30px;
+        }
+        .layui-table-view .layui-form-select dl dd, .layui-form-select dl dt {
+            line-height: 30px;
+        }
+        .layui-table-view .layui-form-select dl {
+            top: 34px;
+        }
+        .layui-anim, .layui-anim-upbit, .layui-form-select dl {
+            z-index: 10002;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="layui-layout-body">
+<table id="carousellist" lay-filter="carousellisttable"></table>
+</body>
+<div id="divadd" style="display: none; padding: 10px">
+    <form class="layui-form layui-form-pane">
+        <div class="layui-form-item">
+            <label class="layui-form-label">轮播图片</label>
+            <div class="layui-upload" id="addimg">
+                <button type="button" class="layui-btn" id="uppimg">上传图片</button>
+                <div class="layui-upload-list">
+                    <img class="layui-upload-img" id="uppimgview">
+                    <p id="uppimgtext"></p>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="divshow" style="display: none; padding: 10px">
+    <div class="layui-carousel" id="showcarousel">
+        <div carousel-item id="itemlist"></div>
+    </div>
+</div>
+<script src="../layui/layui.js"></script>
+<script src="../js/wangEditor.min.js"></script>
+<script type="text/html" id="zizeng">
+    {{d.LAY_TABLE_INDEX+1}}
+</script>
+<script type="text/html" id="toolbarDemo">
+    <form class="layui-form layui-form-pane">
+        <div class="layui-form-item" style="margin-bottom: 0">
+            <div class="layui-inline">
+                <button lay-event="add" type="button" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe654;</i></button>
+                <button lay-event="show" type="button" class="layui-btn layui-btn-sm">展示效果</button>
+                <button id="refresh" lay-event="refresh" class="layui-btn layui-bg-blue layui-btn-sm" type="button"><i class="layui-icon">&#xe669;</i></button>
+            </div>
+            <div class="layui-inline" style="float: right">
+                <button lay-event="delete" type="button" class="layui-btn layui-btn-danger layui-btn-sm"><i class="layui-icon">&#xe640;</i></button>
+            </div>
+        </div>
+    </form>
+</script>
+<script type="text/html" id="barDemo">
+    <div class="layui-inline">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">
+            编辑
+        </a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">
+            删除
+        </a>
+    </div>
+</script>
+<script type="text/html" id="pimg">
+    <img src="{{d.img}}" style="height: 100%; width: 100%">
+</script>
+<script>
+    layui.use(['element', 'jquery', 'table', 'form', 'laydate', 'layer', 'upload', 'carousel'], function() {
+        var element = layui.element;
+        var $ = layui.jquery;
+        var table = layui.table;
+        var form = layui.form;
+        var laydate = layui.laydate;
+        var layer = layui.layer;
+        var upload = layui.upload;
+        var carousel = layui.carousel;
+        var inscarousel = null;
+        var carouselOptions = {
+            elem: '#showcarousel',
+            width: '100%',
+            arrow: 'always'
+        };
+
+        function carouselDOMreset() {
+            $('#itemlist').empty();
+        }
+
+        table.render({
+            elem: '#carousellist',
+            url: '/sys/list',
+            height: 'full-0',
+            toolbar: '#toolbarDemo',
+            page: true,
+            id: 'tablecarousellist',
+            cols: [[
+                {type:'checkbox', fixed: 'left'},
+                {width: 60, title: '序号',templet:'#zizeng', type: 'numbers'},
+                {field: 'img', templet:'#pimg', title: '图片', width: 200},
+                {field: 'img', title: 'URL'},
+                {fixed: 'right', align:'left', toolbar: '#barDemo'}
+            ]],
+            done: function() {
+
+            }
+        });
+
+        function addreset() {//添加层元素初始化
+            $('#addimg').empty();
+            $('#addimg').append('<button type="button" class="layui-btn" id="uppimg">上传图片</button>\n' +
+                '                <div class="layui-upload-list">\n' +
+                '                    <img class="layui-upload-img" id="uppimgview" width="92" height="92" style="margin-left: 110px">\n' +
+                '                    <p id="uppimgtext" style="margin-left: 110px"></p>\n' +
+                '                </div>');
+        }
+
+        function tablereload(page, keyObj) {
+            table.reload('tablecarousellist', {
+                page: page,
+                where: keyObj,
+                done: function() {
+                    daterender();
+                    setKeyObj(keyObj);
+                }
+            });
+        }
+
+        function getids(obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            if (checkStatus.data.length == 0) {
+                layer.msg('没有选中行', {icon: 2, time: 500});
+                return;
+            }
+            //提取oids
+            var ids = [];
+            for (var i = 0; i < checkStatus.data.length; i++)
+                ids.push(checkStatus.data[i].id);
+            return ids;
+        }
+
+        //监听头部工具栏
+        table.on('toolbar(carousellisttable)', function(obj){
+            switch(obj.event){
+                case 'add':
+                    addreset();
+                    var pimgurl = '';
+                    var uploadInst = upload.render({
+                        elem: '#uppimg',
+                        url: '/common/img',
+                        before: function(obj) {
+                            obj.preview(function(index, file, result){
+                                $('#uppimgview').attr('src', result); //图片链接（base64）
+                            });
+                        },
+                        done: function(res) {
+                            if (res.errno == '0') {
+                                pimgurl = res.data[0];
+                            } else if (res.errno == '1') {
+                                layer.msg(res.msg, {icon: 2, time: 1000});
+                                return;
+                            }
+                        },
+                        error: function() {
+                            var demoText = $('#uppimgtext');
+                            demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                            demoText.find('.demo-reload').on('click', function(){
+                                uploadInst.upload();
+                            });
+                        }
+                    });
+                    layer.open({
+                        type: 1,
+                        content: $('#divadd'),
+                        area: ['300px', '300px'],
+                        title: '添加图片',
+                        btn: ['添加'],
+                        success: function(layero, index) {
+                        },
+                        yes: function(index) {
+
+                            if (pimgurl == '') {
+                                layer.msg('请上传图片', {icon: 2, time: 1000});
+                                return;
+                            }
+                            $.ajax({
+                                url: '/sys/add',
+                                type: 'post',
+                                data: {img: pimgurl},
+                                dataType: 'json',
+                                success: function(res) {
+                                    if (res.code == "0") {
+                                        layer.msg('添加成功', {icon: 1, time: 500}, function() {
+                                            $('#refresh').click();
+                                            layer.close(index);
+                                        });
+                                    } else {
+                                        layer.msg(res.msg, {icon: 2, time: 1000});
+                                    }
+                                },
+                                error: function(res) {
+                                    layer.msg('网络错误', {icon: 2, time: 1000});
+                                }
+                            })
+                        }
+                    });
+                    break;
+                case 'show':
+                    carouselDOMreset();
+
+                    layer.open({
+                        type: 1,
+                        content: $('#divshow'),
+                        area: [$('body').width() - 45 + 'px', '350px'],
+                        title: '轮播展示',
+                        success: function(layero, index) {
+                            $.ajax({
+                                type: 'post',
+                                url: '/sys/query',
+                                dataType: 'json',
+                                success: function(res) {
+                                    if (res.code == "0") {
+                                        for (var i = 0; i < res.data.length; i++) {
+                                            $('#itemlist').append('<div><img src="' + res.data[i].img + '"></div>');
+                                        }
+
+                                        if (inscarousel == null) {
+                                            inscarousel = carousel.render(carouselOptions);
+                                        } else {
+                                            inscarousel.reload(carouselOptions);
+                                        }
+                                    } else {
+                                        layer.msg(res.msg, {icon: 2, time: 1000});
+                                    }
+                                },
+                                error: function() {
+                                    layer.msg('网络错误', {icon: 2, time: 1000});
+                                }
+                            });
+                        }
+                    });
+                    break;
+                case 'refresh':
+                    tablereload({curr: obj.config.page.curr}, {});
+                    break;
+                case 'delete':
+                    var ids = getids(obj);
+                    if (ids.length == 0)
+                        return;
+                    layer.confirm('您确定要删除这' + ids.length + '张图片吗？',
+                        {btn: ['确定','取消'] },
+                        function() {
+                            $.ajax({
+                                url: "/sys/delete",
+                                type: 'post',
+                                data: {ids: ids},
+                                dataType: 'json',
+                                success: function (res) {
+                                    if (res.code == '0') {
+                                        layer.msg('删除成功', {icon: 1, time: 500}, function () {
+                                            $('#refresh').click();
+                                            layer.close(index);
+                                        });
+                                    } else if (res.code == '1') {
+                                        layer.msg(res.msg, {icon: 2, time: 1000});
+                                    }
+                                },
+                                error: function(res) {
+                                    layer.msg('异常错误', {icon: 2, time: 1000});
+                                }
+                            });
+                        });
+                    break;
+            };
+        });
+
+
+        //监听工具条
+        table.on('tool(carousellisttable)', function(obj) {
+            var data = obj.data;
+            console.log(data);
+            if (obj.event === 'edit') {
+                addreset();
+                var pimgurl = '';
+                var uploadInst = upload.render({
+                    elem: '#uppimg',
+                    url: '/common/img',
+                    before: function(obj) {
+                        obj.preview(function(index, file, result){
+                            $('#uppimgview').attr('src', result); //图片链接（base64）
+                        });
+                    },
+                    done: function(res) {
+                        if (res.errno == '0') {
+                            pimgurl = res.data[0];
+                        } else if (res.errno == '1') {
+                            layer.msg(res.msg, {icon: 2, time: 1000});
+                            return;
+                        }
+                    },
+                    error: function() {
+                        var demoText = $('#uppimgtext');
+                        demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                        demoText.find('.demo-reload').on('click', function(){
+                            uploadInst.upload();
+                        });
+                    }
+                });
+                layer.open({
+                    type: 1,
+                    content: $('#divadd'),
+                    area: ['300px', '300px'],
+                    title: '编辑图片',
+                    btn: ['修改'],
+                    success: function(layero, index) {
+                        $('#uppimgview').attr('src', data.img);
+                        pimgurl = data.img;
+                    },
+                    yes: function(index) {
+                        if (pimgurl == '') {
+                            layer.msg('请上传图片', {icon: 2, time: 1000});
+                            return;
+                        }
+                        $.ajax({
+                            url: '/sys/update',
+                            type: 'post',
+                            data: {img: pimgurl, id: data.id},
+                            dataType: 'json',
+                            success: function(res) {
+                                if (res.code == "0") {
+                                    layer.msg('添加成功', {icon: 1, time: 500}, function() {
+                                        $('#refresh').click();
+                                        layer.close(index);
+                                    });
+                                } else {
+                                    layer.msg(res.msg, {icon: 2, time: 1000});
+                                }
+                            },
+                            error: function(res) {
+                                layer.msg('网络错误', {icon: 2, time: 1000});
+                            }
+                        })
+                    }
+                });
+            } else if (obj.event === 'delete') {
+                layer.confirm('您确定要删除图片 ' + data.img + ' 吗？',
+                    {btn: ['确定','取消'] },
+                    function() {
+                        $.ajax({
+                            url: "/sys/delete",
+                            type: 'post',
+                            data: {ids: [data.id]},
+                            success: function (res) {
+                                if (res.code == '0') {
+                                    layer.msg('删除成功', {icon: 1, time: 500}, function () {
+                                        obj.del();//删除行
+                                        layer.close(index);
+                                    });
+                                } else if (res.code == '1') {
+                                    layer.msg(res.msg, {icon: 2, time: 500});
+                                }
+                            },
+                            error: function(res) {
+                                layer.msg('异常错误', {icon: 2, time: 500});
+                            }
+                        });
+                    });
+            }
+        });
+
+    });
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

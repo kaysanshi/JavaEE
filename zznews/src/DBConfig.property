@@ -1,0 +1,3 @@
+MySQLURL=jdbc:mysql://localhost:3306/zznews?user=root&password=123&useUnicode=true&characterEncoding=utf8
+
+

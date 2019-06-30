@@ -1,0 +1,34 @@
+package com.leo.course.scheduling.service;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.leo.course.scheduling.domain.Classes;
+import com.leo.course.scheduling.domain.Classroom;
+
+/**
+ * 
+ * @author kay三石
+ *TODO
+ *2019年3月7日-下午3:10:02
+ */
+public interface ClassesService {
+
+	Map<String, Object> add(Classes classes, HttpServletRequest request, HttpServletResponse response);
+
+	Map<String, Object> list(Integer page, Integer limit, HttpServletRequest request, HttpServletResponse response);
+
+	Map<String, Object> getClasses(HttpServletRequest request, HttpServletResponse response);
+
+	Map<String, Object> getClassesById(Integer classid, HttpServletRequest request, HttpServletResponse response);
+
+	List<Classes> getListClassesName();
+
+	List<Classes> getListClassesById(List<String> list_majorno);
+
+	
+
+}

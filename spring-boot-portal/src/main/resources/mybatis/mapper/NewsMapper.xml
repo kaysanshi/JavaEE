@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.qfengx.portal.mapper.NewsMapper">
+	<select id="queryById" resultType="cn.qfengx.portal.bean.News">
+		select * from news where id= #{value}
+	</select>
+	<select id="query" parameterType="cn.qfengx.portal.bean.NewsQueryVo" resultType="cn.qfengx.portal.bean.News">
+		select 
+			news.id as id,
+			news.title as title,
+			news.detail as detail,
+			news.addtime as addtime,
+			news.ncid as ncid,
+			news.click as click,
+			newscate.name as ncname
+			from news, newscate 
+				where
+					news.ncid = newscate.id
+				<if test="startDate != null">
+					and news.addtime &gt;= #{startDate}
+				</if>	
+				<if test="endDate != null">
+					and news.addtime &lt;= #{endDate}
+				</if>
+				
+				<if test="key != null and key != ''">
+					and (news.title like "%"#{key}"%" or news.detail like "%"#{key}"%")
+				</if>
+				
+				<if test="sort == null or sort == 0">
+					ORDER BY news.addtime desc
+				</if>
+				<if test="sort == 1">
+					ORDER BY news.addtime asc
+				</if>
+				
+				
+				limit #{start}, #{limit}	 
+	</select>
+	<select id="querySum" resultType="Integer" parameterType="cn.qfengx.portal.bean.NewsQueryVo">
+		select 
+			count(*)
+			from news, newscate 
+				where
+					news.ncid = newscate.id
+				<if test="startDate != null">
+					and news.addtime &gt;= #{startDate}
+				</if>	
+				<if test="endDate != null">
+					and news.addtime &lt;= #{endDate}
+				</if>
+				
+				<if test="key != null and key != ''">
+					and (news.title like "%"#{key}"%" or news.detail like "%"#{key}"%")
+				</if>
+	</select>
+	<insert id="add" parameterType="cn.qfengx.portal.bean.News" useGeneratedKeys="true" keyProperty="id">
+		insert into news 
+			(ncid, title, click, detail, addtime)
+		values 
+			(#{ncid}, #{title}, #{click}, #{detail}, #{addtime})
+	</insert> 
+	<update id="update" parameterType="cn.qfengx.portal.bean.NewsQueryVo">
+		update news set title = #{title}, detail = #{detail}, ncid = #{ncid}
+	</update>
+	<delete id="delete">
+		delete from news 
+		where id in (
+			<foreach collection="array" item="id" separator=",">
+				#{id}
+			</foreach>
+		)
+	</delete>
+</mapper>

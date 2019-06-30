@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kaysanshi.institute.mapper.CarouselMapper">
+	<select id="query" parameterType="com.kaysanshi.institute.bean.CarouselQueryVo" resultType="com.kaysanshi.institute.bean.Carousel">
+		select 
+			*
+			from carousel  	
+				where status='0' and id limit #{start}, #{limit} 	 
+	</select>
+	<select id="querySum" resultType="Integer" parameterType="com.kaysanshi.institute.bean.CarouselQueryVo">
+		select 
+			count(*)
+			from carousel where status='0'
+	</select>
+	<select id="queryAll" resultType="com.kaysanshi.institute.bean.Carousel">
+		select 
+			*
+			from carousel where status='0'
+	</select>
+	<insert id="add" parameterType="com.kaysanshi.institute.bean.Carousel" useGeneratedKeys="true" keyProperty="id">
+		insert into carousel 
+			(image)
+		values 
+			(#{image})
+	</insert> 
+	<update id="update" parameterType="com.kaysanshi.institute.bean.Carousel">
+		update carousel set image = #{image} 
+			where id = #{id} and status='0'
+	</update>
+	<delete id="delete">
+		delete from carousel 
+		where id in (
+			<foreach collection="array" item="id" separator=",">
+				#{id}
+			</foreach>
+		)
+	</delete>
+	
+	<update id="updatelogo" parameterType="com.kaysanshi.institute.bean.Carousel">
+		update carousel set image=#{image} where status='1'
+	</update>
+	<select id="querylogo" resultType="com.kaysanshi.institute.bean.Carousel">
+		select * from carousel  where status='1'
+	</select>
+</mapper>
