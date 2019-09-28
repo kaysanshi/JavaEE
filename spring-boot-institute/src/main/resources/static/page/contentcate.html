@@ -236,7 +236,7 @@
                         	 $.ajax({
                         		 url:'/content/cate/addcate',
                         		 data:{pid:pid,name:name,status:st},
-                        		 dataType:'josn',
+                        		 dataType:'json',
                         		 success:function(res){
                         			 if(res.code =='0'){
                         				 layer.msg("添加成功",{icon:1,time:1000});
@@ -324,7 +324,7 @@
                     	 $.ajax({
                     		 url:'/content/cate/upcate',
                     		 data:{id:data.id,pid:pid,name:name,status:st},
-                    		 dataType:'josn',
+                    		 dataType:'json',
                     		 success:function(res){
                     			 if(res.code =="0"){
                     				 layer.msg("修改成功",{icon:1,time:1000});
