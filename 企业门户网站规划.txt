@@ -1,0 +1,9 @@
+navigation£ºid,pid,name create,update
+carousel: id, title,url,create,update,createby
+company:id,name,phone,tellphone,email,post,description,createby
+news:id,title,desc,content,pic,createby
+product:id,tite,desc,content,pic,create,createby
+case:id,title,desc,content,pic,create,createby
+user:id,name,password,create update
+
+
