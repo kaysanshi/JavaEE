@@ -19,8 +19,8 @@
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-	<!-- 引用dubbo服务 
+	<!-- 引用dubbo服务 -->
 	<dubbo:application name="e3-portal-web"/>
 	<dubbo:registry protocol="zookeeper" address="39.105.4.254:2181"/>	
-	<dubbo:reference interface="com.leo.e3mall.content.service.ContentService" id="contentService" />-->
+	<dubbo:reference interface="com.leo.e3mall.content.service.ContentService" id="contentService" />
 </beans>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kayleoi.springbootshop.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.kayleoi.springbootshop.domain.User">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="create" jdbcType="DATE" property="create" />
+  </resultMap>
+</mapper>
