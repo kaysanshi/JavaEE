@@ -8,7 +8,7 @@
         <version>2.2.0.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.kayleoi</groupId>
+    <groupId>com.kaysanshi</groupId>
     <artifactId>spring-boot-shop</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>spring-boot-shop</name>
@@ -19,11 +19,31 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>2.1.1</version>
-        </dependency>
+        <!--mybatis中的jar包-->
+        <!--<dependency>-->
+            <!--<groupId>org.mybatis.spring.boot</groupId>-->
+            <!--<artifactId>mybatis-spring-boot-starter</artifactId>-->
+            <!--<version>2.1.1</version>-->
+        <!--</dependency>-->
+        <!--通用mapper:
+        tk.mybatis:mapper 依赖包含了通用 Mapper 的基础代码 mapper-core,-base,-extra,-weekend,-generator以及
+        和 Spring 集成必须的代码 mapper-spring  1.1.5
+        4.1.5 和 apper-spring-boot-starter 2.1.5 所包含的jar包的版本是一样的，如果同时使用这个两个jar包（tk.mybatis:mapper）
+        （mapper-spring-boot-starter）必须使得所包含的jar包的版本号一样，否者会引起jar冲突，报错java.lang.NoSuchMethodException: tk.mybatis.mapper.provider.base.BaseSelectProvider.
+        所一这里不必使用这个jar包直接使用与springboot集成的jar包即可
+        -->
+        <!--<dependency>-->
+            <!--<groupId>tk.mybatis</groupId>-->
+            <!--<artifactId>mapper</artifactId>-->
+            <!--<version>4.1.5</version>-->
+        <!--</dependency>-->
+        <!--mapper-spring-boot-start不可以和上面的mapper包一起用因为他已经包含了上面的那个
+            tk.mybatis:mapper   依赖包含了通用 Mapper 的基础代码 mapper-core,-base,-extra,-weekend,-generator以及
+        和 Spring 集成必须的代码 mapper-spring ,springboot继承的：
+        mapper-spring-boot-autoconfigure, 1.1.5
+        spring-boot-starter-jdbc, 1.1.5
+        spring-boot-starter 1.1.5
+        -->
         <dependency>
             <groupId>tk.mybatis</groupId>
             <artifactId>mapper-spring-boot-starter</artifactId>
@@ -33,17 +53,21 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
-            <optional>true</optional>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-devtools</artifactId>-->
+            <!--<scope>runtime</scope>-->
+            <!--<optional>true</optional>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -55,11 +79,6 @@
                     <artifactId>junit-vintage-engine</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>tk.mybatis</groupId>
-            <artifactId>mapper</artifactId>
-            <version>3.4.4</version>
         </dependency>
     </dependencies>
 
@@ -92,6 +111,14 @@
                 </dependencies>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 
 </project>

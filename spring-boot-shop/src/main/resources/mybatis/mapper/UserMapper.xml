@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kayleoi.springbootshop.dao.UserMapper">
-  <resultMap id="BaseResultMap" type="com.kayleoi.springbootshop.domain.User">
+<mapper namespace="com.kaysanshi.springbootshop.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.kaysanshi.springbootshop.domain.User">
     <!--
       WARNING - @mbg.generated
     -->
@@ -15,6 +15,6 @@
     <result column="sex" jdbcType="VARCHAR" property="sex" />
     <result column="state" jdbcType="INTEGER" property="state" />
     <result column="code" jdbcType="VARCHAR" property="code" />
-    <result column="create" jdbcType="DATE" property="create" />
+    <result column="create" jdbcType="TIMESTAMP" property="create" />
   </resultMap>
 </mapper>

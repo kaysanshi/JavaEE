@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kayleoi.springbootshop.dao.ProductMapper">
-  <resultMap id="BaseResultMap" type="com.kayleoi.springbootshop.domain.Product">
+<mapper namespace="com.kaysanshi.springbootshop.dao.ProductMapper">
+  <resultMap id="BaseResultMap" type="com.kaysanshi.springbootshop.domain.Product">
     <!--
       WARNING - @mbg.generated
     -->
@@ -21,6 +21,100 @@
     <result column="recommand_status" jdbcType="INTEGER" property="recommandStatus" />
     <result column="note" jdbcType="VARCHAR" property="note" />
     <result column="cid" jdbcType="VARCHAR" property="cid" />
-    <result column="desc" jdbcType="LONGVARCHAR" property="desc" />
+    <result column="description" jdbcType="LONGVARCHAR" property="description" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
   </resultMap>
+  <select id="getProductListBySearch" parameterType="com.kaysanshi.springbootshop.dto.ProductQueryDTO" resultMap="BaseResultMap">
+    select * from product
+    <where>
+      <if test="search != null and search != ''">
+        and name regexp #{search}
+      </if>
+      <if test="newStatus != null and newStatus != ''">
+        and new_status regexp #{newStatus}
+      </if>
+      <if test="hot != null and hot != '' and sort == 'hot'">
+        and is_hot = 0
+      </if>
+      <if test="publicStatus!=null and publicStatus !=''">
+        and publish_status regexp #{publicStatus}
+      </if>
+      and delete_status = 0
+    </where>
+    <if test="sort == null or sort == ''">
+      order by create_time desc
+    </if>
+    limit #{page},#{size}
+  </select>
+  <select id="countBySearch" parameterType="com.kaysanshi.springbootshop.dto.ProductQueryDTO"
+          resultType="java.lang.Integer">
+    select count(*) from product
+    <where>
+      <if test="search != null and search != ''">
+        and name regexp #{search}
+      </if>
+      <if test="newStatus != null and newStatus != ''">
+        and new_status regexp #{newStatus}
+      </if>
+      <if test="hot != null and hot != '' and sort == 'hot'">
+        and is_hot = 0
+      </if>
+      <if test="publicStatus!=null and publicStatus !=''">
+        and publish_status regexp #{publicStatus}
+      </if>
+      and delete_status = 0
+    </where>
+
+  </select>
+  <select id="query" parameterType="com.kaysanshi.springbootshop.dto.ProductQueryVO" resultType="com.kaysanshi.springbootshop.domain.Product">
+    select * from product
+    where
+      delete_status = 0
+    <if test="startDate != null">
+      and create_time &gt;= #{startDate}
+    </if>
+    <if test="endDate != null">
+      and create_time &lt;= #{endDate}
+    </if>
+
+    <if test="key != null and key != ''">
+      and name like "%"#{key}"%"
+    </if>
+
+    <if test="sort == null or sort == 0">
+      ORDER BY create_time desc
+    </if>
+    <if test="sort == 1">
+      ORDER BY create_time asc
+    </if>
+
+    limit #{start}, #{limit}
+  </select>
+
+  <select id="querySum" resultType="Integer" parameterType="com.kaysanshi.springbootshop.dto.ProductQueryVO">
+    select
+    count(*)
+    from product, category
+    where
+    product.cid = category.id
+    <if test="startDate != null">
+      and product.create_time &gt;= #{startDate}
+    </if>
+    <if test="endDate != null">
+      and product.create_time &lt;= #{endDate}
+    </if>
+
+    <if test="key != null and key != ''">
+      and product.name like "%"#{key}"%"
+    </if>
+
+    <if test="sort == null or sort == 0">
+      ORDER BY product.create_time desc
+    </if>
+    <if test="sort == 1">
+      ORDER BY product.create_time asc
+    </if>
+  </select>
+
 </mapper>

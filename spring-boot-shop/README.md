@@ -32,6 +32,31 @@
                 </dependency>
             </dependencies>
         </plugin>
+        
+     <!--通用mapper:
+             tk.mybatis:mapper 依赖包含了通用 Mapper 的基础代码 mapper-core,-base,-extra,-weekend,-generator以及
+             和 Spring 集成必须的代码 mapper-spring  1.1.5
+             4.1.5 和 apper-spring-boot-starter 2.1.5 所包含的jar包的版本是一样的，如果同时使用这个两个jar包（tk.mybatis:mapper）
+             （mapper-spring-boot-starter）必须使得所包含的jar包的版本号一样，否者会引起jar冲突，报错java.lang.NoSuchMethodException: tk.mybatis.mapper.provider.base.BaseSelectProvider.
+             所一这里不必使用这个jar包直接使用与springboot集成的jar包即可
+             -->
+             <!--<dependency>-->
+                 <!--<groupId>tk.mybatis</groupId>-->
+                 <!--<artifactId>mapper</artifactId>-->
+                 <!--<version>4.1.5</version>-->
+             <!--</dependency>-->
+             <!--mapper-spring-boot-start不可以和上面的mapper包一起用因为他已经包含了上面的那个
+                 tk.mybatis:mapper   依赖包含了通用 Mapper 的基础代码 mapper-core,-base,-extra,-weekend,-generator以及
+             和 Spring 集成必须的代码 mapper-spring ,springboot继承的：
+             mapper-spring-boot-autoconfigure, 1.1.5
+             spring-boot-starter-jdbc, 1.1.5
+             spring-boot-starter 1.1.5
+             -->
+             <dependency>
+                 <groupId>tk.mybatis</groupId>
+                 <artifactId>mapper-spring-boot-starter</artifactId>
+                 <version>2.1.5</version>
+             </dependency>
 ###generatorConfig.xml:
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE generatorConfiguration

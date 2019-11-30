@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kayleoi.springbootshop.dao.BannerMapper">
-  <resultMap id="BaseResultMap" type="com.kayleoi.springbootshop.domain.Banner">
+<mapper namespace="com.kaysanshi.springbootshop.dao.BannerMapper">
+  <resultMap id="BaseResultMap" type="com.kaysanshi.springbootshop.domain.Banner">
     <!--
       WARNING - @mbg.generated
     -->
@@ -10,5 +10,7 @@
     <result column="image" jdbcType="VARCHAR" property="image" />
     <result column="create" jdbcType="VARCHAR" property="create" />
     <result column="productid" jdbcType="VARCHAR" property="productid" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
   </resultMap>
 </mapper>
