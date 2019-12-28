@@ -29,14 +29,14 @@ public class CartServiceImpl implements CartService {
 
         //获得该商品的购买数量
         int buyNum = Integer.parseInt(request.getParameter("buyNum"));
-
+        product.setId(request.getParameter("id")); //获得商品id
         //获得product对象
         Product products = productService.getProduct(product);
         //计算小计
         double subtotal = products.getShopPrice() * buyNum;
         //封装CartItem
         CartItem item = new CartItem();
-        item.setProduct(product);
+        item.setProduct(products);
         item.setBuyNum(buyNum);
         item.setSubtotal(subtotal);
 
@@ -64,13 +64,13 @@ public class CartServiceImpl implements CartService {
             //原来该商品的小计
             double oldsubtotal = cartItem.getSubtotal();
             //新买的商品的小计
-            newsubtotal = buyNum * product.getShopPrice();
+            newsubtotal = buyNum * products.getShopPrice();
             cartItem.setSubtotal(oldsubtotal + newsubtotal);
 
         } else {
             //如果车中没有该商品
             cart.getCartItems().put(product.getId(), item);
-            newsubtotal = buyNum * product.getShopPrice();
+            newsubtotal = buyNum * products.getShopPrice();
         }
 
         //计算总计

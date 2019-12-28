@@ -38,7 +38,8 @@ public class CommonController {
     public BaseResult upload(@RequestParam("file") MultipartFile file, HttpServletRequest request, HttpServletResponse response){
         if(!file.isEmpty()){
             String fileName=file.getOriginalFilename();
-            String newFileName= UUID.randomUUID().toString()+fileName.substring(file.getName().lastIndexOf("."));
+            System.out.println(fileName);
+            String newFileName= UUID.randomUUID().toString()+fileName.substring(file.getOriginalFilename().lastIndexOf("."));
             File saveFile = new File(uploadConfig.getPimgPath() + "/" + newFileName);
             if (!saveFile.getParentFile().exists()) {
                 saveFile.getParentFile().mkdirs();

@@ -22,97 +22,209 @@
             z-index: 10002;
         }
     </style>
+    <link rel="stylesheet" href="../layui/module/treetable-lay/treetable.css">
 </head>
 <body class="layui-layout-body">
-<table id="list" lay-filter="listtable"></table>
-</body>
-<div id="divadd" style="display: none; padding: 10px">
-    <form class="layui-form layui-form-pane">
-        <div class="layui-form-item">
-            <label class="layui-form-label">分类名称</label>
-            <div class="layui-input-inline">
-                <input type="text" id="add-name" required lay-verify="required" autocomplete="off" placeholder="请输入分类名" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">所属类型</label>
-            <div class="layui-input-inline">
-                <select id="add-newstype">
-                    <option value="-1">无</option>
-                </select>
-            </div>
-        </div>
-        <div class="layui-form-item">
-        	 <label class="layui-form-label">是否启用</label>
-        	 <div class="layui-input-block">
-		      	<input type="checkbox" name="switch" id="add-status"lay-skin="switch">
-		    </div>
-        </div>
-    </form>
-</div>
-<script src="../layui/layui.js"></script>
-<script src="../layui/lay/modules/treetable-lay/treetable.js"></script>
-<script src="../js/wangEditor.min.js"></script>
-<script type="text/html" id="zizeng">
-    {{d.LAY_TABLE_INDEX+1}}
-</script>
-<script type="text/html" id="toswitch">
-    <input type="checkbox" lay-skin="switch" lay-text="启用|禁用" {{d.status =='0'?"checked":"" }}>
-</script>
-<script type="text/html" id="typename">
-    {{#  if(d.typeid==1){ }}
-        养生
-    {{#  } else if(d.typeid==2) { }}
-        饮食
-    {{#  }else if(d.typeid==3){ }}
-        时政
-    {{# }else if(d.typeid==4){ }}
-        健康小贴士
-    {{# }else if(d.typeid==5){ }}
-        用品推荐
-    {{# }else{  }}
-        测试
-    {{# }}}
-</script>
-<script type="text/html" id="toolbarDemo">
+<div>
     <form class="layui-form layui-form-pane">
         <div class="layui-form-item" style="margin-bottom: 0">
 
             <div class="layui-inline">
-                <button lay-event="add" type="button" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe654;</i></button>
+                <button lay-event="add" id="add" type="button" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe654;</i></button>
                 <button id="refresh" lay-event="refresh" class="layui-btn  layui-btn-sm" type="button"><i class="layui-icon">&#xe669;</i></button>
             </div>
             <div class="layui-inline" style="float: right">
                 <button lay-event="delete" type="button" class="layui-btn layui-btn-danger layui-btn-sm"><i class="layui-icon">&#xe640;</i></button>
             </div>
-            
         </div>
     </form>
+</div>
+<table id="listtable" lay-filter="listtable" class="layui-table"></table>
+</body>
+<div id="divadd" style="display: none; padding: 10px">
+    <form class="layui-form layui-form-pane" lay-filter="form-add">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">分类名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="add-name" required lay-verify="required" autocomplete="off" placeholder="请输入分类名" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">单位</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="add-unit" required lay-verify="required" autocomplete="off" placeholder="请输入单位" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">添加时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="add-addtime" required lay-verify="required" autocomplete="off" placeholder="yyyy-MM-dd" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">所属分类</label>
+            <table id="laytable" lay-filter="laytable"></table>
+        </div>
+        <div class="layui-form-item">
+           <div class="layui-inline">
+               <label class="layui-form-label">是否启用</label>
+               <div class="layui-input-inline">
+                   <input type="checkbox" name="switch" id="add-showstatus" lay-skin="switch" lay-text="开启|关闭">
+               </div>
+           </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">导航栏是否启用</label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" name="switch" id="add-navstatus"lay-skin="switch" lay-text="开启|关闭">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <lable class="layui-form-label">图标</lable>
+            <div class="layui-upload" id="addimg">
+                <button type="button" class="layui-btn" id="uppimg">上传图标</button>
+                <div class="layui-upload-list">
+                    <img class="layui-upload-img" id="uppimgview">
+                    <p id="uppimgtext"></p>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">内容详情</label>
+            <div class="layui-input-block">
+                <div id="content"></div>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="divdetail" style="display: none; padding: 10px">
+    <form class="layui-form layui-form-pane">
+        <div class="layui-inline">
+            <div class="layui-form-item">
+                <label class="layui-form-label">分类名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="detail-name" required lay-verify="required" autocomplete="off" placeholder="请输入分类名" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">单位</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="detail-unit" required lay-verify="required" autocomplete="off" placeholder="请输入单位" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否启用</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="switch" id="detail-showstatus"lay-skin="switch" lay-text="开启|关闭">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">导航栏启用</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="switch" id="detail-navstatus" lay-skin="switch" lay-text="开启|关闭">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <lable class="layui-form-label">图标</lable>
+            <div class="layui-upload" id="detailmg">
+                <div class="layui-upload-list">
+                    <img class="layui-upload-img" id="detailimgview">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">内容详情</label>
+            <div class="layui-input-block">
+                <div id="detailcontent"></div>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <div class="layui-form-item">
+                <label class="layui-form-label">添加时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="detail-addtime" required lay-verify="required" autocomplete="off" placeholder="请输入分类名" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">修改时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="detail-updatetime" required lay-verify="required" autocomplete="off" placeholder="请输入分类名" class="layui-input">
+                </div>
+            </div>
+
+        </div>
+
+    </form>
+</div>
+<script src="../layui/layui.js"></script>
+<script src="../js/wangEditor.min.js"></script>
+<script type="text/html" id="zizeng">
+    {{d.LAY_TABLE_INDEX+1}}
+</script>
+<script type="text/html" id="navswitch">
+    <input type="checkbox" lay-skin="switch" disabled="disabled" lay-text="启用|禁用" {{d.navStatus =='0'?"checked":"" }}>
+</script>
+<script type="text/html" id="showswitch">
+    <input type="checkbox" lay-skin="switch"  disabled="disabled" lay-text="启用|禁用" {{d.showStatus =='0'?"checked":"" }}>
+</script>
+<script type="text/html" id="img">
+    <img src="{{d.icon}}" style="height: 100%; width: 100%">
+</script>
+<script type="text/html" id="showbarDemo">
+    <div class="layui-inline">
+        {{# if(d.pid==-1){}}
+            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="showtree">
+                展开
+            </a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="closetree">
+                关闭
+            </a>
+            <a class="layui-btn layui-btn-xs" lay-event="edit">
+                编辑
+            </a>
+        {{#}else{}}
+            <a class="layui-btn layui-btn-xs" lay-event="edit">
+                编辑
+            </a>
+            <a class="layui-btn layui-btn-xs" lay-event="delete">
+                删除
+            </a>
+        {{#}}}
+    </div>
+</script>
+<script type="text/html" id="typename">
+
+</script>
+<script type="text/html" id="toolbarDemo">
+
 </script>
 
 <script type="text/html" id="barDemo">
     <div class="layui-inline">
-          <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="showtree">
+          <a class="layui-btn layui-btn-primary layui-btn-xs" id="btn-expand" lay-event="showtree">
        	 展开
         </a>
-          <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="closetree">
+          <a class="layui-btn layui-btn-danger layui-btn-xs" id="btn-fold" lay-event="closetree">
      	关闭
         </a>
         <a class="layui-btn layui-btn-xs" lay-event="edit">
             编辑
         </a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="addtree">
-            添加字节点
-        </a>
     </div>
 </script>
 <script>
 	layui.config({
-		base:'/static/layui/lay/modules/'
+		base:'/layui/module/'
 	}).extend({
 		treetable:'treetable-lay/treetable'
 	});
-    layui.use(['element', 'jquery', 'table', 'form', 'laydate', 'layer','treetable'], function() {
+	layui.use(['element', 'jquery', 'table', 'form', 'laydate', 'layer','treetable','upload'], function() {
         var element = layui.element;
         var $ = layui.jquery;
         var table = layui.table;
@@ -120,7 +232,45 @@
         var laydate = layui.laydate;
         var layer = layui.layer;
 		var treetable=layui.treetable;
+        var upload=layui.upload;
+        var editor;
+        editor = new wangEditor('#content');
+        editor.customConfig.debug = true;
+        editor.customConfig.uploadFileName = 'file';
+        editor.customConfig.uploadImgServer = '/common/upload';
+        //自定义上传图片事件
+        editor.customConfig.uploadImgHooks = {
+            before: function(xhr, editor, files) {
 
+            },
+            success: function(xhr, editor, result) {
+                console.log("上传成功");
+            },
+            fail: function(xhr, editor, result) {
+                console.log("上传失败,原因是" + result);
+            },
+            error: function(xhr, editor) {
+                console.log("上传出错");
+            },
+            timeout: function(xhr, editor) {
+                console.log("上传超时");
+            },
+            customInsert: function (insertImg, result, editor) {
+                // 图片上传并返回结果，自定义插入图片的事件（而不是编辑器自动插入图片！！！）
+                // insertImg 是插入图片的函数，editor 是编辑器对象，result 是服务器端返回的结果
+
+                // 举例：假如上传图片成功后，服务器端返回的是 {url:'....'} 这种格式，即可这样插入图片：
+                var url = result.data;
+                console.log(url);
+                insertImg(url);
+
+                // result 必须是一个 JSON 格式字符串！！！否则报错
+            }
+        }
+        editor.create();
+        laydate.render({
+            elem:'#add-addtime'
+        })
         function daterender() {
             laydate.render({
                 elem: '#startDate',
@@ -131,92 +281,75 @@
                 format:'yyyy-MM-dd'
             });
         }
-		treetable.render({
-			treeColIndex:3,
-			treeSpid:-1,
-			treeIdName:'id',
-			treePidName:'pid',
-			treeDefaultClose:false,//默认全部关闭，这里打开
-			treeLinkage:true,
-			elem:'#list',
-			url:'http://10.33.8.51:91/api/news/cate/list/all?typeid=1&pid=-1&rec=1&isSub=0',
-		
-			//url:'http://127.0.0.1:8020/static/json/test.json',
-			cols:[[
-				{type:'checkbox', fixed: 'left'},
-                {width: 60, title: '序号',fixed: 'left',templet:'#zizeng', type: 'numbers'},
-				{field:'pid',title:'pid', width:50,style:'display:none;'},
-				{field:'name', title:'分类名称'},
-				{field:'typeid',title:'类型名称',width:120,templet:'#typename'},
-				{field:'status',title:'状态', width:90,templet:'#toswitch'},
-				{fixed: 'right', align:'left', toolbar: '#barDemo'},
-			]],
-			done:function(){
-				$('table:eq(1).layui-table thead tr th:eq(0)').addClass('layui-hide');
-			}
-			
-		});
-//      table.render({
-//          elem: '#list',
-//          url: 'http://10.33.8.51:91/api/news/cate/list/all?typeid=1&pid=-1&rec=0',
-//          height: 'full-0',
-//          toolbar: '#toolbarDemo',
-//          id: '#listtable',
-//          page: true,
-//          cols: [[
-//              {type:'checkbox', fixed: 'left'},
-//              {width: 60, title: '序号',fixed: 'left',templet:'#zizeng', type: 'numbers'},
-//              {field: 'name', title: '父级分类名称'},
-//              {field:'typid',title:'所属类型',templet:'#typename'},
-//              {field:'status', title:'状态' , width:80 ,templet:'#toswitch'},
-//              {fixed: 'right', align:'left', toolbar: '#barDemo'}
-//          ]],
-//          done:function () {
-//
-//          }
-//      });
+        var renderTable=function () {
+            layer.load(2);
+            treetable.render({
+                treeColIndex: 3, // 树形图标显示在那列
+                treeSpid: -1, // 最上级的id
+                treeIdName: 'id', // id 子端的名字
+                treePidName: 'pid',// pid 的名字
+                treeDefaultClose: true,//默认全部关闭，这里打开
+                treeLinkage: false, // 父级展示是子类全部展示
+                //toolbar: '#toolbarDemo',
+                page: true,
+                elem: '#listtable',
+                url: '/product/category/listall',
+                cols: [[
+                    {type: 'checkbox', fixed: 'left'},
+                    {width: 60, title: '序号', fixed: 'left', templet: '#zizeng', type: 'numbers'},
+                    {field: 'pid', title: 'pid', width: 50, style: 'display:none;'},
+                    {field: 'name', title: '分类名称' ,width:180},
+                    {field: 'navStatus', title: '导航栏显示', width: 90, templet: '#navswitch'},
+                    {field: 'showStatus', title: '前台是否显示', width: 90, templet: '#showswitch'},
+                    {field: 'icon', title: '图标', width: 80, templet: '#img'},
+                    {field: 'productUnit', title: '单位', width: 80},
+                    {field: 'productCount', title: '产品总数', width: 80},
+                    {field: 'description', title: '描述', width: 100},
+                    {field: 'createTime', title: '添加时间', width: 100},
+                    {field: 'updateTime', title: '修改时间', width: 100},
+                    {field: 'createUser', title: '创建人', width: 100},
+                    {fixed: 'right', align: 'right', toolbar: '#showbarDemo',width:360}
+                ]],
+                done: function () {
+                    $('table:eq(1).layui-table thead tr th:eq(0)').addClass('layui-hide');
+                    layer.closeAll('loading')
+                }
+
+            });
+        };
+        // 触发加载
+        renderTable();
+
 
         function addreset() {//添加层元素初始化
+            $('#addimg').empty();
+            $('#addimg').append('<button type="button" class="layui-btn" id="uppimg">上传封面图片</button>\n' +
+                '                <div class="layui-upload-list">\n' +
+                '                    <img class="layui-upload-img" id="uppimgview" width="92" height="92" style="margin-left: 110px">\n' +
+                '                    <p id="uppimgtext" style="margin-left: 110px"></p>\n' +
+                '                </div>');
             $('#add-name').val('');
-            $("#add-newscate").find("option:selected").text("");
-            $("#add-newscate").empty();
-            $("#add-newscate").append('<option value="">请选择类别</option>');
+            $('#add-unit').val('');
+            $('#add-addtime').val('');
+            editor.txt.html('');
+            $('#add-navstatus').prop("checked",'');
+            $('#add-showstatus').prop("checked",'');
+
+
         }
 
+        function detailreset() {
+            $('#detailcontent').empty()
+            $('#addimg').empty();
+            $('#addimg').append(
+                '                <div class="layui-upload-list">\n' +
+                '                    <img class="layui-upload-img" id="uppimgview" width="92" height="92" style="margin-left: 110px">\n' +
+                '                    <p id="uppimgtext" style="margin-left: 110px"></p>\n' +
+                '                </div>');
 
-        function getKeyObj() {
-            var startDate = $('#startDate').val();
-            var endDate = $('#endDate').val();
-            var sort = $('#sort').val();
-            var key = $('#key').val();
-            return {
-                startDate: startDate,
-                endDate: endDate,
-                sort: sort,
-                key: key
-            }
+
+
         }
-
-        function setKeyObj(keyObj) {
-            $('#startDate').val(keyObj.startDate);
-            $('#endDate').val(keyObj.endDate);
-            $('#sort').val(keyObj.sort);
-            $('#key').val(keyObj.key);
-
-            form.render();
-        }
-
-        function tablereload(page, keyObj) {
-            table.reload('listtable', {
-                page: page,
-                where: keyObj,
-                done: function() {
-                    daterender();
-                    setKeyObj(keyObj);
-                }
-            });
-        }
-
         function getids(obj) {
             var checkStatus = table.checkStatus(obj.config.id);
             if (checkStatus.data.length == 0) {
@@ -243,156 +376,269 @@
                 return 0;   //超小屏幕
             }
         }
-
-        //监听头部工具栏
-        table.on('toolbar(listtable)', function(obj){
-            switch(obj.event){
-                case 'showtree':
-                   
-                    break;
-                case 'closetree':
-                    
-                    break;
-                case 'refresh':
-                    var keyObj = getKeyObj();
-                    tablereload({curr: obj.config.page.curr}, keyObj);
-                    break;
-                case 'editor':
-
-                    break;
-                case 'addtree':
-                addreset();
-                layer.open({
-                    type: 1,
-                    content: $('#divadd'),
-                    area: screen()<2?['80%','70%']:['1000px','600px'],
-                    title: '添加字节点',
-                    btn: ['确认'],
-                    success: function(layero, index) {
-                        //获取分类列表
-                        $.ajax({
-                            url: 'http://10.33.8.51:91/api/news/type/list',
-                            type: 'post',
-                            dataType: 'json',
-                            success: function(res) {
-                                if (res.code == "0") {
-                                    var $newstype = $('#add-newstype');
-                                    for (var i = 0; i < res.count; i++) {
-                                        $newstype.append('<option value="' + res.data[i].id + '">' + res.data[i].name + '</option>')
-                                    }
-                                    form.render();
-                                } else {
-                                    layer.msg(res.msg, {icon: 2, time: 1000});
-                                }
-                            },
-                            error: function(res) {
-                                layer.msg('异常错误', {icon: 2, time: 1000});
-                            }
-                        });
-
-
-                    },
-                    yes: function(index) {
-                        var typeid = $('#add-newstype').val();
-                        var pid=data.pid;
-                        var name=$('#add-name').val();
-						var status=$('#add-status').val();
-                      
-                        if (typeid == '') {
-                            layer.msg('请选择新闻分类', {icon: 2, time: 1000});
-                            return;
+        $('#tab_btn-expand').click(function () {
+            treetable.expandAll('#listtable');
+        });
+        $('#tab_btn-fold').click(function () {
+            treetable.foldAll('#listtable');
+        });
+        $('#tab_btn-refresh').click(function () {
+            renderTable();
+        })
+        $('#add').click(function () {
+            addreset();
+            var pimgurl = '';
+            var uploadInst = upload.render({
+                elem: '#uppimg',
+                url: '/common/upload',
+                type:'post',
+                before: function(obj) {
+                    obj.preview(function(index, file, res){
+                        $('#uppimgview').attr('src', res); //图片链接（base64）
+                        console.log(res);
+                    });
+                },
+                done: function(res) {
+                    if (res.code =='0') {
+                        pimgurl = res.data;
+                    } else if (res.code == '1') {
+                        layer.msg(res.msg, {icon: 2, time: 1000});
+                        return;
+                    }
+                },
+                error: function() {
+                    var demoText = $('#uppimgtext');
+                    demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                    demoText.find('.demo-reload').on('click', function(){
+                        uploadInst.upload();
+                    });
+                }
+            });
+            var PID='';
+            layer.open({
+                type: 1,
+                content: $('#divadd'),
+                area: screen()<2?['80%','70%']:['1000px','600px'],
+                title: '添加字节点',
+                btn: ['确认'],
+                success: function(layero, index) {
+                    treetable.render({
+                        treeColIndex: 2,
+                        treeSpid: -1,
+                        treeIdName: 'id',
+                        treePidName: 'pid',
+                        treeDefaultClose: true,//默认全部关闭，这里打开
+                        elem: '#laytable',
+                        url: '/product/category/listall',
+                        cols: [[
+                            {width: 60, title: '序号', fixed: 'left', templet: '#zizeng', type: 'numbers'},
+                            {field: 'pid', title: '', width:1,style:'display:none;'},
+                            {field: 'name', title: '分类名称',width:'550'},
+                        ]],
+                        done: function () {
+                            $('.laytable-cell-3-0-2').addClass('layui-hide');
+                            layer.closeAll('loading')
                         }
 
-                        $.ajax({
-                            url: 'http://10.33.8.51:91/api/news/cate/list/add',
-                            type: 'post',
-                            data: {id: data.id, pid:pid,type:typeid,name:name,status:status},
-                            dataType: 'json',
-                            success: function(res) {
-                                if (res.code == "0") {
-                                    layer.msg('添加成功', {icon: 1, time: 500}, function() {
-                                        $('#refresh').click();
-                                        layer.close(index);
-                                    });
-                                } else {
-                                    layer.msg(res.msg, {icon: 2, time: 1000});
-                                }
-                            },
-                            error: function(res) {
-                                layer.msg('网络错误', {icon: 2, time: 1000});
-                            }
-                        })
+                    });
+                    // 这里一定要再次渲染
+                    form.render('checkbox','form-add');
+                    //监听行单击事件（双击事件为：rowDouble）
+                    table.on('rowDouble(laytable)', function(obj) {
+                        var data = obj.data;
+                        //标注选中样式
+                        obj.tr.addClass('layui-bg-red').siblings().removeClass('layui-bg-red');
+                        console.log(data.id);
+                        PID=data.id;
+                    });
+                    table.on('row(laytable)',function (obj) {
+                        obj.tr.removeClass('layui-bg-red');
+                        PID='';
+                    })
+
+
+                },
+                yes: function(index) {
+                    // 如果pid为'' 则说明是父级标题，否则就是子集标题
+                    if (PID==''){
+                        PID=-1
+                    }else{
+                        PID=PID;
                     }
-                });
-            };
-        });
+                    var showStatus,navStatus;
+                    if($('#add-showstatus').val()==='on'){
+                        showStatus='0'
+                    }else {
+                        showStatus='1'
+                    }
+                    if ($('#add-navstatus').val()==='on'){
+                        navStatus='0'
+                    }else{
+                        navStatus='1'
+                    }
+                    var name=$('#add-name').val();
+                    var unit=$('#add-unit').val();
+                    var content=editor.txt.html();
+                    var addtime=$('#add-addtime').val();
+
+                    $.ajax({
+                        url: '/product/category/add',
+                        type: 'post',
+                        data: {name:name,productUnit:unit,pid:PID,navStatus:navStatus,showStatus:showStatus,icon:pimgurl,description:content,createTime:addtime},
+                        dataType: 'json',
+                        success: function(res) {
+                            if (res.code == "0") {
+                                layer.msg('添加成功', {icon: 1, time: 500}, function() {
+                                    $('#refresh').click();
+                                    layer.close(index);
+                                });
+                            } else {
+                                layer.msg(res.msg, {icon: 2, time: 1000});
+                            }
+                        },
+                        error: function(res) {
+                            layer.msg('网络错误', {icon: 2, time: 1000});
+                        }
+                    })
+                }
+            });
+        })
+
 
 
 
         //监听工具条
         table.on('tool(listtable)', function(obj) {
             var data = obj.data;
-            if (obj.event === 'edit') {
+
+            if (obj.event ==='showtree') {
+                console.log("展开");
+
+            }else if (obj.event === 'closetree') {
+
+                console.log("关闭");
+            }else if (obj.event === 'edit') {
                 addreset();
+                var pimgurl = '';
+                var uploadInst = upload.render({
+                    elem: '#uppimg',
+                    url: '/common/upload',
+                    type:'post',
+                    before: function(obj) {
+                        obj.preview(function(index, file, res){
+                            $('#uppimgview').attr('src', res); //图片链接（base64）
+                            console.log(res);
+                        });
+                    },
+                    done: function(res) {
+                        if (res.code =='0') {
+                            pimgurl = res.data;
+                        } else if (res.code == '1') {
+                            layer.msg(res.msg, {icon: 2, time: 1000});
+                            return;
+                        }
+                    },
+                    error: function() {
+                        var demoText = $('#uppimgtext');
+                        demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                        demoText.find('.demo-reload').on('click', function(){
+                            uploadInst.upload();
+                        });
+                    }
+                });
+                var PID='';
                 layer.open({
                     type: 1,
                     content: $('#divadd'),
                     area: screen()<2?['80%','70%']:['1000px','600px'],
-                    title: '编辑新闻分类',
-                    btn: ['修改'],
+                    title: '编辑节点',
+                    btn: ['确认'],
                     success: function(layero, index) {
-                        //获取分类列表
-                        $.ajax({
-                            url: '/n/nquery',
-                            type: 'post',
-                            dataType: 'json',
-                            success: function(res) {
-                                if (res.code == "0") {
-                                    var $cate = $('#add-cate');
-                                    for (var i = 0; i < res.count; i++) {
-                                        $cate.append('<option value="' + res.data[i].id + '">' + res.data[i].name + '</option>')
-                                    }
+                        console.log(data.showStatus)
+                        if(data.showStatus=='0'){
+                            $('#add-showstatus').prop("checked","checked")
+                        }
+                        if (data.navStatus=='0'){
+                            $('#add-navstatus').prop("checked","checked")
+                        }
 
-                                    //参数传递
-                                    $('#add-name').val(data.title);
-                                    $('#add-cate').val(data.ncid);
-                                    editor.txt.html(data.detail);
+                        $('#add-name').val(data.name);
+                        $('#add-unit').val(data.productUnit);
+                        editor.txt.html(data.description);
+                        $('#add-addtime').val(data.createTime);
+                        $('#uppimgview').attr("src",data.icon);
+                        // 这里一定要再次渲染
+                        form.render('checkbox','form-add');
+                        //
+                        treetable.render({
+                            treeColIndex: 2,
+                            treeSpid: -1,
+                            treeIdName: 'id',
+                            treePidName: 'pid',
+                            treeDefaultClose: false,//默认全部关闭，这里打开
+                            elem: '#laytable',
+                            url: '/product/category/listall',
+                            cols: [[
+                                {width: 60, title: '序号', fixed: 'left', templet: '#zizeng', type: 'numbers'},
+                                {field: 'pid', title: '', width:1,style:'display:none;'},
+                                {field: 'name', title: '分类名称',width:'550'},
 
-                                    form.render();
-                                } else {
-                                    layer.msg(res.msg, {icon: 2, time: 1000});
-                                }
-                            },
-                            error: function(res) {
-                                layer.msg('异常错误', {icon: 2, time: 1000});
+                            ]],
+                            done: function () {
+                                $('.laytable-cell-3-0-2').addClass('layui-hide');
+                                $('.laytable-cell-2-0-3').addClass('layui-hide');
+                                layer.closeAll('loading')
                             }
-                        });
 
+                        });
+                        //监听行单击事件（双击事件为：rowDouble）
+                        table.on('rowDouble(laytable)', function(obj) {
+                            var data = obj.data;
+                            //标注选中样式
+                            obj.tr.addClass('layui-bg-red').siblings().removeClass('layui-bg-red');
+                            console.log(data.id);
+                            PID=data.id;
+                        });
+                        table.on('row(laytable)',function (obj) {
+                            obj.tr.removeClass('layui-bg-red');
+                            PID='';
+                        })
 
                     },
                     yes: function(index) {
-                        var name = $('#add-name').val();
-                        var cate = $('#add-cate').val();
-                        var detail = editor.txt.html();
-
-                        if (name == '') {
-                            layer.msg('新闻分类名称不能为空', {icon: 2, time: 1000});
-                            $('#add-name').focus();
-                            return;
+                        // 如果pid为'' 则说明是父级标题，否则就是子集标题
+                        if (PID==''){
+                            PID=data.pid
+                        }else{
+                            PID=PID;
                         }
-                        if (cate == '') {
-                            layer.msg('请选择新闻分类', {icon: 2, time: 1000});
-                            return;
+                        var showStatus,navStatus;
+                        if($('#add-showstatus').val()==='on'){
+                            showStatus='0'
+                        }else {
+                            showStatus='1'
                         }
-
+                        if ($('#add-navstatus').val()==='on'){
+                            navStatus='0'
+                        }else{
+                            navStatus='1'
+                        }
+                        var name=$('#add-name').val();
+                        var unit=$('#add-unit').val();
+                        var content=editor.txt.html();
+                        var addtime=$('#add-addtime').val();
+                        //判断是否为'' 如果是则图片未改变，否则图片改变
+                        if (pimgurl=='') {
+                            pimgurl=data.image;
+                        }
                         $.ajax({
-                            url: '/p/update',
+                            url: '/product/category/update',
                             type: 'post',
-                            data: {id: data.id, title: name, ncid: cate, detail: detail},
+                            data: { id:data.id,name:name,productUnit:unit,pid:PID,navStatus:navStatus,showStatus:showStatus,icon:pimgurl,description:content,createTime:addtime},
                             dataType: 'json',
                             success: function(res) {
                                 if (res.code == "0") {
-                                    layer.msg('添加成功', {icon: 1, time: 500}, function() {
+                                    layer.msg('修改成功', {icon: 1, time: 500}, function() {
                                         $('#refresh').click();
                                         layer.close(index);
                                     });
@@ -407,20 +653,28 @@
                     }
                 });
             } else if (obj.event === 'delete') {
-                $('#addtree').attr("disable",false);
-                layer.open({
-                    type:1,
-                    title:'展示所有分类树',
-                    maxmin:true,
-                    area:['450px','500px'],
-                    shade:0,
-                    content:$("#showtree")
+                var id=data.id;
+                $.ajax({
+                    url: "/product/category/delete",
+                    type: 'post',
+                    dataType: 'json',
+                    data:{id:id,pid:data.pid},
+                    success: function (res) {
+                        if (res.code == '0') {
+                            layer.msg('删除成功', {icon: 1, time: 500}, function () {
+                                $('#refresh').click();
+                                layer.close(index);
 
+                            });
+                        } else if (res.code == '1') {
+                            layer.msg(res.msg, {icon: 2, time: 1000});
+                        }
+                    },
+                    error: function(res) {
+                        layer.msg('异常错误', {icon: 2, time: 1000});
+                    }
                 });
-                var zTreeObj;
-                var setting={
 
-                }
 
             }
 

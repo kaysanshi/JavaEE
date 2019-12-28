@@ -8,9 +8,11 @@ import com.kaysanshi.springbootshop.dto.BaseResult;
 import com.kaysanshi.springbootshop.dto.ProductDTO;
 import com.kaysanshi.springbootshop.dto.ProductQueryDTO;
 import com.kaysanshi.springbootshop.dto.ProductQueryVO;
+import com.kaysanshi.springbootshop.service.CategoryService;
 import com.kaysanshi.springbootshop.service.ProductService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,12 +28,24 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class ProductServiceImpl implements ProductService {
+    @Value("${mobileId}")
+    private String mobileId;
+    @Value("${computerId}")
+    private String computerId;
+    @Value("${clothesId}")
+    private String clothesId;
+    @Value("${heaId}")
+    private String heaId;
+
 
     @Autowired
     ProductMapper productMapper;
 
     @Autowired
     CategoryMapper categoryMapper;
+
+    @Autowired
+    CategoryService categoryService;
 
     @Override
     public Product add(Product product) {
@@ -54,8 +68,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Integer delete(Product product) {
-        if (productMapper.delete(product) > 0) {
-            return productMapper.delete(product);
+        int count=productMapper.delete(product);
+        if ( count> 0) {
+            return count;
         } else {
             return null;
         }
@@ -150,5 +165,76 @@ public class ProductServiceImpl implements ProductService {
         return BaseResult.createResult(res.get("code").toString(),"操作成功",res.get("data"),res.get("count").toString());
 
 
+    }
+
+    @Override
+    public Integer getCount(Product product) {
+        return productMapper.selectCount(product);
+    }
+
+    @Override
+    public List <Product> gethotProductlist() {
+        Product product =new Product();
+        product.setIsHot(0);
+        product.setDeleteStatus(0);
+        return productMapper.select(product);
+
+    }
+
+    @Override
+    public List <Product> getRecomendProductList() {
+        Product product =new Product();
+        product.setRecommandStatus(0);
+        product.setDeleteStatus(0);
+        List<Product> list=productMapper.select(product);
+        List<Product> list1=new ArrayList <>();
+        if (list.size()>=4){
+            for (int i=0; i<4;i++){
+                list1.add(list.get(i));
+            }
+        }else {
+            for (int i=0; i<list.size();i++){
+                list1.add(list.get(i));
+            }
+        }
+        return list1;
+
+    }
+
+    @Override
+    public List <Product> getMobileProcuctByCategory() {
+        Category category=new Category();
+        category.setId(mobileId);
+        return get(category);
+    }
+    private List<Product> get(Category category){
+        List<Category> categoriesList=categoryMapper.select(category); // 获取一级分类
+        List<Product> list=new ArrayList <>();
+        for (Category category1:categoriesList){
+            List<Category> categories=categoryService.getListById(category1);
+            for (Category category2:categories){
+                Product product=new Product();
+                product.setCid(category2.getId());
+                List<Product> productList=productMapper.select(product);
+                for (Product product1:productList){
+                    list.add(product1);
+                }
+            }
+        }
+        return list;
+    }
+    @Override
+    public List <Product> getcloseProcuctByCategory() {
+        Category category=new Category();
+        category.setId(clothesId);
+
+        return get(category);
+    }
+
+    @Override
+    public List <Product> getHEAProductByCategory() {
+        Category category=new Category();
+        category.setId(heaId);
+        return get(category);
     }
 }

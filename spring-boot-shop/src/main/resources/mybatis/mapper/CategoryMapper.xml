@@ -23,5 +23,14 @@
         from category
         where pid=#{value}
     </select>
-
+    <select id="getCategorylistBypid" resultType="com.kaysanshi.springbootshop.dto.CategoryDTO">
+        select id,name
+        from category
+        where pid=#{value}
+    </select>
+    <select id="selectById" resultType="com.kaysanshi.springbootshop.domain.Category">
+         select id,pid,name,product_count,product_unit,nav_status,show_status,sort,icon,description,create_time,update_time
+        from category
+        where id=#{value}
+    </select>
 </mapper>

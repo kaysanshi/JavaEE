@@ -12,7 +12,7 @@ public class Cart {
     private Map<String,CartItem> cartItems = new HashMap<String,CartItem>();
 
     //商品的总计
-    private double total;
+    private double total=0;
 
     public Map<String, CartItem> getCartItems() {
         return cartItems;

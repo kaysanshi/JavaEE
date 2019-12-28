@@ -66,9 +66,12 @@ public class BaseResult implements Serializable {
         baseResult.setCode(code);
         baseResult.setMessage(message);
         baseResult.setData(data);
-        baseResult.setCount(count);
+        if (count!=null){
+            baseResult.setCount(count);
+        }
         return baseResult;
     }
+
     /**
      * 成功并返回数据
      *
@@ -78,6 +81,7 @@ public class BaseResult implements Serializable {
     public static BaseResult success(Object data) {
         return createResult(SuccessStatus, SUCCESSMESSAGE, data);
     }
+
 
     /**
      * 失败返回数据
@@ -106,12 +110,12 @@ public class BaseResult implements Serializable {
     /**
      * 创建自定义的返回的消息
      *
-     * @param message
+     * @param
      * @param data
      * @return
      */
-    public static BaseResult createResult(String message, Object data) {
-        return createResult(SuccessStatus, message, data);
+    public static BaseResult createSuccessMessageResult(String message1, Object data) {
+        return createResult(SuccessStatus, message1, data);
     }
 
     /**
@@ -121,7 +125,7 @@ public class BaseResult implements Serializable {
      * @param message
      * @return
      */
-    public static BaseResult createResult(Object data, String message) {
+    public static BaseResult createErrorMessageResult(Object data, String message) {
         return createResult(ErrorStatus, message, data);
     }
 
@@ -130,6 +134,8 @@ public class BaseResult implements Serializable {
     }
 
     public void setCount(Object count) {
-        this.count = count;
+        if (count!=null){
+            this.count = count;
+        }
     }
 }

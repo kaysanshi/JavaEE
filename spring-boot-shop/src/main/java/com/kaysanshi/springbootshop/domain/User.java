@@ -1,9 +1,12 @@
 package com.kaysanshi.springbootshop.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 import javax.persistence.*;
 
-@Table(name = "user")
+@Table(name = "shopuser")
 public class User {
     @Id
     private String id;
@@ -25,8 +28,18 @@ public class User {
     private Integer state;
 
     private String code;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    @Column(name = "create_time")
+    private Date createTime;
 
-    private Date create;
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
     /**
      * @return id
@@ -168,17 +181,5 @@ public class User {
         this.code = code;
     }
 
-    /**
-     * @return create
-     */
-    public Date getCreate() {
-        return create;
-    }
 
-    /**
-     * @param create
-     */
-    public void setCreate(Date create) {
-        this.create = create;
-    }
 }

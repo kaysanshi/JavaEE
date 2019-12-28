@@ -1,6 +1,7 @@
 package com.kaysanshi.springbootshop.service;
 
 import com.kaysanshi.springbootshop.domain.Product;
+import com.kaysanshi.springbootshop.domain.User;
 import com.kaysanshi.springbootshop.dto.BaseResult;
 import com.kaysanshi.springbootshop.dto.ProductDTO;
 import com.kaysanshi.springbootshop.dto.ProductQueryVO;
@@ -25,4 +26,16 @@ public interface ProductService {
     Product getProduct(Product product);
 
     BaseResult getlist(ProductQueryVO productQueryVO);
+
+    Integer getCount(Product product);
+
+    List<Product> gethotProductlist();
+
+    List<Product> getRecomendProductList();
+
+    List<Product> getMobileProcuctByCategory();
+
+    List<Product> getcloseProcuctByCategory();
+
+    List<Product> getHEAProductByCategory();
 }

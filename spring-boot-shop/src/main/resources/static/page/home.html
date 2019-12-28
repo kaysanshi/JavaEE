@@ -41,7 +41,7 @@
         <ul class="layui-nav top_menu layui-layout-right" lay-filter="right">
             <li class="layui-nav-item" pc>
                 <a href="javascript:;">
-                    <img src="../images/header.jpg" class="layui-circle" width="35" height="35">
+                    <img src="../img/header.jpg" class="layui-circle" width="35" height="35">
                     <cite><span class="userName" id="userInfo">获取中...</span></cite>
                 </a>
                 <dl class="layui-nav-child">
@@ -51,7 +51,7 @@
                     <dd><a lay-id="pwd" lay-href="./user/changePwd.html" href="javascript:;"><i class="iconfont icon-shezhi1"
                                                                                       data-icon="icon-shezhi1"></i><cite>修改密码</cite></a>
                     </dd>
-                    <dd><a href="javascript:; "  href="login.html" id="logout"><i class="iconfont icon-loginout"></i><cite>退出</cite></a></dd>
+                    <dd><li class="confont icon-shezhi1"><a href="login.html"><i class="layui-icon">&#xe602;</i><cite>退出系统</cite></a></dd>
                 </dl>
             </li>
         </ul>
@@ -60,7 +60,7 @@
     <div class="layui-side layui-side-menu layui-bg-black">
         <div class="layui-side-scroll">
             <div class="user-photo">
-                <a class="img" title="我的头像"><img src="../images/header.jpg" class="userAvatar"></a>
+                <a class="img" title="我的头像"><img src="../img/header.jpg" class="userAvatar"></a>
                 <p>你好！<span class="userName" id="userName">获取中...</span>, 欢迎登录</p>
             </div>
             <ul class="layui-nav layui-nav-tree" lay-filter="test">
@@ -70,7 +70,7 @@
                 <li class="layui-nav-item">
                     <a class="" href="javascript:;"><i class="layui-icon seraph icon-text">&#xe62a;</i><cite>商品管理</cite></a>
                     <dl class="layui-nav-child">
-                        <dd><a lay-id="productlist" lay-href="productlist.html" href="javascript:;"><i class="layui-icon-tree"></i><cite>商品列表</cite></a>
+                        <dd><a lay-id="productlist" lay-href="productlist.html" href="javascript:;"><i class="layui-icon">&#xe60a;</i><cite>商品列表</cite></a>
                         </dd>
                         <dd><a lay-id="productcate" lay-href="productcate.html" href="javascript:;"><i class="layui-icon">&#xe62d;</i><cite>商品分类</cite></a>
                         </dd>
@@ -88,6 +88,13 @@
                     <dl class="layui-nav-child">
                         <dd><a lay-id="userlist" lay-href="userlist.html" href="javascript:;"><i class="layui-icon">&#xe613;</i><cite>用户列表</cite></a>
                         </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a class="" href="javascript:;"><i class="layui-icon">&#xe612;</i><cite>轮播管理</cite></a></a>
+                    <dl class="layui-nav-child">
+                    <dd><a lay-id="banner" lay-href="banner.html" href="javascript:;"><i class="layui-icon">&#xe62d;</i><cite>轮播列表</cite></a>
+                    </dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item"><a href="login.html"><i class="layui-icon">&#xe602;</i><cite>退出系统</cite></a>

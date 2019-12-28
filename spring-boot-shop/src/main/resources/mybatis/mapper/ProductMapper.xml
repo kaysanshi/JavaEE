@@ -24,6 +24,7 @@
     <result column="description" jdbcType="LONGVARCHAR" property="description" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    <result column="createuser" jdbcType="VARCHAR" property="createUser"/>
   </resultMap>
   <select id="getProductListBySearch" parameterType="com.kaysanshi.springbootshop.dto.ProductQueryDTO" resultMap="BaseResultMap">
     select * from product

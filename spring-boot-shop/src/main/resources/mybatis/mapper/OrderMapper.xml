@@ -16,4 +16,53 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
 
   </resultMap>
+  <select id="query" parameterType="com.kaysanshi.springbootshop.dto.OrderQueryVO" resultType="com.kaysanshi.springbootshop.domain.Order">
+    select * from `order`
+    where
+    state = 0
+    <if test="startDate != null">
+      and ordertime &gt;= #{startDate}
+    </if>
+    <if test="endDate != null">
+      and ordertime &lt;= #{endDate}
+    </if>
+
+    <if test="key != null and key != ''">
+      and name like "%"#{key}"%"
+    </if>
+
+    <if test="sort == null or sort == 0">
+      ORDER BY ordertime desc
+    </if>
+    <if test="sort == 1">
+      ORDER BY ordertime asc
+    </if>
+
+    limit #{start}, #{limit}
+  </select>
+
+  <select id="querySum" resultType="Integer" parameterType="com.kaysanshi.springbootshop.dto.OrderQueryVO">
+    select
+    count(*)
+    from `order`,orderitem
+    where
+      `order`.id = orderitem.orderid
+    <if test="startDate != null">
+      and  `order`.ordertime &gt;= #{startDate}
+    </if>
+    <if test="endDate != null">
+      and `order`.ordertime &lt;= #{endDate}
+    </if>
+
+    <if test="key != null and key != ''">
+      and `order`.name like "%"#{key}"%"
+    </if>
+
+    <if test="sort == null or sort == 0">
+      ORDER BY `order`.ordertime desc
+    </if>
+    <if test="sort == 1">
+      ORDER BY `order`.ordertime asc
+    </if>
+  </select>
 </mapper>

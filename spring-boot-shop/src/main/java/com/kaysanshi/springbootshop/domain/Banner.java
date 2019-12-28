@@ -16,7 +16,7 @@ public class Banner {
 
     private String image;
 
-    private String create;
+    private String createuser;
 
     private String productid;
 
@@ -92,15 +92,15 @@ public class Banner {
     /**
      * @return create
      */
-    public String getCreate() {
-        return create;
+    public String getCreateUse() {
+        return createuser;
     }
 
     /**
      * @param create
      */
-    public void setCreate(String create) {
-        this.create = create;
+    public void setCreateUser(String create) {
+        this.createuser = create;
     }
 
     /**

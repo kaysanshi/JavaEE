@@ -4,9 +4,7 @@ import com.kaysanshi.springbootshop.domain.Order;
 import com.kaysanshi.springbootshop.domain.Orderitem;
 import com.kaysanshi.springbootshop.domain.Product;
 import com.kaysanshi.springbootshop.domain.User;
-import com.kaysanshi.springbootshop.dto.BaseResult;
-import com.kaysanshi.springbootshop.dto.Cart;
-import com.kaysanshi.springbootshop.dto.CartItem;
+import com.kaysanshi.springbootshop.dto.*;
 import com.kaysanshi.springbootshop.service.OrderService;
 import com.kaysanshi.springbootshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +44,6 @@ public class OrderContoller {
     @ResponseBody
     public BaseResult addOrder(Order order, Product product,HttpServletRequest request, HttpServletResponse response){
         User user=userService.getCurrentUser(request,response);
-
         if (user!=null){
             order.setId(UUID.randomUUID().toString());
             order.setOrdertime(new Date());
@@ -77,13 +74,37 @@ public class OrderContoller {
                 orderItem.setProduct(cartItem.getProduct());
                 //5)private Order order;//该订单项属于哪个订单
                 orderItem.setOrder(order);
+                orderItem.setOrderid(order.getId());
+                orderItem.setProductid(cartItem.getProduct().getId());
                 //将该订单项添加到订单的订单项集合中
                 order.getOrderItems().add(orderItem);
             }
             return BaseResult.success(orderService.addOder(user,order,product));
         }else{
-            return BaseResult.createResult("用户不存在",(Object) null);
+            return BaseResult.createErrorMessageResult(null,"用户未登录");
         }
+    }
+    @RequestMapping("/count")
+    @ResponseBody
+    public BaseResult getCount(Order order){
+        return BaseResult.success(orderService.getCount(order));
+    }
+
+    /**
+     * 后台显示出订单列表
+     *
+     */
+    @RequestMapping("/list")
+    @ResponseBody
+    public BaseResult getOrderList( OrderQueryVO  orderQueryVO){
+        return orderService.getlist( orderQueryVO);
+    }
+
+    @RequestMapping("/get")
+    @ResponseBody
+    public BaseResult getOrder(Order order,HttpServletRequest request){
+        order.setId(request.getParameter("id"));
+        return orderService.getOrder(order);
     }
 
 }

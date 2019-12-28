@@ -8,7 +8,10 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 
-@Table(name = "order")
+/**
+ * 这里使用的order是系统中的关键字所以要把他给转义一下
+ */
+@Table(name = "`order`")
 public class Order {
     @Id
     private String id;

@@ -14,6 +14,16 @@
             /*background: pink;*/
             margin: auto;
         }
+        .panel_box{
+            width: 100%;
+            height: 90px;
+            margin: auto;
+        }
+        .panel{
+            width: 200px;
+            height: 90px;
+            margin: auto;
+        }
     </style>
 </head>
 <body>
@@ -24,7 +34,7 @@
                 <i class="iconfont icon-dongtaifensishu" data-icon="icon-dongtaifensishu"></i>
             </div>
             <div class="panel_word userAll">
-                <span></span>
+                <span id="users"></span>
                 <cite>新增人数</cite>
             </div>
         </a>
@@ -35,7 +45,7 @@
                 <i class="layui-icon" data-icon="&#xe613;">&#xe613;</i>
             </div>
             <div class="panel_word userAll">
-                <span></span>
+                <span id="usercount"></span>
                 <cite>用户总数</cite>
             </div>
         </a>
@@ -46,7 +56,7 @@
                 <i class="layui-icon" data-icon="&#xe64a;">&#xe64a;</i>
             </div>
             <div class="panel_word imgAll">
-                <span></span>
+                <span id="imagescount"></span>
                 <cite>图片总数</cite>
             </div>
         </a>
@@ -57,9 +67,21 @@
                 <i class="iconfont icon-text" data-icon="icon-text"></i>
             </div>
             <div class="panel_word allNews">
-                <span></span>
+                <span id="prouductcount"></span>
                 <em>商品总数</em>
                 <cite>商品列表</cite>
+            </div>
+        </a>
+    </div>
+    <div class="panel col max_panel">
+        <a href="javascript:;" data-url="page/news/newsList.html">
+            <div class="panel_icon" style="background-color:#FFB800;">
+                <i class="layui-icon" data-icon="&#xe60e;">&#xe60e;</i>
+            </div>
+            <div class="panel_word allNews">
+                <span id="ordercount"></span>
+                <em>订单总数</em>
+                <cite>订单列表</cite>
             </div>
         </a>
     </div>
@@ -69,8 +91,80 @@
 </body>
 <script src="../layui/layui.js"></script>
 <script src="../js/echarts.js"></script>
+<script src="../js/jquery.min.js"></script>
 <script type="text/html" id="zizeng">
     {{d.LAY_TABLE_INDEX+1}}
+</script>
+<script>
+    $(function () {
+        $.ajax({
+            url: '/user/newUserCount',
+            type: 'get',
+            dataType: 'json',
+            success: function(res) {
+                if (res.code == "0") {
+                    $("#users").text(res.data);
+                } else {
+                    console.log("error")
+                }
+            },
+            error: function(res) {
+            }
+        });
+        $.ajax({
+            url: '/user/count',
+            type: 'get',
+            dataType: 'json',
+            success: function(res) {
+                if (res.code == "0") {
+                    $("#usercount").text(res.data);
+                } else {
+                }
+            },
+            error: function(res) {
+            }
+        });
+        $.ajax({
+            url: '/product/count',
+            type: 'get',
+            dataType: 'json',
+            success: function(res) {
+                if (res.code == "0") {
+                    $("#imagescount").text(res.data);
+                } else {
+                }
+            },
+            error: function(res) {
+            }
+        });
+        $.ajax({
+            url: '/product/count',
+            type: 'get',
+            dataType: 'json',
+            success: function(res) {
+                if (res.code == "0") {
+                    $("#prouductcount").text(res.data);
+                } else {
+                }
+            },
+            error: function(res) {
+            }
+        });
+        $.ajax({
+            url: '/order/count',
+            type: 'get',
+            dataType: 'json',
+            success: function(res) {
+                if (res.code == "0") {
+                    $("#ordercount").text(res.data);
+                } else {
+                }
+            },
+            error: function(res) {
+            }
+        });
+
+    })
 </script>
 <script>
     layui.use(['element', 'jquery', 'table'], function () {

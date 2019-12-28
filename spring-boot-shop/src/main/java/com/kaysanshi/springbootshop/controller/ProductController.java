@@ -1,22 +1,21 @@
 package com.kaysanshi.springbootshop.controller;
 
-import com.kaysanshi.springbootshop.domain.Category;
-import com.kaysanshi.springbootshop.domain.Product;
+import com.kaysanshi.springbootshop.domain.*;
 import com.kaysanshi.springbootshop.dto.BaseResult;
+import com.kaysanshi.springbootshop.dto.CategoryDTO;
 import com.kaysanshi.springbootshop.dto.ProductQueryVO;
+import com.kaysanshi.springbootshop.service.BannerService;
 import com.kaysanshi.springbootshop.service.CategoryService;
 import com.kaysanshi.springbootshop.service.ProductService;
+import com.kaysanshi.springbootshop.utils.Myutils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @Author kay三石
@@ -32,6 +31,8 @@ public class ProductController {
     @Autowired
     private CategoryService categoryService;
 
+
+
     /**
      * 添加商品
      * @param product
@@ -39,10 +40,19 @@ public class ProductController {
      */
     @RequestMapping("/add")
     @ResponseBody
-    public BaseResult addProduct(Product product){
-        product.setId(UUID.randomUUID().toString());
-        if(productService.add(product)!=null){
-            return BaseResult.success(productService.add(product));
+    public BaseResult addProduct(Product product,HttpServletRequest request){
+        String uid=UUID.randomUUID().toString();
+        product.setId(UUID.nameUUIDFromBytes((uid).getBytes()).toString());
+        //product.setId(String.valueOf(Myutils.genItemId()));
+        product.setCreateTime(new Date());
+        Admin admin=(Admin) request.getSession().getAttribute("user");
+        if (admin==null){
+            return  BaseResult.createErrorMessageResult(null,"用户未登录或登录失效");
+        }
+        product.setCreateUser(String.valueOf(admin.getId()));
+        Product prod=productService.add(product);
+        if(prod!=null){
+            return BaseResult.success(prod);
         }else{
             return BaseResult.error("添加失败");
         }
@@ -57,8 +67,10 @@ public class ProductController {
     @RequestMapping(value = "/update",method = RequestMethod.POST)
     @ResponseBody
     public BaseResult updateProduct(Product product){
-        if(productService.update(product)!=null){
-            return BaseResult.success(productService.update(product));
+        product.setUpdateTime(new Date());
+        Product product1=productService.update(product);
+        if(product1!=null){
+            return BaseResult.success(product1);
         }else{
             return BaseResult.error("修改失败");
         }
@@ -72,6 +84,7 @@ public class ProductController {
     @RequestMapping(value = "/delete",method = RequestMethod.POST)
     @ResponseBody
     public BaseResult deleteProduct(Product product){
+        product.setId(product.getId());
         if (productService.delete(product)!=null){
             return BaseResult.success(null);
         }else{
@@ -120,6 +133,23 @@ public class ProductController {
         }else{
             return BaseResult.error(null);
         }
+    }
+    @RequestMapping("/list/dto")
+    @ResponseBody
+    public List<Category> getList(String cid){
+        List<Category> list=categoryService.getCategoryDTOListBycid(cid);
+        return list;
+    }
+
+
+    /**
+     * 获取商品总数
+     * @return
+     */
+    @RequestMapping("/count")
+    @ResponseBody
+    public BaseResult getCount(){
+        return BaseResult.success(productService.getCount(new Product()));
     }
 
 
@@ -180,10 +210,26 @@ public class ProductController {
     @RequestMapping(value = "/category/list", method=RequestMethod.GET)
     @ResponseBody
     public BaseResult getListCategory(HttpServletRequest request, HttpServletResponse response){
-        if(categoryService.getCategoryList()!=null){
-            return BaseResult.success(categoryService.getCategoryList());
+        List<Category> list=categoryService.getCategoryList();
+        if(list!=null){
+            return BaseResult.success(list);
         }else{
             return BaseResult.error(null);
+        }
+    }
+
+    /**
+     *
+     * @return
+     */
+    @RequestMapping(value = "/categorydto/list", method=RequestMethod.GET)
+    @ResponseBody
+    public List<CategoryDTO> getListCateGoryDto(){
+        List<CategoryDTO> list=categoryService.getCategoryDTOList();
+        if (list!=null){
+            return list;
+        }else{
+            return list;
         }
     }
 
@@ -203,6 +249,17 @@ public class ProductController {
             return BaseResult.error(null);
         }
     }
+    @RequestMapping(value = "/category/test_list",method = RequestMethod.GET)
+    @ResponseBody
+    public List<Category> getListCategoryByList(HttpServletResponse response, HttpServletRequest request){
+        List<Category> list=categoryService.getCategoryListAll();
+        if (list!=null){
+            return list;
+        }else{
+            return list;
+        }
+    }
+
 
     /**
      * 通过id 获取到这个分类

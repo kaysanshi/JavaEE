@@ -20,28 +20,166 @@
         .layui-anim, .layui-anim-upbit, .layui-form-select dl {
             z-index: 10002;
         }
+
     </style>
 </head>
 <body class="layui-layout-body">
-<table id="list" lay-filter="listtable"></table>
+<table id="listtable" lay-filter="listtable"></table>
 <script type="text/html" id="toswitch">
-    <input type="checkbox" lay-skin="switch" lay-text="启用|禁用" {{d.status =='0'?"checked":"" }}>
+    <input type="checkbox" lay-skin="switch" disabled="disabled" lay-text="启用|禁用" {{d.deleteStatus =='0'?"checked":"" }}>
+</script>
+<script type="text/html"id="hotswitch">
+    <input type="checkbox" lay-skin="switch" disabled="disabled" lay-text="最热|取消" {{d.isHot =='0'?"checked":"" }}>
+</script>
+<!--0删除-->
+<script type="text/html"id="deleteswitch">
+    <input type="checkbox" lay-skin="switch" disabled="disabled" lay-text="删除|取消" {{d.deleteStatus =='1'?"checked":"" }}>
+</script>
+<script type="text/html"id="publishswitch">
+    <input type="checkbox" lay-skin="switch" disabled="disabled" lay-text="发布|取消" {{d.publishStatus =='0'?"checked":"" }}>
+</script>
+<script type="text/html"id="newswitch">
+    <input type="checkbox" lay-skin="switch" disabled="disabled" lay-text="新品|取消" {{d.newStatus =='0'?"checked":"" }}>
+</script>
+<script type="text/html"id="recommandswitch">
+    <input type="checkbox" lay-skin="switch" disabled="disabled" lay-text="推荐|取消" {{d.recommandStatus =='0'?"checked":"" }}>
 </script>
 </body>
-<table id="comment" lay-filter="commentlisttable"></table>
-<div id="divadd" style="display: none; padding: 10px">
-    <form class="layui-form layui-form-pane">
+<div id="divdetail" style="display: none; padding: 10px">
+    <form class="layui-form layui-form-pane" lay-filter="form-add">
         <div class="layui-form-item">
-            <label class="layui-form-label">标题</label>
-            <div class="layui-input-block">
-                <input type="text" id="add-title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+            <div class="layui-inline">
+                <label class="layui-form-label">名称</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input " id="detail-name" readonly="readonly" name="detail-name" required  class="layui-input" >
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">进价</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input " id="detail-market-price" readonly="readonly" name="detail-market-price" required lay-verify="required"  class="layui-input"  >
+
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">售价</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input " id="detail-shop-price"  readonly="readonly" name="detail-shop-price" required lay-verify="required" class="layui-input"  >
+
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">库存</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input " id="detail-shop-stock" readonly="readonly"  name="detail-shop-stock" required lay-verify="required"  class="layui-input"  >
+
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">所属分类</label>
+                <div class="layui-input-inline"  readonly="readonly">
+                    <select id="detail-cate">
+                        <option value="">请选择分类</option>
+                    </select>
+                </div>
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">内容简介</label>
+            <lable class="layui-form-label">封面</lable>
+            <div class="layui-upload" id="ddetailimg">
+                <div class="layui-upload-list">
+                    <img class="layui-upload-img" id="detailview"  readonly="readonly">
+                    <p id="detailtext"></p>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">是否最热</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" id="detail-hot"  name="detail-hot"  disabled="disabled" lay-skin="switch" lay-text="开启|关闭">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">是否发布</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" id="detail-publish"  name="detail-publish" disabled="disabled"  lay-skin="switch" lay-text="开启|关闭">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">是否新品</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" id="detail-new" name="detail-new" lay-skin="switch" disabled="disabled" readonly="readonly" lay-text="开启|关闭">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">是否推荐</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" id="detail-recommand"  name="detail-recommand"  disabled="disabled"  lay-skin="switch"lay-text="开启|关闭">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">是否删除</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" id="detail-delete"  name="detail-delete" disabled="disabled" lay-skin="switch" lay-text="开启|关闭">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">标题</label>
             <div class="layui-input-block">
-                <input type="text" id="add-summary" lay-verify="summary" autocomplete="off" placeholder="请输入简介" class="layui-input">
+                <input type="text" id="detail-detail-title"  autocomplete="off"  readonly="readonly"  class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">内容详情</label>
+            <div class="layui-input-block"  readonly="readonly">
+                <div id="detailcontent"></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <input type="text" id="detail-detail-note"  autocomplete="off"  readonly="readonly" class="layui-input">
+            </div>
+        </div>
+    </form>
+</div>
+<div id="divadd" style="display: none; padding: 10px">
+    <form class="layui-form layui-form-pane" lay-filter="form-add">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">名称</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input " id="add-name" name="add-name" required lay-verify="required" placeholder="请输入名称" class="layui-input" >
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">进价</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input " id="add-market-price" name="add-market-price" required lay-verify="required" placeholder="请输入进价格" class="layui-input"  >
 
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">售价</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input " id="add-shop-price" name="add-shop-price" required lay-verify="required" placeholder="请输入售价" class="layui-input"  >
+
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">库存</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input " id="add-shop-stock" name="add-shop-stock" required lay-verify="required" placeholder="请输入库存量" class="layui-input"  >
+
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">所属分类</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="tree" lay-filter="tree" class="layui-input">
+                </div>
             </div>
         </div>
         <div class="layui-form-item">
@@ -55,29 +193,53 @@
             </div>
         </div>
         <div class="layui-form-item">
-        	<div class="layui-inline">
-                <label class="layui-form-label">所属分类</label>
-                <div class="layui-input-inline">
-                    <select id="add-type">
-                        <option value="">请选择分类</option>
-                    </select>
+            <div class="layui-inline">
+                <label class="layui-form-label">是否最热</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" id="add-hot"  name="add-hot" lay-skin="switch" lay-text="开启|关闭">
                 </div>
             </div>
-        <div class="layui-inline">
-                <label class="layui-form-label">所属类型</label>
-                <div class="layui-input-inline">
-                    <select id="add-cate">
-                        <option value="-1">请选择类型</option>
-                    </select>
+            <div class="layui-inline">
+                <label class="layui-form-label">是否发布</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" id="add-publish"  name="add-publish" lay-skin="switch" lay-text="开启|关闭">
                 </div>
             </div>
-     
-        	
+            <div class="layui-inline">
+                <label class="layui-form-label">是否新品</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" id="add-new" name="add-new" lay-skin="switch" lay-text="开启|关闭">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">是否推荐</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" id="add-recommand"  name="add-recommand" lay-skin="switch"lay-text="开启|关闭">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">是否删除</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" id="add-delete"  name="add-delete" lay-skin="switch" lay-text="开启|关闭">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">标题</label>
+            <div class="layui-input-block">
+                <input type="text" id="add-detail-title" lay-verify="add-detail-title" autocomplete="off" placeholder="请输入简介" class="layui-input">
+            </div>
         </div>
          <div class="layui-form-item">
-            <label class="layui-form-label">内容</label>
+            <label class="layui-form-label">内容详情</label>
             <div class="layui-input-block">
                 <div id="content"></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <input type="text" id="add-detail-note" lay-verify="add-detail-note" autocomplete="off" placeholder="请输入备注" class="layui-input">
             </div>
         </div>
     </form>
@@ -88,21 +250,21 @@
     {{d.LAY_TABLE_INDEX+1}}
 </script>
 <script type="text/html" id="img">
-    <img src="http://10.33.8.51:92/{{d.cover}}" style="height: 100%; width: 100%">
+    <img src="{{d.image}}" style="height: 100%; width: 100%">
 </script>
-<script type="text/html" id="typename">
-    {{#  if(d.typeid==1){ }}
-    养生
-    {{#  } else if(d.typeid==2) { }}
-    饮食
-    {{#  }else if(d.typeid==3){ }}
-    时政
-    {{# }else if(d.typeid==4){ }}
-    健康小贴士
-    {{# }else if(d.typeid==5){ }}
-    用品推荐
+<script type="text/html" id="catename">
+    {{#  if(d.cid==1){ }}
+    衣服
+    {{#  } else if(d.cid==2) { }}
+    家具
+    {{#  }else if(d.cid==3){ }}
+    电器
+    {{# }else if(d.cid==4){ }}
+    电子
+    {{# }else if(d.cid==5){ }}
+    其他
     {{# }else{  }}
-    测试
+
     {{# }}}
 </script>
 <script type="text/html" id="authorname">
@@ -111,22 +273,21 @@
 <script type="text/html" id="toolbarDemo">
     <form class="layui-form layui-form-pane">
         <div class="layui-form-item" style="margin-bottom: 0">
+
             <div class="layui-inline">
                 <button lay-event="add" type="button" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe654;</i></button>
             </div>
             <div class="layui-inline">
-                <div class="layui-input-inline" style="width: 110px">
+                <div class="layui-input-inline" style="width: 180px">
                     <input id="key" type="text" style="height: 30px" placeholder="请输入关键字" class="layui-input layui-input-xs">
                 </div>
-                <button id="search" lay-event="search" class="layui-btn  layui-btn-sm" type="button"><i class="layui-icon">&#xe615;</i></button>
-                <button id="refresh" lay-event="refresh" class="layui-btn  layui-btn-sm" type="button"><i class="layui-icon">&#xe669;</i></button>
+                <button id="search" lay-event="search" class="layui-btn layui-btn-sm" type="button"><i class="layui-icon">&#xe615;</i></button>
+                <button id="refresh" lay-event="refresh" type="button" class="layui-btn layui-btn-sm" ><i class="layui-icon">&#xe669;</i></button>
 
             </div>
             <div class="layui-inline">
-                <div class="layui-input-inline" style="width:100px">
-                <select id="typesort">
-                    <option value="0">请选择类型查看列表</option>
-                </select>
+                <div class="layui-input-inline" style="width:150px">
+                    <input type="text" id="tree2" lay-filter="tree2" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline" style="float: right">
@@ -143,13 +304,14 @@
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">
             删除
         </a>
-        <a class="layui-btn layui-btn-xs" layui-event="showcomment">
-            查看评论  	
-        </a>
     </div>
 </script>
 <script>
-    layui.use(['element', 'jquery', 'table', 'form', 'laydate', 'layer','upload'], function() {
+    layui.config({
+        base:'/layui/module/'
+    }).extend({
+        treeSelect:'treeselect/treeSelect'});
+    layui.use(['element', 'jquery', 'table', 'form', 'laydate', 'layer','upload','treeSelect'], function() {
         var element = layui.element;
         var $ = layui.jquery;
         var table = layui.table;
@@ -157,12 +319,13 @@
         var laydate = layui.laydate;
         var upload=layui.upload;
         var layer = layui.layer;
+        var treeSelect=layui.treeSelect;
 
         var editor;
         editor = new wangEditor('#content');
         editor.customConfig.debug = true;
         editor.customConfig.uploadFileName = 'file';
-        editor.customConfig.uploadImgServer = '/common/product/upload';
+        editor.customConfig.uploadImgServer = '/common/upload';
        	//自定义上传图片事件
         editor.customConfig.uploadImgHooks = {
             before: function(xhr, editor, files) {
@@ -181,13 +344,13 @@
                 console.log("上传超时");
             },
              customInsert: function (insertImg, result, editor) {
-        // 图片上传并返回结果，自定义插入图片的事件（而不是编辑器自动插入图片！！！）
-        // insertImg 是插入图片的函数，editor 是编辑器对象，result 是服务器端返回的结果
+            // 图片上传并返回结果，自定义插入图片的事件（而不是编辑器自动插入图片！！！）
+            // insertImg 是插入图片的函数，editor 是编辑器对象，result 是服务器端返回的结果
 
-        // 举例：假如上传图片成功后，服务器端返回的是 {url:'....'} 这种格式，即可这样插入图片：
-        	var url = result.data[0];
+            // 举例：假如上传图片成功后，服务器端返回的是 {url:'....'} 这种格式，即可这样插入图片：
+        	var url = result.data;
         	console.log(url);
-        	insertImg("http://10.33.8.51:92"+url);
+        	insertImg(url);
 
         	// result 必须是一个 JSON 格式字符串！！！否则报错
     	}
@@ -198,28 +361,30 @@
 			type:'datetime'
 		});
         table.render({
-            elem: '#list',
-            url: 'http://10.33.8.51:91/api/news/content/list',
+            elem: '#listtable',
+            url: '/product/list',
             height: 'full-0',
             toolbar: '#toolbarDemo',
             id: '#listtable',
             page: true,
-            where:{typeid:"1"},
             cols: [[
                 {type:'checkbox', fixed: 'left'},
                 {width: 40, title: '序号',fixed: 'left',templet:'#zizeng', type: 'numbers'},
-                {field: 'title', title: '标题',width:60},
-                {field: 'authorid', title: '作者',width:60},
-                {field: 'categoryid', title: '所属分类', templet:'#catename',width:80},
-                {field: 'typeid', title: '所属类型', templet:'#typename',width:80},
-                {field: 'summary', title: '内容简介', width:120},
-                {field: 'content', title: '内容',width:160},
-                {field: 'cover',title:'封面', templet:'#img',width:160},
-                {field: 'viewsum',title:'浏览数',width:120},
-                {field: 'up',title:'点赞数',width:80},
-                {field: 'down',title:'踩数',width:80},
-                {field: 'time',title:'发布时间',width:120},
-                {field: 'ip',title:'发布ip',width:120},
+                {field: 'name', title: '名称',width:60},
+                {field: 'detailTitle', title: '详情标题', width:120},
+                {field: 'description', title: '详情',width:160},
+                {field: 'marketPrice', title: '进价',width:60},
+                {field: 'shopPrice', title: '售价',width:60},
+                {field: 'image',title:'封面', templet:'#img',width:160},
+                {field: 'note',title:'备注', width:160},
+                {field: 'cid', title: '所属分类', templet:'#catename',width:80},
+                {field: 'isHot',title:'是否最热',width:120,templet:'#hotswitch'},
+                {field: 'deleteStatus',title:'是否删除',width:120,templet:'#deleteswitch'},
+                {field: 'publishStatus',title:'是否发布',width:120,templet:'#publishswitch'},
+                {field: 'newStatus',title:'是否新品',width:120,templet:'#newswitch'},
+                {field: 'recommandStatus',title:'是否推荐',width:120,templet:'#recommandswitch'},
+                {field: 'createTime',title:'发布时间',width:120},
+                {field: 'updateTime',title:'修改时间',width:120},
                 {field: 'status',title:'状态',width:80,templet:'#toswitch'},
                 {fixed: 'right', width:220, align:'center', toolbar: '#barDemo'}
             ]],
@@ -230,14 +395,7 @@
 
         function addreset() {//添加层元素初始化
             $('#add-name').val('');
-            $("#add-cate").find("option:selected").text("");
-            $("#add-cate").empty();
-            $("#add-cate").append('<option value="">请选择类别</option>');
-            $("#add-viewsum").val('');
-            $("#add-title").val('');
-            $("#add-down").val('');
-            $("#add-summary").val('');
-            $("#add-up").val('');
+            treeSelect.destroy('tree'); // 初始化时先进行破坏掉
             editor.txt.html('');
             $('#addimg').empty();
             $('#addimg').append('<button type="button" class="layui-btn" id="uppimg">上传封面图片</button>\n' +
@@ -245,18 +403,30 @@
                 '                    <img class="layui-upload-img" id="uppimgview" width="92" height="92" style="margin-left: 110px">\n' +
                 '                    <p id="uppimgtext" style="margin-left: 110px"></p>\n' +
                 '                </div>');
+            $('#add-market-price').val('');
+            $('#add-shop-price').val('');
+            $('#add-shop-stock').val('');
+            $('#add-detail-title').val('');
+            $('#add-detail-note').val('');
+            $('#add-recommand').val();
+            $('#add-hot').prop('checked','');
+            $('#add-delete').prop('checked','');
+            $('#add-publish').prop('checked','');
+            $('#add-new').prop('checked','');
+            $('#add-recommand').prop('checked','');
+            form.render();
+
+
         }
         //头部获取下拉框
         function selecttypereset(){
             $.ajax({
-                url:'http://10.33.8.51:91/api/news/type/list/all',
+                url:'/product/category/listall',
                 method:'get',
                 dataType:'json',
                 success:function(res) {
-
                     if (res.code=="0"){
                         $newstype=$("#typesort");
-                        console.log($newstype);
                         for (var i = 0; i < res.data.length; i++) {
                             $newstype.append('<option value="' + res.data[i].id + '">' + res.data[i].name + '</option>')
                         }
@@ -270,12 +440,16 @@
             })
         }
         function detailreset() {
+            $('#detailcontent').empty()
         	$('#addimg').empty();
             $('#addimg').append(
                 '                <div class="layui-upload-list">\n' +
                 '                    <img class="layui-upload-img" id="uppimgview" width="92" height="92" style="margin-left: 110px">\n' +
                 '                    <p id="uppimgtext" style="margin-left: 110px"></p>\n' +
                 '                </div>');
+
+
+
         }
 
 
@@ -347,7 +521,7 @@
                     var pimgurl = '';
                     var uploadInst = upload.render({
                         elem: '#uppimg',
-                        url: 'http://10.33.8.51:92/api/common/pic/s/upload',
+                        url: '/common/upload',
                         type:'post',
                         before: function(obj) {
                             obj.preview(function(index, file, res){
@@ -356,10 +530,10 @@
                             });
                         },
                         done: function(res) {
-                            if (res.errno =='0') {
+                            if (res.code =='0') {
                                 pimgurl = res.data;
                                 console.log("::"+res.data);
-                            } else if (res.errno == '1') {
+                            } else if (res.code == '1') {
                                 layer.msg(res.msg, {icon: 2, time: 1000});
                                 return;
                             }
@@ -372,86 +546,141 @@
                             });
                         }
                     });
+                    var cid="";
                     layer.open({
                         type: 1,
                         content: $('#divadd'),
                         area: screen()<2?['85%','90%']:['1200px','600px'],
-                        title: '添加资讯',
+                        title: '添加商品',
                         btn: ['添加'],
                         success: function(layero, index) {
-                            $.ajax({
-                                url: 'http://10.33.8.51:91/api/news/type/list/all',
+                            treeSelect.render({
+                                // 选择器
+                                elem: '#tree',
+                                // 数据
+                                data: '/product/categorydto/list',
+                                // 异步加载方式：get/post，默认get
                                 type: 'get',
-                                dataType: 'json',
-                                success: function(res) {
-                                    if (res.code == "0") {
-                                        
-                                        for (var i = 0; i < res.data.length; i++) {
-                                           $('#add-type').append('<option value="' + res.data[i].id + '">' + res.data[i].name + '</option>')
-                                        }
-                                        form.render();
-                                    } else {
-                                        layer.msg(res.msg, {icon: 2, time: 1000});
-                                    }
+                                // 占位符
+                                placeholder: '请输入分类',
+                                // 是否开启搜索功能：true/false，默认false
+                                search: true,
+                                // 点击回调
+                                click: function(d){
+                                    console.log(d.current.id);
+                                    cid=d.current.id;
                                 },
-                                error: function(res) {
-                                    layer.msg('异常错误', {icon: 2, time: 1000});
-                                }
-                            });
-                            //分类名
-                            $.ajax({
-                                url: 'http://10.33.8.51:91/api/news/cate/list/all?typeid=1&pid=-1&rec=1&isSub=0',
-                                type: 'get',
-                                dataType: 'json',
-                                success: function(res) {
-                                    if (res.code == "0") {
-                                        for (var i = 0; i < res.data.length; i++) {
-                                           $('#add-cate').append('<option value="' + res.data[i].id + '">' + res.data[i].name + '</option>')
-                                        }
-                                        form.render();
-                                    } else {
-                                        layer.msg(res.msg, {icon: 2, time: 1000});
-                                    }
+                            // 加载完成后的回调函数
+                                success: function (d) {
+                    //                 console.log(d);
+                    // //                选中节点，根据id筛选
+                    //                treeSelect.checkNode('tree', 3);
+                    //
+                    // //                获取zTree对象，可以调用zTree方法
+                    //                var treeObj = treeSelect.zTree('tree');
+                    //                console.log(treeObj);
+
+                    //                刷新树结构
+                                   treeSelect.refresh('tree');
                                 },
-                                error: function(res) {
-                                    layer.msg('异常错误', {icon: 2, time: 1000});
-                                }
                             });
+
+
+                            // $.ajax({
+                            //     url: '/product/category/listall',
+                            //     type: 'get',
+                            //     dataType: 'json',
+                            //     success: function(res) {
+                            //         if (res.code=="0") {
+                            //             console.log(res.data)
+                            //             for (var i = 0; i < res.data.length; i++) {
+                            //                $('#add-cate').append('<option value="' + res.data[i].id + '">' + res.data[i].name + '</option>')
+                            //             }
+                            //             form.render();
+                            //         } else {
+                            //             layer.msg(res.msg, {icon: 2, time: 1000});
+                            //         }
+                            //     },
+                            //     error: function(res) {
+                            //         layer.msg('异常错误', {icon: 2, time: 1000});
+                            //     }
+                            // });
                         },
                         yes: function(index) {
                        			
-                            var title=$('#add-title').val();
-                            var summary=$('#add-summary').val();
-                            var pimg=$('#uppimg').val();
-                            var type=$('#add-type').val();
-                        
-                            var cate = $('#add-cate').val();
-                            var viewsum=$('#add-viewsum').val();
-                            var up=$('#add-up').val();
-                            var down=$('#add-down').val();
+                            var name=$('#add-name').val()
+                            var marketPrice=$('#add-market-price').val()
+                            var shopPrice=$('#add-shop-price').val()
+                            var stock=$('#add-shop-stock').val()
+                            var cate = cid;
+                            var detailTitle=$('#add-detail-title').val();
+                            var note=$('#add-detail-note').val();
+                            var ishot,deleteStatus,publishStatus,newStatus,recommandStatus;
+                            if ($('#add-recommand').val()=='on'){
+                                recommandStatus='0'
+                            }else{
+                                recommandStatus='1'
+                            }
+                            if ($('#add-hot').val()=='on'){
+                                ishot='0'
+                            }else{
+                                ishot='1'
+                            }
+                            if ($('#add-delete').val()=='on'){
+                                deleteStatus='0'
+                            }else{
+                                deleteStatus='1'
+                            }
+                            if ($('#add-publish').val()=='on'){
+                                publishStatus='0'
+                            }else{
+                                publishStatus='1'
+                            }
+                            if ($('#add-new').val()=='on'){
+                                newStatus='0'
+                            }else{
+                                newStatus='1'
+                            }
                             var content = editor.txt.html();
 							console.log(content);
-                            if (title == '') {
+                            if (name == '') {
                                 layer.msg('标题不能为空', {icon: 2, time: 1000});
                                 $('#add-name').focus();
                                 return;
                             }
-                            
                             console.log("上传的路径"+pimgurl);
                             //提交表单
                             $.ajax({
-                                url: 'http://10.33.8.51:91/api/news/content/add',
+                                url: '/product/add',
                                 type: 'post',
-                                data: {title:title,summary:summary,type:type,categoryid:cate,content:content,cover:pimgurl},
+                                data: {
+                                    name:name,
+                                    marketPrice:marketPrice,
+                                    shopPrice:shopPrice,
+                                    stock:stock,
+                                    cid:cate,
+                                    detailTitle:detailTitle,
+                                    note:note,
+                                    isHot:ishot,deleteStatus:deleteStatus,publishStatus:publishStatus,
+                                    newStatus:newStatus,recommandStatus:recommandStatus,
+                                    description:content,image:pimgurl,
+                                },
                                 dataType: 'json',
                                 success: function(res) {
+                                    console.log(res)
                                     if (res.code == "0") {
                                         layer.msg('添加成功', {icon: 1, time: 500}, function() {
-                                            $('#refresh').click();
                                             layer.close(index);
+                                            treeSelect.destroy('tree');
+                                            treeSelect.revokeNode('tree', function(d){
+                                                console.log(d);
+                                            });
+                                            //修改成功后刷新父界面
+                                            // window.parent.location.reload();
+                                            table.reload('#listtable')
                                         });
                                     } else {
-                                        layer.msg(res.msg, {icon: 2, time: 1000});
+                                        layer.msg(res.message, {icon: 2, time: 1000});
                                     }
                                 },
                                 error: function(res) {
@@ -467,26 +696,28 @@
                     tablereload({curr: 1}, keyObj);
                     break;
                 case 'refresh':
-                    var keyObj = getKeyObj();
-                    tablereload({curr: obj.config.page.curr}, keyObj);
+                    console.log("sss")
+                    // var keyObj = getKeyObj();
+                    // tablereload({curr: obj.config.page.curr}, keyObj);
+                    table.reload('#listtable')
                     break;
                 case 'delete':
                     var ids = getids(obj);
                     if (ids.length == 0)
                         return;
-                    layer.confirm('您确定要删除这' + ids.length + '条新闻吗？',
+                    layer.confirm('您确定要删除这' + ids.length + '条商品吗？',
                         {btn: ['确定','取消'] },
                         function() {
                             $.ajax({
-                                url: "http://10.33.8.51:92/api/news/content/delete",
+                                url: "/product/delete",
                                 type: 'post',
                                 data: {id: ids},
                                 dataType: 'json',
                                 success: function (res) {
                                     if (res.code == '0') {
                                         layer.msg('删除成功', {icon: 1, time: 500}, function () {
-                                            $('#refresh').click();
                                             layer.close(index);
+                                            table.reload('#listtable')
                                         });
                                     } else if (res.code == '1') {
                                         layer.msg(res.msg, {icon: 2, time: 1000});
@@ -507,21 +738,55 @@
             var data = obj.data;
             layer.open({
                 type: 1,
-                content: $('#divadd'),
+                content: $('#divdetail'),
                 area: screen()<2?['85%','90%']:['1200px','600px'],
-                title: '资讯详情',
+                title: '商品详情',
                 success: function(layero, index) {
-                    $('#add-name').val(data.name);
-                    $("#add-cate").val(data.categoryid);
-                    $('#add-type').val(data.type);
-                    $("#add-viewsum").val(data.viewsum);
-                    $("#add-title").val(data.title);
-                    $("#add-down").val(data.down);
-                    $("#add-summary").val(data.summary);
-                    $("#add-up").val(data.up);
                     $('#addtime').val(data.time);
-                    $('#uppimgview').attr("src",'http://10.33.8.51:92/'+data.cover);
-                   editor.txt.html(data.content);
+                    $('#detailview').attr("src",data.image);
+                    editor.txt.html(data.description);
+                    $('#detail-name').val(data.name);
+                    $('#detail-market-price').val(data.marketPrice);
+                    $('#detail-shop-price').val(data.shopPrice);
+                    $('#detail-shop-stock').val(data.stock);
+                    $('#detail-detail-title').val(data.detailTitle);
+                    $('#detail-detail-note').val(data.note);
+                    if (data.isHot =='0'){
+                        $('#detail-hot').prop('checked','checked');
+                    }
+                    if (data.deleteStatus =='1'){
+                        $('#detail-delete').prop('checked','checked');
+                    }
+                    if (data.publishStatus=='0'){
+                        //$('#add-publish').checked=true 这种方法不可以渲染
+                        //console.log($('#add-publish').val())
+                        $('#detail-publish').prop('checked','checked');
+                    }
+                    if (data.newStatus=='0'){
+                        $('#detail-new').prop('checked','checked')
+                    }
+                    if (data.recommandStatus=='0'){
+                        $('#detail-recommand').prop('checked','checked')
+                    }
+                    $('#detailcontent').append(data.description)
+                    $.ajax({
+                        url:'/product/category/get',
+                        method:'get',
+                        data:{id:data.cid},
+                        dataType:'json',
+                        success:function(res) {
+                            if (res.code=="0"){
+                                $('#detail-cate').append('<option value="' + res.data.id + '">' + res.data.name + '</option>')
+                                $('#detail-cate').val(data.cid);
+                                form.render();
+                            }
+                        },
+                        error:function (res) {
+                            layer.alert('出现错误');
+
+                        }
+                    })
+                    form.render()
                 }
             });
             //标注选中样式
@@ -535,75 +800,94 @@
                
             } else if (obj.event === 'edit') {
                 addreset();
+                var pimgurl = '';
+                var cateid="";
                 layer.open({
                     type: 1,
                     content: $('#divadd'),
                     area: screen()<2?['85%','90%']:['1200px','600px'],
-                    title: '编辑新闻',
+                    title: '编辑商品',
                     btn: ['修改'],
                     success: function(layero, index) {
-	                    $("#add-viewsum").val(data.viewsum);
 	                    $("#add-title").val(data.title);
 	                    $("#add-down").val(data.down);
-	                    $("#add-summary").val(data.summary);
-	                    $("#add-up").val(data.up);
-	                    $("#add-ip").val(data.ip); 
 	                    $('#addtime').val(data.time);
-	                    $('#uppimgview').attr("src",'http://10.33.8.51:92/'+data.cover);
-	                    editor.txt.html(data.content);
-                        //获取类型列表
-                         $.ajax({
-                                url: 'http://10.33.8.51:91/api/news/type/list/all',
-                                type: 'get',
-                                dataType: 'json',
-                                success: function(res) {
-                                    if (res.code == "0") {
-                                        
-                                        for (var i = 0; i < res.data.length; i++) {
-                                           $('#add-type').append('<option value="' + res.data[i].id + '">' + res.data[i].name + '</option>')
-                                        }
-                                        form.render();
-                                    } else {
-                                        layer.msg(res.msg, {icon: 2, time: 1000});
-                                    }
-                                },
-                                error: function(res) {
-                                    layer.msg('异常错误', {icon: 2, time: 1000});
-                                }
-                            });
-                            //分类名
-                            $.ajax({
-                                url: 'http://10.33.8.51:91/api/news/cate/list/all?typeid=1&pid=-1&rec=1&isSub=0',
-                                type: 'get',
-                                dataType: 'json',
-                                success: function(res) {
-                                    if (res.code == "0") {
-                                        for (var i = 0; i < res.data.length; i++) {
-                                           $('#add-cate').append('<option value="' + res.data[i].id + '">' + res.data[i].name + '</option>')
-                                        }
-                                        form.render();
-                                    } else {
-                                        layer.msg(res.msg, {icon: 2, time: 1000});
-                                    }
-                                },
-                                error: function(res) {
-                                    layer.msg('异常错误', {icon: 2, time: 1000});
-                                }
-                            });
-					 var pimgurl = '';
+	                    $('#uppimgview').attr("src",data.image);
+
+	                    editor.txt.html(data.description);
+                        $('#add-name').val(data.name);
+                        $('#add-market-price').val(data.marketPrice);
+                        $('#add-shop-price').val(data.shopPrice);
+                        $('#add-shop-stock').val(data.stock);
+                        $('#add-detail-title').val(data.detailTitle);
+                        $('#add-detail-note').val(data.note);
+                        console.log(data.publishStatus);
+                        if (data.isHot =='0'){
+                            $('#add-hot').prop('checked','checked');
+                        }
+                        // 1.为删除
+                        if (data.deleteStatus =='1'){
+                            $('#add-delete').prop('checked','checked');
+                        }
+                        if (data.publishStatus=='0'){
+                            //$('#add-publish').checked=true 这种方法不可以渲染
+                            //console.log($('#add-publish').val())
+                            $('#add-publish').prop('checked','checked');
+                        }
+                        if (data.newStatus=='0'){
+                            $('#add-new').prop('checked','checked')
+                        }
+                        if (data.recommandStatus=='0'){
+                            $('#add-recommand').prop('checked','checked')
+                        }
+                        form.render('checkbox','form-add');
+                        treeSelect.render({
+                            // 选择器
+                            elem: '#tree',
+                            // 数据
+                            data: '/product/categorydto/list',
+                            // 异步加载方式：get/post，默认get
+                            type: 'get',
+                            // 占位符
+                            placeholder: '请输入分类',
+                            // 是否开启搜索功能：true/false，默认false
+                            search: true,
+                            // 点击回调
+                            click: function(d){
+                                console.log(d.current.id);
+                                cateid=d.current.id;
+                                console.log(cateid)
+                            },
+                            // 加载完成后的回调函数
+                            success: function (d) {
+                                console.log(data.cid);
+                                treeSelect.checkNode('tree',data.cid);
+
+                                //                 console.log(d);
+                                // //                选中节点，根据id筛选
+                                //                treeSelect.checkNode('tree', 3);
+                                //
+                                // //                获取zTree对象，可以调用zTree方法
+                                //                var treeObj = treeSelect.zTree('tree');
+                                //                console.log(treeObj);
+
+                                //                刷新树结构
+                                treeSelect.refresh('tree');
+                            },
+                        });
                     var uploadInst = upload.render({
                         elem: '#uppimg',
-                        url: 'http://10.33.8.51:92/api/common/pic/s/upload',
+                        url: '/common/upload',
                         type:'post',
                         before: function(obj) {
                             obj.preview(function(index, file, res){
-                                $('#uppimgview').attr('src', 'http://10.33.8.51:92/'+res.data[0]); //图片链接（base64）
+                                $('#uppimgview').attr('src', res)
                             });
                         },
                         done: function(res) {
                             if (res.code =='0') {
-                                pimgurl = res.data[0];
-                                console.log("::"+res.data[0]);
+                                pimgurl = res.data;  //base 64的
+                                console.log("::"+res.data);
                             } else if (res.code == '1') {
                                 layer.msg(res.msg, {icon: 2, time: 1000});
                                 return;
@@ -617,40 +901,83 @@
                             });
                         }
                     });
-                    
-                       
-
                     },
                     yes: function(index) {
-                        	var title=$('#add-title').val();
-                            var summary=$('#add-summary').val();
-                            var pimg=$('#uppimgview').val();
-                            console.log(pimg);
-                            var type=$('#add-type').val();
-                        	var status=$('#add-stauts').val();
-                            var cate = $('#add-cate').val();
-                            var viewsum=$('#add-viewsum').val();
-                            var content = editor.txt.html();
-                            
-                        	var authorid=1;
-
-                        if (title == '') {
-                            layer.msg('新闻名称不能为空', {icon: 2, time: 1000});
-                            $('#add-title').focus();
+                        var name=$('#add-name').val();
+                        var marketPrice=$('#add-market-price').val();
+                        var shopPrice=$('#add-shop-price').val();
+                        var stock=$('#add-shop-stock').val();
+                        var cate = $('#add-cate').val();
+                        var detailTitle=$('#add-detail-title').val();
+                        var note=$('#add-detail-note').val();
+                        var ishot,deleteStatus,publishStatus,newStatus,recommandStatus;
+                        if ($('#add-recommand').val()=='on'){
+                            recommandStatus='0'
+                        }else{
+                            recommandStatus='1'
+                        }
+                        console.log($('#add-recommand').val());
+                        if ($('#add-hot').val()=='on'){
+                            ishot='0'
+                        }else{
+                            ishot='1'
+                        }
+                        console.log($('#add-hot').val());
+                        if ($('#add-delete').val()=='on'){
+                            deleteStatus='0'
+                        }else{
+                            deleteStatus='1'
+                        }
+                        if ($('#add-publish').val()=='on'){
+                            publishStatus='0'
+                        }else{
+                            publishStatus='1'
+                        }
+                        if ($('#add-new').val()=='on'){
+                            newStatus='0'
+                        }else{
+                            newStatus='1'
+                        }
+                        if (cateid==""){
+                            cateid=data.cid;
+                        }
+                        var content = editor.txt.html();
+                        console.log(content);
+                        if (name == '') {
+                            layer.msg('标题不能为空', {icon: 2, time: 1000});
+                            $('#add-name').focus();
                             return;
                         }
-
+                        //判断是否为'' 如果是则图片未改变，否则图片改变
+                        if (pimgurl=='') {
+                            pimgurl=data.image;
+                        }
+                        form.render('checkbox','form-add');
                         $.ajax({
-                            url: 'http://10.33.8.51:91/api/mews/content/update',
+                            url: '/product/update',
                             type: 'post',
-                            data: {id: data.id, title:title, authorid:authorid,categoryid:cate, summary:summary,content:content,cover:pimg,status:status},
+                            data: {
+                                id:data.id,
+                                name:name,
+                                marketPrice:marketPrice,
+                                shopPrice:shopPrice,
+                                stock:stock,
+                                cid:cateid,
+                                detailTitle:detailTitle,
+                                note:note,
+                                isHot:ishot,deleteStatus:deleteStatus,publishStatus:publishStatus,
+                                newStatus:newStatus,recommandStatus:recommandStatus,
+                                description:content,image:pimgurl,createTime:data.createTime
+                            },
                             dataType: 'json',
                             success: function(res) {
                                 if (res.code == "0") {
-                                    layer.msg('添加成功', {icon: 1, time: 500}, function() {
-                                        $('#refresh').click();
+                                    layer.msg('修改成功', {icon: 1, time: 500}, function() {
+                                        treeSelect.destroy('tree');
                                         layer.close(index);
+                                        table.reload('#listtable')
                                     });
+
                                 } else {
                                     layer.msg(res.msg, {icon: 2, time: 1000});
                                 }
@@ -662,41 +989,27 @@
                     }
                 });
             } else if (obj.event === 'delete') {
-            			var id=data.id;
-                            $.ajax({
-                                url: "http://10.33.8.51:91/api/news/content/delete/"+id,
-                                type: 'post',
-                                dataType: 'json',
-                                success: function (res) {
-                                    if (res.code == '0') {
-                                        layer.msg('删除成功', {icon: 1, time: 500}, function () {
-                                            $('#refresh').click();
-                                            layer.close(index);
-                                        });
-                                    } else if (res.code == '1') {
-                                        layer.msg(res.msg, {icon: 2, time: 1000});
-                                    }
-                                },
-                                error: function(res) {
-                                    layer.msg('异常错误', {icon: 2, time: 1000});
-                                }
-                            });	
-            }else if(obj.event==='showcomment'){
-            	layer.open({
-                        type: 1,
-                        content: $('#comment'),
-                        area: screen()<2?['85%','90%']:['1200px','600px'],
-                        title: '资讯评论列表',
-                        success: function(layero, index) {
-                            
-                        },
-                        yes: function(index) {
-                       			
-                            
-                           
+                var id=data.id;
+                $.ajax({
+                    url: "/product/delete",
+                    type: 'post',
+                    dataType: 'json',
+                    data:{id:id},
+                    success: function (res) {
+                        if (res.code == '0') {
+                            layer.msg('删除成功', {icon: 1, time: 500}, function () {
+                                layer.close(index);
+                                table.reload('#listtable')
+
+                            });
+                        } else if (res.code == '1') {
+                            layer.msg(res.msg, {icon: 2, time: 1000});
                         }
-                    });
-            	
+                    },
+                    error: function(res) {
+                        layer.msg('异常错误', {icon: 2, time: 1000});
+                    }
+                });
             }
         });
 

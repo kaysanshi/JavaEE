@@ -8,7 +8,7 @@
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="image" jdbcType="VARCHAR" property="image" />
-    <result column="create" jdbcType="VARCHAR" property="create" />
+    <result column="createuser" jdbcType="VARCHAR" property="create" />
     <result column="productid" jdbcType="VARCHAR" property="productid" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
